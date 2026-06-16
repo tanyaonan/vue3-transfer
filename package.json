@@ -1,0 +1,43 @@
+{
+  "name": "vue3-transfer",
+  "version": "0.0.1",
+  "description": "Transfer Vue 3 SFC source to plain JavaScript in the browser",
+  "type": "module",
+  "main": "./dist/vue3-transfer.js",
+  "module": "./dist/vue3-transfer.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3-transfer.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "vue3",
+    "compiler",
+    "sfc",
+    "transfer",
+    "rolldown",
+    "vite",
+    "browser",
+    "vapor"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vue/compiler-sfc": "3.6.0-beta.15"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vite": "^8.0.16",
+    "vue": "3.6.0-beta.15"
+  }
+}
