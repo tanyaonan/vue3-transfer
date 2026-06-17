@@ -44,9 +44,6 @@
 
     // 创建 Vue 3 应用实例，以编译后的 Counter 组件作为根组件
     const app = Vue.createApp(rendered.component)
-    if (usesElementPlus) {
-      app.use(ElementPlus)
-    }
     app.mount('#app')
 
     window.addEventListener('beforeunload', () => {
