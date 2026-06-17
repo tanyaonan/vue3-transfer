@@ -60,32 +60,34 @@ console.log(result.code)
 ```ts
 import { renderVueToDOM } from 'vue3-transfer'
 
-const { app, style } = await renderVueToDOM(source, '#app')
+const { app, style } = await renderVueToDOM(source, '#app', {
+  filename: 'Hello.vue',
+})
 ```
 
 > 注意：`<script>` 块目前只支持纯 JavaScript，不支持 TypeScript，因为本库设计为在浏览器中运行。
 
 ## API
 
-### `transformVueToJS(source, options?)`
+### `transformVueToJS(source, options)`
 
 | 选项 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `filename` | `string` | `'App.vue'` | 源文件名 |
+| `filename` | `string` | - | **必填**，源文件标识，用于缓存、错误报告和 scoped style |
 | `isProduction` | `boolean` | `false` | 是否生产模式 |
 | `styleMode` | `'inject' \| 'inline' \| 'none'` | `'inject'` | `<style>` 块的处理方式 |
 | `vapor` | `boolean` | `true` | 是否编译为直接 DOM 操作 |
-| `useCache` | `boolean` | `true` | 是否使用内存编译缓存 |
+| `useCache` | `boolean` | `true` | 是否使用 IndexedDB 编译缓存 |
 
 返回 `Promise<TransformResult>`，包含 `code`、可选的 `css` 和 `errors`。
 
-### `renderVueToDOM(source, container, options?)`
+### `renderVueToDOM(source, container, options)`
 
 | 参数 | 类型 | 说明 |
 |------|------|------|
 | `source` | `string` | Vue SFC 源码 |
 | `container` | `string \| Element` | CSS 选择器或 DOM 挂载点 |
-| `options` | `TransformOptions` | 与 `transformVueToJS` 相同 |
+| `options` | `TransformOptions` | **必填**，与 `transformVueToJS` 相同 |
 
 返回 `Promise<{ app: App<Element>, style: HTMLStyleElement | null }>`。
 

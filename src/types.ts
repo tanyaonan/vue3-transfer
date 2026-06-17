@@ -1,9 +1,10 @@
 export interface TransformOptions {
   /**
-   * The filename of the source file, used for error reporting and scoped styles.
-   * @default 'App.vue'
+   * The filename of the source file, used for caching, error reporting and
+   * scoped styles. Required to prevent different files from overwriting each
+   * other's cache entries.
    */
-  filename?: string
+  filename: string
 
   /**
    * Whether to compile in production mode.

@@ -96,7 +96,7 @@ function reset() {
 </style>
 `
 
-    const { app, style } = await renderVueToDOM(source, '#app')
+    const { app, style } = await renderVueToDOM(source, '#app', { filename: 'Counter.vue' })
 
     // Clean up styles when the page is unloaded so styles don't leak between
     // renders in a long-lived dynamic preview application.

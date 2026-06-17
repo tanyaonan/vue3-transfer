@@ -5,7 +5,8 @@ const DB_VERSION = 1
 const DB_STORE = 'compile-cache'
 const CACHE_TTL = 24 * 60 * 60 * 1000 // 1 day
 
-interface CacheEntry {
+export interface CacheEntry {
+  sourceHash: string
   code: string
   css?: string
   errors: string[]
@@ -50,11 +51,14 @@ async function withStore<T>(
   }
 }
 
-export async function getCacheEntry(key: string): Promise<TransformResult | null> {
+export async function getCacheEntry(
+  key: string,
+  sourceHash: string,
+): Promise<TransformResult | null> {
   const entry = await withStore<CacheEntry>('readonly', (store) => store.get(key))
   if (!entry) return null
 
-  if (Date.now() - entry.timestamp > CACHE_TTL) {
+  if (Date.now() - entry.timestamp > CACHE_TTL || entry.sourceHash !== sourceHash) {
     withStore('readwrite', (store) => store.delete(key))
     return null
   }
@@ -66,8 +70,13 @@ export async function getCacheEntry(key: string): Promise<TransformResult | null
   }
 }
 
-export async function setCacheEntry(key: string, result: TransformResult): Promise<void> {
+export async function setCacheEntry(
+  key: string,
+  sourceHash: string,
+  result: TransformResult,
+): Promise<void> {
   const entry: CacheEntry = {
+    sourceHash,
     code: result.code,
     css: result.css,
     errors: result.errors,

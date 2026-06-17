@@ -3,6 +3,10 @@ import type { App } from 'vue'
 import { loadCompiler } from './utils/compiler.js'
 import { getCacheEntry, setCacheEntry, clearCompileCache } from './utils/cache.js'
 import { generateId } from './utils/id.js'
+
+function createSourceHash(source: string): string {
+  return generateId(source)
+}
 import type { TransformOptions, TransformResult } from './types.js'
 
 export type { TransformOptions, TransformResult }
@@ -14,15 +18,14 @@ declare global {
   }
 }
 
-function createCacheKey(source: string, options: TransformOptions): string {
+function createCacheKey(options: TransformOptions): string {
   return generateId(
-    source +
-      JSON.stringify({
-        filename: options.filename,
-        isProduction: options.isProduction,
-        styleMode: options.styleMode,
-        vapor: options.vapor,
-      }),
+    JSON.stringify({
+      filename: options.filename,
+      isProduction: options.isProduction,
+      styleMode: options.styleMode,
+      vapor: options.vapor,
+    }),
   )
 }
 
@@ -37,13 +40,21 @@ function createCacheKey(source: string, options: TransformOptions): string {
  */
 export async function transformVueToJS(
   source: string,
-  options: TransformOptions = {},
+  options: TransformOptions,
 ): Promise<TransformResult> {
+  if (!options.filename) {
+    return {
+      code: '',
+      errors: ['filename is required'],
+    }
+  }
+
   const useCache = options.useCache ?? true
-  const cacheKey = useCache ? createCacheKey(source, options) : null
+  const sourceHash = createSourceHash(source)
+  const cacheKey = useCache ? createCacheKey(options) : null
 
   if (cacheKey) {
-    const cached = await getCacheEntry(cacheKey)
+    const cached = await getCacheEntry(cacheKey, sourceHash)
     if (cached) return cached
   }
 
@@ -55,7 +66,7 @@ export async function transformVueToJS(
     rewriteDefault,
   } = await loadCompiler()
 
-  const filename = options.filename || 'App.vue'
+  const filename = options.filename
   const isProduction = options.isProduction ?? false
   const styleMode = options.styleMode || 'inject'
   const vapor = options.vapor ?? true
@@ -175,7 +186,7 @@ document.head.appendChild(__style__)
   }
 
   if (cacheKey) {
-    await setCacheEntry(cacheKey, result)
+    await setCacheEntry(cacheKey, sourceHash, result)
   }
 
   return result
@@ -198,7 +209,7 @@ export interface RenderResult {
 export async function renderVueToDOM(
   source: string,
   container: string | Element,
-  options: TransformOptions = {},
+  options: TransformOptions,
 ): Promise<RenderResult> {
   const result = await transformVueToJS(source, {
     ...options,
