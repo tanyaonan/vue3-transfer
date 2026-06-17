@@ -1,34 +1,34 @@
 # vue3-transfer
 
-Transform Vue 3 SFC source into plain JavaScript **directly in the browser**.
+在浏览器中把 Vue 3 单文件组件（SFC）源码转换为纯 JavaScript。
 
-## Features
+## 特性
 
-- Vue 3.6.0-beta.15 compiler
-- Vite 8 (powered by Rolldown)
+- Vue 3.6.0-beta.15 编译器
+- Vite 8（底层 Rolldown）
 - TypeScript
 - pnpm
-- ES module only output
-- Async loading / code splitting: compiler and Vue runtime are loaded on demand
-- Browser-first: no Node.js runtime dependency
-- No import map required: Vue runtime is bundled in
-- Vapor mode by default (direct DOM operations, near-native performance)
+- 仅输出 ES Module
+- 异步按需加载：编译器和 Vue runtime 在调用函数时才加载
+- 浏览器优先：不依赖 Node.js 运行时
+- 无需 import map：Vue runtime 已打包在内
+- 默认开启 Vapor 模式：直接操作 DOM，接近原生性能
 
-## Install
+## 安装
 
 ```bash
 pnpm install
 ```
 
-## Build
+## 构建
 
 ```bash
 pnpm build
 ```
 
-## Usage
+## 使用
 
-### Transform only
+### 仅转换代码
 
 ```ts
 import { transformVueToJS } from 'vue3-transfer'
@@ -55,46 +55,50 @@ const result = await transformVueToJS(source, {
 console.log(result.code)
 ```
 
-### Render directly to DOM
+### 直接渲染到 DOM
 
 ```ts
 import { renderVueToDOM } from 'vue3-transfer'
 
-await renderVueToDOM(source, '#app')
+const { app, style } = await renderVueToDOM(source, '#app')
+
+// 需要时清理，避免样式泄漏
+app.unmount()
+style?.remove()
 ```
 
-> Note: `<script>` blocks should be plain JavaScript. TypeScript is not handled because this library is designed to run in the browser.
+> 注意：`<script>` 块请使用纯 JavaScript。
 
 ## API
 
 ### `transformVueToJS(source, options?)`
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `filename` | `string` | `'App.vue'` | Source filename |
-| `isProduction` | `boolean` | `false` | Production mode |
-| `styleMode` | `'inject' \| 'inline' \| 'none'` | `'inject'` | How to handle `<style>` blocks |
-| `vapor` | `boolean` | `true` | Compile to direct DOM operations |
+| 选项 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `filename` | `string` | `'App.vue'` | 源文件名 |
+| `isProduction` | `boolean` | `false` | 是否生产模式 |
+| `styleMode` | `'inject' \| 'inline' \| 'none'` | `'inject'` | `<style>` 块的处理方式 |
+| `vapor` | `boolean` | `true` | 是否编译为直接 DOM 操作 |
 
-Returns `Promise<TransformResult>` with `code`, optional `css`, and `errors`.
+返回 `Promise<TransformResult>`，包含 `code`、可选的 `css` 和 `errors`。
 
 ### `renderVueToDOM(source, container, options?)`
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `source` | `string` | Vue SFC source |
-| `container` | `string \| Element` | CSS selector or DOM element to mount on |
-| `options` | `TransformOptions` | Same options as `transformVueToJS` |
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `source` | `string` | Vue SFC 源码 |
+| `container` | `string \| Element` | CSS 选择器或 DOM 元素 |
+| `options` | `TransformOptions` | 与 `transformVueToJS` 相同 |
 
-Returns `Promise<App<Element>>`.
+返回 `Promise<RenderResult>`，包含 `app` 和注入的 `<style>` 元素 `style`。
 
-## Demo
+## 示例
 
-Open `demo.html` in a browser after building. No import map or external Vue script is required.
+构建后直接在浏览器中打开 `demo.html`，无需 import map 或外部 Vue 脚本。
 
 ```bash
 pnpm build
-# serve the project root, e.g.
+# 启动静态服务器，例如
 python3 -m http.server 8767
-# open http://localhost:8767/demo.html
+# 打开 http://localhost:8767/demo.html
 ```

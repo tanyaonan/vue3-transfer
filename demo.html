@@ -96,7 +96,14 @@ function reset() {
 </style>
 `
 
-    await renderVueToDOM(source, '#app')
+    const { app, style } = await renderVueToDOM(source, '#app')
+
+    // Clean up styles when the page is unloaded so styles don't leak between
+    // renders in a long-lived dynamic preview application.
+    window.addEventListener('beforeunload', () => {
+      app.unmount()
+      style?.remove()
+    })
   </script>
 </body>
 </html>

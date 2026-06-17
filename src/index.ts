@@ -172,17 +172,25 @@ document.head.appendChild(__style__)
   }
 }
 
+export interface RenderResult {
+  app: App<Element>
+  style: HTMLStyleElement | null
+}
+
 /**
  * Transform a Vue 3 SFC source string and mount it directly into a DOM container.
  *
  * This is a browser-only helper. The Vue runtime is bundled into the library,
  * so no import map or external Vue script is required.
+ *
+ * The returned `style` element can be removed when the component is unmounted
+ * to avoid leaking styles.
  */
 export async function renderVueToDOM(
   source: string,
   container: string | Element,
   options: TransformOptions = {},
-): Promise<App<Element>> {
+): Promise<RenderResult> {
   const result = await transformVueToJS(source, {
     ...options,
     styleMode: 'inline',
@@ -207,44 +215,44 @@ export async function renderVueToDOM(
 
   window.__VUE_TRANSFER_RUNTIME__ = vueRuntime
 
-  const runtimeKeys = Object.keys(vueRuntime)
-  const vueModuleCode = [
-    'const runtime = window.__VUE_TRANSFER_RUNTIME__',
-    ...runtimeKeys.map((key) => `export const ${key} = runtime.${key}`),
-    'export default runtime',
-  ].join('\n')
+  // Convert generated ES module code into an IIFE that reads Vue APIs from
+  // the global runtime object. This avoids creating Blob URLs for every render.
+  let componentCode = result.code
 
-  const vueBlob = new Blob([vueModuleCode], { type: 'application/javascript' })
-  const vueUrl = URL.createObjectURL(vueBlob)
+  // Replace `import { X as _X, Y } from 'vue'` with destructuring from global.
+  componentCode = componentCode.replace(
+    /import\s+\{([^}]+)\}\s+from\s+['"]vue['"];?/g,
+    (_match, imports: string) => {
+      const pairs = imports.split(',').map((s: string) => s.trim())
+      const destructuring = pairs.map((pair: string) => {
+        const parts = pair.split(/\s+as\s+/).map((s: string) => s.trim())
+        if (parts.length === 2) {
+          return `${parts[0]}: ${parts[1]}`
+        }
+        return parts[0]
+      }).join(', ')
+      return `const { ${destructuring} } = window.__VUE_TRANSFER_RUNTIME__`
+    },
+  )
 
-  try {
-    const componentCode = result.code.replace(
-      /from\s+['"]vue['"]/g,
-      `from '${vueUrl}'`,
-    )
+  // Strip ES module exports; CSS is handled separately below.
+  componentCode = componentCode.replace(/export const __css__ = [\s\S]*$/m, '')
+  componentCode = componentCode.replace(/\bexport\s+function\s+/g, 'function ')
+  componentCode = componentCode.replace(/\bexport\s+default\s+__sfc_main__\s*;?\s*$/, 'return __sfc_main__')
 
-    const blob = new Blob([componentCode], { type: 'application/javascript' })
-    const url = URL.createObjectURL(blob)
+  const Component = new Function(componentCode)()
 
-    try {
-      const mod = await import(/* @vite-ignore */ url)
-      const Component = mod.default
-
-      if (result.css) {
-        const style = document.createElement('style')
-        style.textContent = result.css
-        document.head.appendChild(style)
-      }
-
-      const app = vueRuntime.createApp(Component)
-      app.use(vueRuntime.vaporInteropPlugin)
-      app.mount(target)
-
-      return app
-    } finally {
-      URL.revokeObjectURL(url)
-    }
-  } finally {
-    URL.revokeObjectURL(vueUrl)
+  let style: HTMLStyleElement | null = null
+  if (result.css) {
+    style = document.createElement('style')
+    style.textContent = result.css
+    style.dataset.vueTransfer = 'true'
+    document.head.appendChild(style)
   }
+
+  const app = vueRuntime.createApp(Component)
+  app.use(vueRuntime.vaporInteropPlugin)
+  app.mount(target)
+
+  return { app, style }
 }
