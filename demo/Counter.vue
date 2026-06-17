@@ -1,15 +1,26 @@
 <template>
-  <div class="counter">
-    <p class="count">Count: {{ count }}</p>
-    <div class="actions">
-      <button class="btn" @click="increment">+1</button>
-      <button class="btn" @click="decrement">-1</button>
-      <button class="btn reset" @click="reset">Reset</button>
+  <el-card class="counter-card" shadow="hover">
+    <template #header>
+      <div class="card-header">
+        <span>Element Plus Counter</span>
+        <el-tag type="success">Vue Transfer Demo</el-tag>
+      </div>
+    </template>
+
+    <div class="count-display">
+      <el-text size="large" type="primary">Count: {{ count }}</el-text>
     </div>
-  </div>
+
+    <div class="actions">
+      <el-button type="primary" @click="increment">+1</el-button>
+      <el-button type="warning" @click="decrement">-1</el-button>
+      <el-button type="info" @click="reset">Reset</el-button>
+    </div>
+  </el-card>
 </template>
 
 <script setup>
+import { ElCard, ElTag, ElText, ElButton, ElMessage } from 'element-plus'
 import { ref } from 'vue'
 
 const count = ref(0)
@@ -24,59 +35,33 @@ function decrement() {
 
 function reset() {
   count.value = 0
+  ElMessage.info('Count 已重置')
 }
 </script>
 
 <style scoped>
-.counter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 32px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  max-width: 320px;
+.counter-card {
+  max-width: 420px;
   margin: 40px auto;
-  font-family: system-ui, -apple-system, sans-serif;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.count {
-  font-size: 24px;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.count-display {
+  text-align: center;
+  font-size: 28px;
   font-weight: 600;
-  color: #333;
-  margin: 0;
+  margin: 24px 0;
 }
 
 .actions {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
   justify-content: center;
-}
-
-.btn {
-  min-width: 72px;
-  padding: 8px 16px;
-  font-size: 14px;
-  color: #fff;
-  background-color: #42b883;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.btn:hover {
-  background-color: #369870;
-}
-
-.btn.reset {
-  background-color: #6c757d;
-}
-
-.btn.reset:hover {
-  background-color: #5a6268;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 </style>

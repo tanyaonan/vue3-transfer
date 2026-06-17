@@ -1,4 +1,4 @@
-import type { App, Component } from 'vue'
+import type { App, Component, Plugin } from 'vue'
 
 export interface TransformOptions {
   /**
@@ -32,6 +32,14 @@ export interface TransformOptions {
    * @default true
    */
   useCache?: boolean
+
+  /**
+   * 将裸模块导入重写为全局变量读取。
+   * 键为模块名（如 `'element-plus'`），值为全局变量名（如 `'ElementPlus'`）。
+   * 仅支持命名导入：`import { ElMessage } from 'element-plus'`
+   * 会被改写为 `const { ElMessage } = window.ElementPlus`。
+   */
+  globals?: Record<string, string>
 }
 
 export interface TransformResult {
@@ -51,6 +59,13 @@ export interface TransformResult {
   errors: string[]
 }
 
+export interface MountOptions {
+  /**
+   * 挂载前要安装的 Vue 插件（如 Element Plus）。
+   */
+  plugins?: Plugin[]
+}
+
 export interface RenderableComponent {
   /**
    * 编译后的 Vue 组件，可在其他 Vue 3 应用中使用。
@@ -65,7 +80,7 @@ export interface RenderableComponent {
   /**
    * 将组件挂载到指定 DOM 容器。
    */
-  mount(container: string | Element): App<Element>
+  mount(container: string | Element, options?: MountOptions): App<Element>
 
   /**
    * 卸载组件并清理已注入的样式。

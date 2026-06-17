@@ -9,7 +9,6 @@
 - TypeScript
 - pnpm
 - 浏览器优先：不依赖 Node.js 运行时
-- 无需 import map：Vue 运行时已打包在内
 - 默认开启 Vapor 模式（直接操作 DOM，接近原生性能）
 - IndexedDB 持久化编译缓存（可配置）
 - 按需加载：编译器和 Vue 运行时首次使用时才加载
@@ -68,6 +67,19 @@ const MyComponent = rendered.component
 // 方式二：预览场景直接挂载
 rendered.mount('#app')
 
+// 方式三：挂载时安装 Vue 插件
+rendered.mount('#app', {
+  plugins: [SomePlugin],
+})
+
+// 方式四：转换时把 `import { X } from 'some-lib'` 映射到全局变量
+const rendered = await renderVueToDOM(source, {
+  filename: 'Counter.vue',
+  globals: {
+    'some-lib': 'SomeLibGlobal',
+  },
+})
+
 // 卸载并清理样式
 rendered.unmount()
 ```
@@ -85,6 +97,7 @@ rendered.unmount()
 | `styleMode` | `'inject' \| 'inline' \| 'none'` | `'inject'` | `<style>` 块的处理方式 |
 | `vapor` | `boolean` | `true` | 是否编译为直接 DOM 操作 |
 | `useCache` | `boolean` | `true` | 是否使用 IndexedDB 编译缓存 |
+| `globals` | `Record<string, string>` | `undefined` | 将裸模块命名导入映射到全局变量 |
 
 返回 `Promise<TransformResult>`，包含 `code`、可选的 `css` 和 `errors`。
 
@@ -101,8 +114,14 @@ rendered.unmount()
 |-----------|------|------|
 | `component` | `Component` | 编译后的 Vue 组件，可直接用于其他 Vue 3 应用 |
 | `style` | `HTMLStyleElement \| null` | 编译后的样式元素，挂载时自动注入 |
-| `mount(container)` | `(string \| Element) => App<Element>` | 挂载到指定容器 |
+| `mount(container, options?)` | `(string \| Element, MountOptions?) => App<Element>` | 挂载到指定容器，可选安装插件 |
 | `unmount()` | `() => void` | 卸载组件并移除注入的样式 |
+
+### `MountOptions`
+
+| 选项 | 类型 | 说明 |
+|------|------|------|
+| `plugins` | `Plugin[]` | 挂载前依次调用的 Vue 插件，通过 `app.use(plugin)` 安装 |
 
 ### `clearCompileCache()`
 
@@ -117,7 +136,7 @@ rendered.unmount()
 
 ## 演示
 
-构建后通过本地静态服务打开 `demo/index.html`，无需 import map 或外部 Vue 脚本。由于 demo 使用 `fetch` 加载 `demo/Counter.vue`，需要通过 HTTP 服务访问。
+构建后通过本地静态服务打开 `demo/index.html`。由于 demo 使用 `fetch` 加载 `demo/Counter.vue`，需要通过 HTTP 服务访问。
 
 ```bash
 pnpm build

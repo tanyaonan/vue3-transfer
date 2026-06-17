@@ -7,7 +7,34 @@ import { generateId } from './utils/id.js'
 function createSourceHash(source: string): string {
   return generateId(source)
 }
-import type { TransformOptions, TransformResult, RenderableComponent } from './types/index.js'
+
+interface RewriteResult {
+  code: string
+  bindings: string[]
+}
+
+function rewriteNamedImports(code: string, specifier: string, globalName: string): RewriteResult {
+  const bindings: string[] = []
+  const pattern = new RegExp(
+    `import\\s+\\{([^}]+)\\}\\s+from\\s+['"]${specifier}['"];?`,
+    'g',
+  )
+  const newCode = code.replace(pattern, (_match, imports: string) => {
+    const pairs = imports.split(',').map((s: string) => s.trim())
+    const destructuring = pairs.map((pair: string) => {
+      const parts = pair.split(/\s+as\s+/).map((s: string) => s.trim())
+      if (parts.length === 2) {
+        bindings.push(parts[1])
+        return `${parts[0]}: ${parts[1]}`
+      }
+      bindings.push(parts[0])
+      return parts[0]
+    }).join(', ')
+    return `const { ${destructuring} } = window.${globalName}`
+  })
+  return { code: newCode, bindings }
+}
+import type { TransformOptions, TransformResult, RenderableComponent, MountOptions } from './types/index.js'
 
 export type { TransformOptions, TransformResult, RenderableComponent }
 export { clearCompileCache }
@@ -215,27 +242,43 @@ export async function renderVueToDOM(
   // 将生成的 ES 模块代码改写为从全局运行时对象读取 Vue API，
   // 避免依赖 import map 或裸导入。
   let componentCode = result.code
+  const globalBindings: string[] = []
 
-  componentCode = componentCode.replace(
-    /import\s+\{([^}]+)\}\s+from\s+['"]vue['"];?/g,
-    (_match, imports: string) => {
-      const pairs = imports.split(',').map((s: string) => s.trim())
-      const destructuring = pairs.map((pair: string) => {
-        const parts = pair.split(/\s+as\s+/).map((s: string) => s.trim())
-        if (parts.length === 2) {
-          return `${parts[0]}: ${parts[1]}`
-        }
-        return parts[0]
-      }).join(', ')
-      return `const { ${destructuring} } = window.__VUE_TRANSFER_RUNTIME__`
-    },
-  )
+  const vueRewrite = rewriteNamedImports(componentCode, 'vue', '__VUE_TRANSFER_RUNTIME__')
+  componentCode = vueRewrite.code
+
+  if (options.globals) {
+    for (const [specifier, globalName] of Object.entries(options.globals)) {
+      const rewrite = rewriteNamedImports(componentCode, specifier, globalName)
+      componentCode = rewrite.code
+      globalBindings.push(...rewrite.bindings)
+    }
+  }
 
   componentCode = componentCode.replace(/export const __css__ = [\s\S]*$/m, '')
   componentCode = componentCode.replace(/\bexport\s+function\s+/g, 'function ')
+
+  // 把通过 globals 引入的命名导出自动注册为局部组件，
+  // 这样 `<script setup>` 中 `import { ElCard } from 'element-plus'`
+  // 被改写后仍能正确解析 `<el-card>` 组件。
+  if (globalBindings.length) {
+    componentCode = componentCode.replace(
+      /\bexport\s+default\s+__sfc_main__\s*;?\s*$/,
+      `__sfc_main__.components = { ${globalBindings.join(', ')} }\n\nexport default __sfc_main__`,
+    )
+  }
+
   componentCode = componentCode.replace(/\bexport\s+default\s+__sfc_main__\s*;?\s*$/, 'return __sfc_main__')
 
-  const Component = new Function(componentCode)()
+  // 延迟执行编译后的组件代码，确保 `globals` 中配置的第三方全局库
+  // （如 Element Plus）在挂载前已经加载到 window 上。
+  let Component: Component | undefined
+  function getComponent(): Component {
+    if (!Component) {
+      Component = new Function(componentCode)() as Component
+    }
+    return Component
+  }
 
   let style: HTMLStyleElement | null = null
   if (result.css) {
@@ -247,10 +290,12 @@ export async function renderVueToDOM(
   let app: App<Element> | null = null
 
   return {
-    component: Component,
+    get component() {
+      return getComponent()
+    },
     style,
 
-    mount(container) {
+    mount(container, mountOptions?: MountOptions) {
       const target = typeof container === 'string'
         ? document.querySelector(container)
         : container
@@ -263,7 +308,12 @@ export async function renderVueToDOM(
         document.head.appendChild(style)
       }
 
-      app = vueRuntime.createApp(Component)
+      app = vueRuntime.createApp(getComponent())
+      if (mountOptions?.plugins) {
+        for (const plugin of mountOptions.plugins) {
+          app.use(plugin)
+        }
+      }
       app.use(vueRuntime.vaporInteropPlugin)
       app.mount(target)
 
