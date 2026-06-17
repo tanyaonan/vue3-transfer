@@ -1,5 +1,5 @@
 import type { SFCStyleBlock, CompilerError } from '@vue/compiler-sfc'
-import type { App } from 'vue'
+import type { App, Component } from 'vue'
 import { loadCompiler } from './utils/compiler.js'
 import { getCacheEntry, setCacheEntry, clearCompileCache } from './utils/cache.js'
 import { generateId } from './utils/id.js'
@@ -192,25 +192,43 @@ document.head.appendChild(__style__)
   return result
 }
 
-export interface RenderResult {
-  app: App<Element>
+export interface RenderableComponent {
+  /**
+   * The compiled Vue component. Can be used directly in another Vue 3 app
+   * (e.g. passed to `createApp()` or used as a child component).
+   */
+  component: Component
+
+  /**
+   * The compiled `<style>` element, not yet injected into the document.
+   * It is automatically injected on `mount()` and removed on `unmount()`.
+   */
   style: HTMLStyleElement | null
+
+  /**
+   * Mount the component into a DOM container.
+   */
+  mount(container: string | Element): App<Element>
+
+  /**
+   * Unmount the component and clean up injected styles.
+   */
+  unmount(): void
 }
 
 /**
- * Transform a Vue 3 SFC source string and mount it directly into a DOM container.
+ * Transform a Vue 3 SFC source string into a renderable component.
  *
  * This is a browser-only helper. The Vue runtime is bundled into the library,
  * so no import map or external Vue script is required.
  *
- * The returned `style` element can be removed when the component is unmounted
- * to avoid leaking styles.
+ * The returned object exposes the compiled component for use in an existing
+ * Vue 3 app, plus `mount()` / `unmount()` helpers for preview scenarios.
  */
 export async function renderVueToDOM(
   source: string,
-  container: string | Element,
   options: TransformOptions,
-): Promise<RenderResult> {
+): Promise<RenderableComponent> {
   const result = await transformVueToJS(source, {
     ...options,
     styleMode: 'inline',
@@ -218,14 +236,6 @@ export async function renderVueToDOM(
 
   if (result.errors.length) {
     throw new Error(result.errors.join('\n'))
-  }
-
-  const target = typeof container === 'string'
-    ? document.querySelector(container)
-    : container
-
-  if (!target) {
-    throw new Error(`Cannot find container: ${container}`)
   }
 
   const vueRuntime = await import('vue')
@@ -262,12 +272,42 @@ export async function renderVueToDOM(
     style = document.createElement('style')
     style.textContent = result.css
     style.dataset.vueTransfer = 'true'
-    document.head.appendChild(style)
   }
 
-  const app = vueRuntime.createApp(Component)
-  app.use(vueRuntime.vaporInteropPlugin)
-  app.mount(target)
+  let app: App<Element> | null = null
 
-  return { app, style }
+  return {
+    component: Component,
+    style,
+
+    mount(container) {
+      const target = typeof container === 'string'
+        ? document.querySelector(container)
+        : container
+
+      if (!target) {
+        throw new Error(`Cannot find container: ${container}`)
+      }
+
+      if (style && !style.parentNode) {
+        document.head.appendChild(style)
+      }
+
+      app = vueRuntime.createApp(Component)
+      app.use(vueRuntime.vaporInteropPlugin)
+      app.mount(target)
+
+      return app
+    },
+
+    unmount() {
+      if (app) {
+        app.unmount()
+        app = null
+      }
+      if (style && style.parentNode) {
+        style.remove()
+      }
+    },
+  }
 }

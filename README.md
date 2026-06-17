@@ -55,14 +55,21 @@ const result = await transformVueToJS(source, {
 console.log(result.code)
 ```
 
-### 直接渲染到 DOM
+### 编译为可挂载组件
 
 ```ts
 import { renderVueToDOM } from 'vue3-transfer'
 
-const { app, style } = await renderVueToDOM(source, '#app', {
-  filename: 'Hello.vue',
-})
+const rendered = await renderVueToDOM(source, { filename: 'Hello.vue' })
+
+// 方式一：拿到组件给现有 Vue 3 项目使用
+const MyComponent = rendered.component
+
+// 方式二：预览场景直接挂载
+rendered.mount('#app')
+
+// 卸载并清理样式
+rendered.unmount()
 ```
 
 > 注意：`<script>` 块目前只支持纯 JavaScript，不支持 TypeScript，因为本库设计为在浏览器中运行。
@@ -81,15 +88,21 @@ const { app, style } = await renderVueToDOM(source, '#app', {
 
 返回 `Promise<TransformResult>`，包含 `code`、可选的 `css` 和 `errors`。
 
-### `renderVueToDOM(source, container, options)`
+### `renderVueToDOM(source, options)`
 
 | 参数 | 类型 | 说明 |
 |------|------|------|
 | `source` | `string` | Vue SFC 源码 |
-| `container` | `string \| Element` | CSS 选择器或 DOM 挂载点 |
 | `options` | `TransformOptions` | **必填**，与 `transformVueToJS` 相同 |
 
-返回 `Promise<{ app: App<Element>, style: HTMLStyleElement | null }>`。
+返回 `Promise<RenderableComponent>`：
+
+| 属性/方法 | 类型 | 说明 |
+|-----------|------|------|
+| `component` | `Component` | 编译后的 Vue 组件，可直接用于其他 Vue 3 应用 |
+| `style` | `HTMLStyleElement \| null` | 编译后的样式元素，挂载时自动注入 |
+| `mount(container)` | `(string \| Element) => App<Element>` | 挂载到指定容器 |
+| `unmount()` | `() => void` | 卸载组件并移除注入的样式 |
 
 ### `clearCompileCache()`
 
