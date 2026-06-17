@@ -217,10 +217,7 @@ export async function renderVueToDOM(
     throw new Error(`Cannot find container: ${container}`)
   }
 
-  const [_, vueRuntime] = await Promise.all([
-    loadCompiler(),
-    import('vue'),
-  ])
+  const vueRuntime = await import('vue')
 
   window.__VUE_TRANSFER_RUNTIME__ = vueRuntime
 
