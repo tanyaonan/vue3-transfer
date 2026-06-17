@@ -2,37 +2,33 @@ import type { App, Component } from 'vue'
 
 export interface TransformOptions {
   /**
-   * The filename of the source file, used for caching, error reporting and
-   * scoped styles. Required to prevent different files from overwriting each
-   * other's cache entries.
+   * 源文件名称，用于缓存 key、错误提示和 scoped style，必填。
    */
   filename: string
 
   /**
-   * Whether to compile in production mode.
+   * 是否启用生产模式编译。
    * @default false
    */
   isProduction?: boolean
 
   /**
-   * How to handle `<style>` blocks.
-   * - `'inject'`: inject styles into the document head at runtime
-   * - `'inline'`: append the compiled CSS as an exported string
-   * - `'none'`: drop styles
+   * `<style>` 块的处理方式。
+   * - `'inject'`：运行时注入到 document.head
+   * - `'inline'`：作为字符串导出
+   * - `'none'`：丢弃样式
    * @default 'inject'
    */
   styleMode?: 'inject' | 'inline' | 'none'
 
   /**
-   * Enable experimental Vapor mode compilation.
-   * Vapor mode compiles templates to direct DOM operations instead of
-   * virtual DOM, achieving near-native performance.
+   * 是否启用实验性 Vapor 模式（模板直接编译为 DOM 操作）。
    * @default true
    */
   vapor?: boolean
 
   /**
-   * Whether to use the in-memory compile cache. Cached by source + options.
+   * 是否启用 IndexedDB 编译缓存。
    * @default true
    */
   useCache?: boolean
@@ -40,41 +36,39 @@ export interface TransformOptions {
 
 export interface TransformResult {
   /**
-   * The compiled JavaScript code.
+   * 编译后的 JavaScript 代码。
    */
   code: string
 
   /**
-   * The compiled CSS code, only available when `styleMode` is `'inline'`.
+   * 编译后的 CSS 代码，仅在 `styleMode` 为 `'inline'` 时返回。
    */
   css?: string
 
   /**
-   * Errors encountered during compilation.
+   * 编译过程中产生的错误信息。
    */
   errors: string[]
 }
 
 export interface RenderableComponent {
   /**
-   * The compiled Vue component. Can be used directly in another Vue 3 app
-   * (e.g. passed to `createApp()` or used as a child component).
+   * 编译后的 Vue 组件，可在其他 Vue 3 应用中使用。
    */
   component: Component
 
   /**
-   * The compiled `<style>` element, not yet injected into the document.
-   * It is automatically injected on `mount()` and removed on `unmount()`.
+   * 编译后的 `<style>` 元素，`mount()` 时自动注入，`unmount()` 时移除。
    */
   style: HTMLStyleElement | null
 
   /**
-   * Mount the component into a DOM container.
+   * 将组件挂载到指定 DOM 容器。
    */
   mount(container: string | Element): App<Element>
 
   /**
-   * Unmount the component and clean up injected styles.
+   * 卸载组件并清理已注入的样式。
    */
   unmount(): void
 }

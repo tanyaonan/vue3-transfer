@@ -30,13 +30,10 @@ function createCacheKey(options: TransformOptions): string {
 }
 
 /**
- * Transform a Vue 3 SFC source string into plain JavaScript code.
+ * 将 Vue 3 单文件组件源码编译为纯 JavaScript 代码。
  *
- * The returned code is a standard ES module that imports Vue runtime helpers
- * and exports the component as the default export.
- *
- * This function is designed to run in a browser environment and expects the
- * input `<script>` block to be plain JavaScript (no TypeScript).
+ * 返回的代码为标准 ES 模块，默认导出组件。该函数在浏览器中运行，
+ * `<script>` 块目前仅支持纯 JavaScript。
  */
 export async function transformVueToJS(
   source: string,
@@ -88,7 +85,7 @@ export async function transformVueToJS(
   const id = generateId(filename)
   const hasScoped = descriptor.styles.some((s: SFCStyleBlock) => s.scoped)
 
-  // 1. script
+  // 编译 script
   let scriptCode = ''
   if (descriptor.script || descriptor.scriptSetup) {
     const script = compileScript(descriptor, {
@@ -104,7 +101,7 @@ export async function transformVueToJS(
     scriptCode = 'const __sfc_main__ = {}'
   }
 
-  // 2. template
+  // 编译 template
   let templateCode = ''
   if (descriptor.template) {
     const templateResult = compileTemplate({
@@ -137,7 +134,7 @@ export async function transformVueToJS(
     }
   }
 
-  // 3. styles
+  // 编译 style
   const cssBlocks: string[] = []
   for (const style of descriptor.styles) {
     const styleResult = await compileStyleAsync({
@@ -193,13 +190,10 @@ document.head.appendChild(__style__)
 }
 
 /**
- * Transform a Vue 3 SFC source string into a renderable component.
+ * 将 Vue 3 单文件组件源码编译为可直接挂载的组件对象。
  *
- * This is a browser-only helper. The Vue runtime is bundled into the library,
- * so no import map or external Vue script is required.
- *
- * The returned object exposes the compiled component for use in an existing
- * Vue 3 app, plus `mount()` / `unmount()` helpers for preview scenarios.
+ * Vue 运行时已打包进库内，无需额外配置 import map 或外部 Vue 脚本。
+ * 返回的组件可在已有 Vue 3 应用中使用，同时提供 mount / unmount 方法用于预览。
  */
 export async function renderVueToDOM(
   source: string,
@@ -218,8 +212,8 @@ export async function renderVueToDOM(
 
   window.__VUE_TRANSFER_RUNTIME__ = vueRuntime
 
-  // Convert generated ES module code into code that reads Vue APIs from the
-  // global runtime object. This avoids relying on import maps or bare imports.
+  // 将生成的 ES 模块代码改写为从全局运行时对象读取 Vue API，
+  // 避免依赖 import map 或裸导入。
   let componentCode = result.code
 
   componentCode = componentCode.replace(

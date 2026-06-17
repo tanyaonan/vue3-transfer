@@ -19,10 +19,10 @@
 
     const rendered = await renderVueToDOM(source, { filename: 'Counter.vue' })
 
-    // Preview: mount to #app
+    // 挂载到 #app 进行预览
     rendered.mount('#app')
 
-    // Clean up when the page is unloaded
+    // 页面卸载时清理组件
     window.addEventListener('beforeunload', () => {
       rendered.unmount()
     })

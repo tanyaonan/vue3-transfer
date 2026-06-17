@@ -3,7 +3,7 @@ import type { TransformResult } from '../types/index.js'
 const DB_NAME = 'vue3-transfer'
 const DB_VERSION = 1
 const DB_STORE = 'compile-cache'
-const CACHE_TTL = 24 * 60 * 60 * 1000 // 1 day
+const CACHE_TTL = 24 * 60 * 60 * 1000 // 1 天
 
 export interface CacheEntry {
   sourceHash: string
