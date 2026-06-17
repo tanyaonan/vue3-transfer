@@ -22,6 +22,17 @@ export default defineConfig({
       // Bundle @vue/compiler-sfc browser build and Vue runtime so the library
       // works standalone in a browser environment without an import map.
       external: [],
+      output: {
+        chunkFileNames: 'chunks/[name].js',
+        manualChunks(id) {
+          if (id.includes('compiler-sfc.esm-browser')) {
+            return 'compiler'
+          }
+          if (id.includes('vue.runtime-with-vapor')) {
+            return 'vue-runtime'
+          }
+        },
+      },
     },
     sourcemap: false,
     minify: false,
