@@ -7,9 +7,9 @@ import { generateId } from './utils/id.js'
 function createSourceHash(source: string): string {
   return generateId(source)
 }
-import type { TransformOptions, TransformResult } from './types.js'
+import type { TransformOptions, TransformResult, RenderableComponent } from './types/index.js'
 
-export type { TransformOptions, TransformResult }
+export type { TransformOptions, TransformResult, RenderableComponent }
 export { clearCompileCache }
 
 declare global {
@@ -190,30 +190,6 @@ document.head.appendChild(__style__)
   }
 
   return result
-}
-
-export interface RenderableComponent {
-  /**
-   * The compiled Vue component. Can be used directly in another Vue 3 app
-   * (e.g. passed to `createApp()` or used as a child component).
-   */
-  component: Component
-
-  /**
-   * The compiled `<style>` element, not yet injected into the document.
-   * It is automatically injected on `mount()` and removed on `unmount()`.
-   */
-  style: HTMLStyleElement | null
-
-  /**
-   * Mount the component into a DOM container.
-   */
-  mount(container: string | Element): App<Element>
-
-  /**
-   * Unmount the component and clean up injected styles.
-   */
-  unmount(): void
 }
 
 /**

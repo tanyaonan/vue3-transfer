@@ -1,4 +1,4 @@
-import type { TransformResult } from '../types.js'
+import type { TransformResult } from '../types/index.js'
 
 const DB_NAME = 'vue3-transfer'
 const DB_VERSION = 1
