@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue 3 Component Mount Demo</title>
+  <link rel="stylesheet" href="./vendor/vendor.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="module">
+    import { Vue, ElementPlus } from './vendor/vendor.js'
+    import { renderVueToDOM } from '../dist/vue3-transfer.js'
+
+    const response = await fetch('./Counter.vue')
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Counter.vue: ${response.status} ${response.statusText}`)
+    }
+    const source = await response.text()
+
+    const usesElementPlus =
+      /<\s*el-[\w-]+/.test(source) ||
+      source.includes('from \'element-plus\'') ||
+      source.includes('from "element-plus"')
+
+    window.Vue = Vue
+    if (usesElementPlus) {
+      window.ElementPlus = ElementPlus
+    }
+
+    const rendered = await renderVueToDOM(source, {
+      filename: 'Counter.vue',
+      vapor: false,
+      globals: usesElementPlus
+        ? { 'element-plus': 'ElementPlus' }
+        : undefined,
+    })
+
+    // renderVueToDOM 默认使用 inline 模式，样式需要手动注入
+    if (rendered.style) {
+      document.head.appendChild(rendered.style)
+    }
+
+    // 创建 Vue 3 应用实例，以编译后的 Counter 组件作为根组件
+    const app = Vue.createApp(rendered.component)
+    if (usesElementPlus) {
+      app.use(ElementPlus)
+    }
+    app.mount('#app')
+
+    window.addEventListener('beforeunload', () => {
+      app.unmount()
+      rendered.unmount()
+    })
+  </script>
+</body>
+</html>
