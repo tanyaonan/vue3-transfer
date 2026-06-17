@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vue Transfer Render Demo</title>
+  <link rel="stylesheet" href="./vendor/vendor.css">
 </head>
 <body>
   <div id="app"></div>
 
   <script type="module">
+    import { Vue, ElementPlus } from './vendor/vendor.js'
     import { renderVueToDOM } from '../dist/vue3-transfer.js'
 
     const response = await fetch('./Counter.vue')
@@ -17,43 +19,26 @@
     }
     const source = await response.text()
 
-    // 简单检测 SFC 是否使用了 Element Plus
     const usesElementPlus =
       /<\s*el-[\w-]+/.test(source) ||
       source.includes('from \'element-plus\'') ||
       source.includes('from "element-plus"')
 
-    // 编译组件，组件代码会延迟到 mount() 时才执行
+    window.Vue = Vue
+    if (usesElementPlus) {
+      window.ElementPlus = ElementPlus
+    }
+
     const rendered = await renderVueToDOM(source, {
       filename: 'Counter.vue',
+      vapor: false,
       globals: usesElementPlus
         ? { 'element-plus': 'ElementPlus' }
         : undefined,
     })
 
-    // 按需加载 Element Plus：只有 SFC 用到时才加载
-    if (usesElementPlus) {
-      // Element Plus 在线脚本需要全局 Vue 才能正确初始化
-      window.Vue = window.__VUE_TRANSFER_RUNTIME__
-
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'https://unpkg.com/element-plus/dist/index.css'
-      document.head.appendChild(link)
-
-      await new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = 'https://unpkg.com/element-plus/dist/index.full.js'
-        script.onload = resolve
-        script.onerror = () => reject(new Error('Failed to load Element Plus'))
-        document.head.appendChild(script)
-      })
-    }
-
-    // 挂载到 #app 进行预览（不全局注册组件）
     rendered.mount('#app')
 
-    // 页面卸载时清理组件
     window.addEventListener('beforeunload', () => {
       rendered.unmount()
     })

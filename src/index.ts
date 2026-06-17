@@ -41,7 +41,7 @@ export { clearCompileCache }
 
 declare global {
   interface Window {
-    __VUE_TRANSFER_RUNTIME__?: typeof import('vue')
+    Vue?: typeof import('vue')
   }
 }
 
@@ -112,53 +112,25 @@ export async function transformVueToJS(
   const id = generateId(filename)
   const hasScoped = descriptor.styles.some((s: SFCStyleBlock) => s.scoped)
 
-  // 编译 script
+  // 编译 script（inlineTemplate: true 会同时把模板编译进 setup 返回的渲染函数，
+  // 避免非 Vapor 模式下 `<script setup>` 的绑定无法通过 _ctx 解析的问题）
   let scriptCode = ''
   if (descriptor.script || descriptor.scriptSetup) {
     const script = compileScript(descriptor, {
       id,
-      inlineTemplate: false,
+      inlineTemplate: true,
       vapor,
       templateOptions: {
         ssr: false,
       },
     })
     scriptCode = rewriteDefault(script.content, '__sfc_main__')
+    scriptCode += '\n\n__sfc_main__.__file = ' + JSON.stringify(filename)
+    if (hasScoped) {
+      scriptCode += '\n__sfc_main__.__scopeId = ' + JSON.stringify(`data-v-${id}`)
+    }
   } else {
     scriptCode = 'const __sfc_main__ = {}'
-  }
-
-  // 编译 template
-  let templateCode = ''
-  if (descriptor.template) {
-    const templateResult = compileTemplate({
-      source: descriptor.template.content,
-      filename,
-      id,
-      scoped: hasScoped,
-      slotted: descriptor.slotted,
-      isProd: isProduction,
-      ssr: false,
-      ssrCssVars: descriptor.cssVars,
-      vapor,
-    })
-
-    if (templateResult.errors.length) {
-      return {
-        code: '',
-        errors: templateResult.errors.map((e: string | CompilerError) =>
-          typeof e === 'string' ? e : (e as Error).message,
-        ),
-      }
-    }
-
-    templateCode = templateResult.code
-    templateCode += '\n\n__sfc_main__.render = render'
-    templateCode += '\n__sfc_main__.__file = ' + JSON.stringify(filename)
-
-    if (hasScoped) {
-      templateCode += '\n__sfc_main__.__scopeId = ' + JSON.stringify(`data-v-${id}`)
-    }
   }
 
   // 编译 style
@@ -194,7 +166,7 @@ document.head.appendChild(__style__)
 `
   }
 
-  const parts = [scriptCode, templateCode, styleCode].filter(Boolean)
+  const parts = [scriptCode, styleCode].filter(Boolean)
 
   let code = parts.join('\n\n')
   code += '\n\nexport default __sfc_main__'
@@ -235,16 +207,17 @@ export async function renderVueToDOM(
     throw new Error(result.errors.join('\n'))
   }
 
-  const vueRuntime = await import('vue')
-
-  window.__VUE_TRANSFER_RUNTIME__ = vueRuntime
+  // 如果调用方已提前加载并暴露 Vue 运行时（例如通过 import map），则直接使用，
+  // 否则按需加载库内置的 Vue 运行时 chunk。
+  const vueRuntime = window.Vue ?? await import('vue')
+  window.Vue = vueRuntime
 
   // 将生成的 ES 模块代码改写为从全局运行时对象读取 Vue API，
   // 避免依赖 import map 或裸导入。
   let componentCode = result.code
   const globalBindings: string[] = []
 
-  const vueRewrite = rewriteNamedImports(componentCode, 'vue', '__VUE_TRANSFER_RUNTIME__')
+  const vueRewrite = rewriteNamedImports(componentCode, 'vue', 'Vue')
   componentCode = vueRewrite.code
 
   if (options.globals) {
@@ -314,7 +287,11 @@ export async function renderVueToDOM(
           app.use(plugin)
         }
       }
-      app.use(vueRuntime.vaporInteropPlugin)
+      // Vapor 模式需要 vaporInteropPlugin 做兼容；非 Vapor 模式（如配合
+      // Element Plus 等未适配 Vapor 的组件库）则跳过。
+      if (options.vapor !== false) {
+        app.use(vueRuntime.vaporInteropPlugin)
+      }
       app.mount(target)
 
       return app
