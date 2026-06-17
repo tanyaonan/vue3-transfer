@@ -27,6 +27,12 @@ export interface TransformOptions {
    * @default true
    */
   vapor?: boolean
+
+  /**
+   * Whether to use the in-memory compile cache. Cached by source + options.
+   * @default true
+   */
+  useCache?: boolean
 }
 
 export interface TransformResult {

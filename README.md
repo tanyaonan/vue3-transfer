@@ -1,6 +1,6 @@
 # vue3-transfer
 
-在浏览器中把 Vue 3 单文件组件（SFC）源码转换为纯 JavaScript。
+在浏览器中直接把 Vue 3 SFC 源码转换成纯 JavaScript。
 
 ## 特性
 
@@ -8,11 +8,11 @@
 - Vite 8（底层 Rolldown）
 - TypeScript
 - pnpm
-- 仅输出 ES Module
-- 异步按需加载：编译器和 Vue runtime 在调用函数时才加载
 - 浏览器优先：不依赖 Node.js 运行时
-- 无需 import map：Vue runtime 已打包在内
-- 默认开启 Vapor 模式：直接操作 DOM，接近原生性能
+- 无需 import map：Vue 运行时已打包在内
+- 默认开启 Vapor 模式（直接操作 DOM，接近原生性能）
+- IndexedDB 持久化编译缓存（可配置）
+- 按需加载：编译器和 Vue 运行时首次使用时才加载
 
 ## 安装
 
@@ -28,7 +28,7 @@ pnpm build
 
 ## 使用
 
-### 仅转换代码
+### 仅转换
 
 ```ts
 import { transformVueToJS } from 'vue3-transfer'
@@ -61,13 +61,9 @@ console.log(result.code)
 import { renderVueToDOM } from 'vue3-transfer'
 
 const { app, style } = await renderVueToDOM(source, '#app')
-
-// 需要时清理，避免样式泄漏
-app.unmount()
-style?.remove()
 ```
 
-> 注意：`<script>` 块请使用纯 JavaScript。
+> 注意：`<script>` 块目前只支持纯 JavaScript，不支持 TypeScript，因为本库设计为在浏览器中运行。
 
 ## API
 
@@ -79,6 +75,7 @@ style?.remove()
 | `isProduction` | `boolean` | `false` | 是否生产模式 |
 | `styleMode` | `'inject' \| 'inline' \| 'none'` | `'inject'` | `<style>` 块的处理方式 |
 | `vapor` | `boolean` | `true` | 是否编译为直接 DOM 操作 |
+| `useCache` | `boolean` | `true` | 是否使用内存编译缓存 |
 
 返回 `Promise<TransformResult>`，包含 `code`、可选的 `css` 和 `errors`。
 
@@ -87,18 +84,29 @@ style?.remove()
 | 参数 | 类型 | 说明 |
 |------|------|------|
 | `source` | `string` | Vue SFC 源码 |
-| `container` | `string \| Element` | CSS 选择器或 DOM 元素 |
+| `container` | `string \| Element` | CSS 选择器或 DOM 挂载点 |
 | `options` | `TransformOptions` | 与 `transformVueToJS` 相同 |
 
-返回 `Promise<RenderResult>`，包含 `app` 和注入的 `<style>` 元素 `style`。
+返回 `Promise<{ app: App<Element>, style: HTMLStyleElement | null }>`。
 
-## 示例
+### `clearCompileCache()`
 
-构建后直接在浏览器中打开 `demo.html`，无需 import map 或外部 Vue 脚本。
+清空 IndexedDB 编译缓存。
+
+## 性能
+
+- **按需加载**：`vue3-transfer.js` 仅约 6.5 kB。Vue 运行时（~608 kB）和编译器（~1.58 MB）作为独立 chunk，首次使用时异步加载。
+- **编译缓存**：相同源码 + 选项再次编译时，直接从 IndexedDB 读取，页面刷新后仍然有效。
+- **内存可控**：编译结果持久化到磁盘，不占用运行时内存；重量级的编译器和运行时模块只加载一次并共享。
+- **自动过期**：缓存条目默认 1 天过期，过期后下次访问会自动清理。
+
+## 演示
+
+构建后直接用浏览器打开 `demo.html`，无需 import map 或外部 Vue 脚本。
 
 ```bash
 pnpm build
-# 启动静态服务器，例如
+# 启动本地静态服务，例如：
 python3 -m http.server 8767
 # 打开 http://localhost:8767/demo.html
 ```

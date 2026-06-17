@@ -1,8 +1,12 @@
 import type { SFCStyleBlock, CompilerError } from '@vue/compiler-sfc'
 import type { App } from 'vue'
+import { loadCompiler } from './utils/compiler.js'
+import { getCacheEntry, setCacheEntry, clearCompileCache } from './utils/cache.js'
+import { generateId } from './utils/id.js'
 import type { TransformOptions, TransformResult } from './types.js'
 
 export type { TransformOptions, TransformResult }
+export { clearCompileCache }
 
 declare global {
   interface Window {
@@ -10,25 +14,16 @@ declare global {
   }
 }
 
-type CompilerModule = typeof import('@vue/compiler-sfc/dist/compiler-sfc.esm-browser.js')
-
-let compilerPromise: Promise<CompilerModule> | null = null
-
-async function loadCompiler(): Promise<CompilerModule> {
-  if (!compilerPromise) {
-    compilerPromise = import('@vue/compiler-sfc/dist/compiler-sfc.esm-browser.js')
-  }
-  return compilerPromise
-}
-
-function generateId(filename: string): string {
-  let hash = 0
-  for (let i = 0; i < filename.length; i++) {
-    const char = filename.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash
-  }
-  return Math.abs(hash).toString(16).padStart(8, '0')
+function createCacheKey(source: string, options: TransformOptions): string {
+  return generateId(
+    source +
+      JSON.stringify({
+        filename: options.filename,
+        isProduction: options.isProduction,
+        styleMode: options.styleMode,
+        vapor: options.vapor,
+      }),
+  )
 }
 
 /**
@@ -44,6 +39,14 @@ export async function transformVueToJS(
   source: string,
   options: TransformOptions = {},
 ): Promise<TransformResult> {
+  const useCache = options.useCache ?? true
+  const cacheKey = useCache ? createCacheKey(source, options) : null
+
+  if (cacheKey) {
+    const cached = await getCacheEntry(cacheKey)
+    if (cached) return cached
+  }
+
   const {
     parse,
     compileScript,
@@ -165,11 +168,17 @@ document.head.appendChild(__style__)
     code += '\nexport const __css__ = ' + JSON.stringify(css)
   }
 
-  return {
+  const result: TransformResult = {
     code,
     css: styleMode === 'inline' ? css : undefined,
     errors: [],
   }
+
+  if (cacheKey) {
+    await setCacheEntry(cacheKey, result)
+  }
+
+  return result
 }
 
 export interface RenderResult {
@@ -208,18 +217,17 @@ export async function renderVueToDOM(
     throw new Error(`Cannot find container: ${container}`)
   }
 
-  const [compiler, vueRuntime] = await Promise.all([
+  const [_, vueRuntime] = await Promise.all([
     loadCompiler(),
     import('vue'),
   ])
 
   window.__VUE_TRANSFER_RUNTIME__ = vueRuntime
 
-  // Convert generated ES module code into an IIFE that reads Vue APIs from
-  // the global runtime object. This avoids creating Blob URLs for every render.
+  // Convert generated ES module code into code that reads Vue APIs from the
+  // global runtime object. This avoids relying on import maps or bare imports.
   let componentCode = result.code
 
-  // Replace `import { X as _X, Y } from 'vue'` with destructuring from global.
   componentCode = componentCode.replace(
     /import\s+\{([^}]+)\}\s+from\s+['"]vue['"];?/g,
     (_match, imports: string) => {
@@ -235,7 +243,6 @@ export async function renderVueToDOM(
     },
   )
 
-  // Strip ES module exports; CSS is handled separately below.
   componentCode = componentCode.replace(/export const __css__ = [\s\S]*$/m, '')
   componentCode = componentCode.replace(/\bexport\s+function\s+/g, 'function ')
   componentCode = componentCode.replace(/\bexport\s+default\s+__sfc_main__\s*;?\s*$/, 'return __sfc_main__')
