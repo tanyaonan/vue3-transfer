@@ -117,11 +117,11 @@ rendered.unmount()
 
 ## 演示
 
-构建后直接用浏览器打开 `demo.html`，无需 import map 或外部 Vue 脚本。
+构建后通过本地静态服务打开 `demo/index.html`，无需 import map 或外部 Vue 脚本。由于 demo 使用 `fetch` 加载 `demo/Counter.vue`，需要通过 HTTP 服务访问。
 
 ```bash
 pnpm build
 # 启动本地静态服务，例如：
 python3 -m http.server 8767
-# 打开 http://localhost:8767/demo.html
+# 打开 http://localhost:8767/demo/
 ```

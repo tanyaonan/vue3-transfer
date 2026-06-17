@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vue Transfer Render Demo</title>
-</head>
-<body>
-  <div id="app"></div>
-
-  <script type="module">
-    import { renderVueToDOM } from './dist/vue3-transfer.js'
-
-    const source = `
 <template>
   <div class="counter">
     <p class="count">Count: {{ count }}</p>
@@ -39,7 +25,7 @@ function decrement() {
 function reset() {
   count.value = 0
 }
-<\/script>
+</script>
 
 <style scoped>
 .counter {
@@ -94,17 +80,3 @@ function reset() {
   background-color: #5a6268;
 }
 </style>
-`
-
-    const rendered = await renderVueToDOM(source, { filename: 'Counter.vue' })
-
-    // Preview: mount to #app
-    rendered.mount('#app')
-
-    // Clean up when the page is unloaded
-    window.addEventListener('beforeunload', () => {
-      rendered.unmount()
-    })
-  </script>
-</body>
-</html>
