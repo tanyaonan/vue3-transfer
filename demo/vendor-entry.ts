@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 export * as Vue from 'vue'
 
 interface ComponentMeta {
@@ -186,7 +188,7 @@ export async function loadElementPlus(
     }
 
     const [componentMod] = await Promise.all([
-      componentLoader(),
+      componentLoader() as Promise<Record<string, any>>,
       styleLoader?.().catch(() => {
         // 部分组件无独立样式入口，忽略
       }),
