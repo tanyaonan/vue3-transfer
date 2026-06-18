@@ -140,9 +140,9 @@ export default defineConfig({
       },
     },
     cssCodeSplit: false,
-    define: {
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    },
+  },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production'),
   },
   resolve: {
     alias: {

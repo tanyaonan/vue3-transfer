@@ -358,11 +358,7 @@ function Me(e) {
 	}, Me(e);
 }
 var Ne = /%[sdj%]/g, Pe = function() {};
-typeof process < "u" && process.env && process.env.NODE_ENV !== "production" && typeof window < "u" && typeof document < "u" && (Pe = function(e, t) {
-	typeof console < "u" && console.warn && typeof ASYNC_VALIDATOR_NO_WARNING > "u" && t.every(function(e) {
-		return typeof e == "string";
-	}) && console.warn(e, t);
-});
+typeof process < "u" && process.env;
 function W(e) {
 	if (!e || !e.length) return null;
 	var t = {};
