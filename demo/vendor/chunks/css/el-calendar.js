@@ -1,0 +1,5 @@
+globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
+import "./el-base.js";
+import "./el-button-group.js";
+import "./el-button.js";
+import "./el-select.js";

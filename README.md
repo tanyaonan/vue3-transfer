@@ -138,7 +138,7 @@ rendered.unmount()
 
 构建后通过本地静态服务打开 `demo/index.html`。由于 demo 使用 `fetch` 加载 `demo/Counter.vue`，需要通过 HTTP 服务访问。
 
-`demo/vendor/` 目录下是 Vite 打包好的 Vue + Element Plus 本地副本（`vendor.js` + `vendor.css`），避免 demo 运行时访问 CDN。若需要更新或重新生成，可执行：
+`demo/vendor/` 目录下是 Vite 打包好的 Vue 运行时本地副本（`vendor.js`），避免 demo 运行时访问 CDN。Element Plus 组件和样式按组件拆分成独立 chunk，浏览器只加载当前 SFC 实际用到的组件和对应样式。
 
 ```bash
 pnpm build
@@ -147,3 +147,5 @@ pnpm build:vendor
 python3 -m http.server 8767
 # 打开 http://localhost:8767/demo/
 ```
+
+> 若 SFC 使用了未在 `demo/vendor-entry.ts` 的 `componentRegistry` 中注册的组件，需先补充映射再执行 `pnpm build:vendor`。

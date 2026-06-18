@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vue Transfer Render Demo</title>
-  <link rel="stylesheet" href="./vendor/vendor.css">
+  <link rel="stylesheet" href="./vendor/styles/vendor.css">
 </head>
 <body>
   <div id="app"></div>
 
   <script type="module">
-    import { Vue, ElementPlus } from './vendor/vendor.js'
+    import { Vue, loadElementPlus, resolveElementPlusTags } from './vendor/vendor.js'
     import { renderVueToDOM } from '../dist/vue3-transfer.js'
 
     const response = await fetch('./Counter.vue')
@@ -19,14 +19,12 @@
     }
     const source = await response.text()
 
-    const usesElementPlus =
-      /<\s*el-[\w-]+/.test(source) ||
-      source.includes('from \'element-plus\'') ||
-      source.includes('from "element-plus"')
+    const elementPlusTags = resolveElementPlusTags(source)
+    const usesElementPlus = elementPlusTags.length > 0
 
     window.Vue = Vue
     if (usesElementPlus) {
-      window.ElementPlus = ElementPlus
+      window.ElementPlus = await loadElementPlus(elementPlusTags)
     }
 
     const rendered = await renderVueToDOM(source, {
