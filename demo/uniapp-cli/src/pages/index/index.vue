@@ -195,6 +195,131 @@
       </view>
     </view>
 
+    <view class="section">
+      <text class="section-title">Wot UI 表单组件</text>
+
+      <view class="wot-grid">
+        <view class="wot-card">
+          <text class="wot-card-title">Input 输入框</text>
+          <wd-input
+            v-model="wotInput"
+            placeholder="请输入内容"
+            clearable
+            @blur="(e) => setStatus('wd-input blur: ' + e.detail.value)"
+          />
+        </view>
+
+        <view class="wot-card">
+          <text class="wot-card-title">Switch 开关</text>
+          <wd-switch v-model="wotSwitch" @change="(e) => setStatus('wd-switch: ' + e.detail.value)" />
+        </view>
+
+        <view class="wot-card wot-card-full">
+          <text class="wot-card-title">Radio 单选</text>
+          <wd-radio-group v-model="wotRadio" @change="(e) => setStatus('wd-radio: ' + e.detail.value)">
+            <wd-radio value="a">选项 A</wd-radio>
+            <wd-radio value="b">选项 B</wd-radio>
+            <wd-radio value="c">选项 C</wd-radio>
+          </wd-radio-group>
+        </view>
+
+        <view class="wot-card wot-card-full">
+          <text class="wot-card-title">Checkbox 复选</text>
+          <wd-checkbox-group v-model="wotCheckbox" @change="(e) => setStatus('wd-checkbox: ' + JSON.stringify(e.detail.value))">
+            <wd-checkbox value="1" type="square">复选 1</wd-checkbox>
+            <wd-checkbox value="2" type="square">复选 2</wd-checkbox>
+            <wd-checkbox value="3" type="square">复选 3</wd-checkbox>
+          </wd-checkbox-group>
+        </view>
+
+        <view class="wot-card">
+          <text class="wot-card-title">Rate 评分</text>
+          <wd-rate v-model="wotRate" @change="(e) => setStatus('wd-rate: ' + e.detail.value)" />
+        </view>
+
+        <view class="wot-card">
+          <text class="wot-card-title">Slider 滑块</text>
+          <wd-slider v-model="wotSlider" @change="(e) => setStatus('wd-slider: ' + e.detail.value)" />
+        </view>
+
+        <view class="wot-card">
+          <text class="wot-card-title">InputNumber 步进器</text>
+          <wd-input-number v-model="wotNumber" @change="(e) => setStatus('wd-input-number: ' + e.detail.value)" />
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <text class="section-title">Wot UI 展示组件</text>
+
+      <wd-notice-bar
+        text="这是一条 Notice Bar，用于在页面顶部展示公告或提示信息。"
+        prefix="warn-bold"
+        closable
+        @close="setStatus('wd-notice-bar closed')"
+      />
+
+      <view class="wot-grid" style="margin-top: 24rpx">
+        <view class="wot-card wot-card-full">
+          <text class="wot-card-title">Cell 单元格</text>
+          <wd-cell-group>
+            <wd-cell title="标题文字" value="内容" is-link @click="setStatus('wd-cell clicked')" />
+            <wd-cell title="带标签" label="描述信息" value="内容" />
+          </wd-cell-group>
+        </view>
+
+        <view class="wot-card wot-card-full">
+          <text class="wot-card-title">Grid 宫格</text>
+          <wd-grid :column="4">
+            <wd-grid-item icon="picture" text="图片" @item-click="setStatus('grid picture')" />
+            <wd-grid-item icon="user" text="用户" @item-click="setStatus('grid user')" />
+            <wd-grid-item icon="phone" text="电话" @item-click="setStatus('grid phone')" />
+            <wd-grid-item icon="setting" text="设置" @item-click="setStatus('grid setting')" />
+          </wd-grid>
+        </view>
+
+        <view class="wot-card">
+          <text class="wot-card-title">Badge 徽标</text>
+          <view class="wot-center">
+            <wd-badge value="8">
+              <view class="badge-box">徽标</view>
+            </wd-badge>
+            <wd-badge is-dot style="margin-left: 32rpx">
+              <view class="badge-box">红点</view>
+            </wd-badge>
+          </view>
+        </view>
+
+        <view class="wot-card">
+          <text class="wot-card-title">Empty 空状态</text>
+          <view class="wot-center">
+            <wd-empty v-if="wotShowEmpty" icon="warning" tip="暂无数据" />
+            <button v-else type="default" size="mini" @click="wotShowEmpty = true">显示 Empty</button>
+          </view>
+        </view>
+
+        <view class="wot-card wot-card-full">
+          <text class="wot-card-title">Divider 分割线</text>
+          <wd-divider>Wot UI Divider</wd-divider>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <text class="section-title">Wot UI 反馈组件</text>
+      <view class="wot-center">
+        <button type="primary" size="mini" @click="showPopup = true">打开 wd-popup</button>
+      </view>
+
+      <wd-popup v-model="showPopup" position="center" :closable="true" @close="setStatus('wd-popup closed')">
+        <view class="popup-content">
+          <text class="popup-title">Wot UI Popup</text>
+          <text class="popup-desc">这是通过 wd-popup 展示的居中弹窗，支持关闭按钮与点击遮罩关闭。</text>
+          <button type="primary" size="mini" @click="showPopup = false">关闭弹窗</button>
+        </view>
+      </wd-popup>
+    </view>
+
     <view class="section status-section">
       <text class="section-title">最后结果 / 状态</text>
       <text class="status-text" selectable>{{ status }}</text>
@@ -223,6 +348,16 @@ const inputFocus = ref(false)
 const storageKey = ref('demo-key')
 const storageValue = ref('demo-value')
 const status = ref('等待操作...')
+
+const wotInput = ref('')
+const wotSwitch = ref(false)
+const wotRadio = ref('a')
+const wotCheckbox = ref(['1'])
+const wotRate = ref(3)
+const wotSlider = ref(30)
+const wotNumber = ref(1)
+const wotShowEmpty = ref(true)
+const showPopup = ref(false)
 
 const checklist = ref([
   { name: 'showToast success', ok: false },
@@ -676,5 +811,73 @@ page {
 .check-ok {
   color: #52c41a;
   background: #f6ffed;
+}
+
+.badge-box {
+  width: 80rpx;
+  height: 48rpx;
+  background: #f2f2f2;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+}
+
+.popup-content {
+  width: 560rpx;
+  padding: 48rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  text-align: center;
+}
+
+.popup-title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.popup-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 32rpx;
+  line-height: 1.5;
+}
+
+.wot-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.wot-card {
+  flex: 1 1 calc(50% - 8rpx);
+  min-width: 280rpx;
+  padding: 20rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  box-sizing: border-box;
+}
+
+.wot-card-full {
+  flex-basis: 100%;
+}
+
+.wot-card-title {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+}
+
+.wot-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
 }
 </style>
