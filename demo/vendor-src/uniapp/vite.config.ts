@@ -46,9 +46,9 @@ function wotUIConditionalCompilePlugin(): Plugin {
 
       for (const rawLine of lines) {
         const line = rawLine.trim()
-        const ifdefMatch = line.match(/<!--\s*#ifdef\s+(\S+)\s*-->/)
-        const ifndefMatch = line.match(/<!--\s*#ifndef\s+(\S+)\s*-->/)
-        const endifMatch = /<!--\s*#endif\s*-->/.test(line)
+        const ifdefMatch = line.match(/(?:<!--|\/\/)\s*#ifdef\s+(\S+)\s*(?:-->)?/)
+        const ifndefMatch = line.match(/(?:<!--|\/\/)\s*#ifndef\s+(\S+)\s*(?:-->)?/)
+        const endifMatch = /(?:<!--|\/\/)\s*#endif\s*(?:-->)?/.test(line)
 
         if (ifdefMatch) {
           const platform = ifdefMatch[1]
@@ -98,11 +98,21 @@ function normalizeFileName(name: string): string {
   return name.replace(/\.vue.*$/, '').replace(/\.mjs$/, '').replace(/\.js$/, '')
 }
 
-function extractWotUIComponentPath(id: string | null): string | null {
+function isWotUIVueComponent(id: string | null): string | null {
+  if (!id) return null
+  // 匹配组件主文件：@wot-ui/ui/components/{name}/{name}.vue 或 .../src/{name}.vue
+  const match = id.match(/@wot-ui[\\/]ui[\\/]components[\\/]([^\\/]+)(?:[\\/]src)?[\\/]\1\.vue/)
+  if (!match) return null
+  return match[1]
+}
+
+function extractWotUIComponentSharedPath(id: string | null): { component: string; name: string } | null {
   if (!id) return null
   const match = id.match(/@wot-ui[\\/]ui[\\/]components[\\/]([^\\/]+)(?:[\\/]src[\\/]?(.+))?/)
   if (!match) return null
-  return match[1]
+  const component = match[1]
+  const subPath = match[2] ? normalizeFileName(match[2]) : 'index'
+  return { component, name: subPath }
 }
 
 function extractWotUISharedPath(id: string | null): { category: string; name: string } | null {
@@ -130,10 +140,14 @@ function resolveChunkPath(chunkInfo: {
     return 'chunks/vue.runtime.js'
   }
 
-  const componentMatches = ids.map(extractWotUIComponentPath).filter((x): x is string => x !== null)
-  if (componentMatches.length > 0) {
-    const component = componentMatches[0]
-    return `chunks/wd-${component}.js`
+  const vueComponent = ids.map(isWotUIVueComponent).find((x): x is string => x !== null)
+  if (vueComponent) {
+    return `chunks/${vueComponent}.js`
+  }
+
+  const componentShared = ids.map(extractWotUIComponentSharedPath).find((x): x is { component: string; name: string } => x !== null)
+  if (componentShared) {
+    return `chunks/shared/wot-ui/components/${componentShared.component}/${componentShared.name}.js`
   }
 
   const sharedMatches = ids.map(extractWotUISharedPath).filter((x): x is { category: string; name: string } => x !== null)

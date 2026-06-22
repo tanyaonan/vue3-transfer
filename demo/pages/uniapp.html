@@ -16,7 +16,7 @@
   <div id="app"></div>
 
   <script type="module">
-    import { Vue, createWotUIPlugin } from '../vendor/uniapp/vendor.js'
+    import { Vue, resolveWotUITags, loadWotUI, createWotUIPlugin } from '../vendor/uniapp/vendor.js'
     import { renderUniAppToDOM } from '../../dist/uniapp.js'
 
     const response = await fetch('../components/counter-uniapp.vue')
@@ -27,13 +27,16 @@
 
     window.Vue = Vue
 
+    const tags = resolveWotUITags(source)
+    const components = await loadWotUI(tags)
+
     const rendered = await renderUniAppToDOM(source, {
       filename: 'counter-uniapp.vue',
       platform: 'h5',
     })
 
     rendered.mount('#app', {
-      plugins: [createWotUIPlugin()],
+      plugins: [createWotUIPlugin(components)],
     })
 
     window.addEventListener('beforeunload', () => {

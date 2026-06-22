@@ -8,6 +8,13 @@ const tagMap: Record<string, string> = {
   image: 'img',
   navigator: 'a',
   picker: 'div',
+  'picker-view': 'div',
+  'picker-view-column': 'div',
+  'movable-area': 'div',
+  'movable-view': 'div',
+  'cover-view': 'div',
+  'cover-image': 'img',
+  block: 'template',
   checkbox: 'input',
   radio: 'input',
   switch: 'input',
@@ -85,7 +92,7 @@ export function transformUniAppTags(
 
     const targetTag = runtimeMap[uniTag] || htmlTag
     content = content.replace(
-      new RegExp(`<${uniTag}\\b`, 'g'),
+      new RegExp(`<${uniTag}(?=[\\s/>])`, 'g'),
       `<${targetTag}`,
     )
     content = content.replace(
@@ -93,6 +100,9 @@ export function transformUniAppTags(
       `</${targetTag}>`,
     )
   }
+
+  // 原生 <video> 不是 void 元素，Vue 模板不允许自闭合；UniApp 源码里常见 <video />
+  content = content.replace(/<video\b([^>]*)\/>/g, '<video$1></video>')
 
   // 对保留标签中需要映射为运行时组件名的标签做二次转换
   for (const [uniTag, runtimeTag] of Object.entries(runtimeMap)) {
