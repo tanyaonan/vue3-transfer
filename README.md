@@ -84,7 +84,48 @@ const rendered = await renderVueToDOM(source, {
 rendered.unmount()
 ```
 
-> 注意：`<script>` 块目前只支持纯 JavaScript，不支持 TypeScript，因为本库设计为在浏览器中运行。
+### React 动态渲染
+
+React 版本与 Vue 版本保持统一入口：
+
+```ts
+import { renderReactToDOM } from 'vue3-transfer/react'
+
+const source = `
+import { useState } from 'react'
+import { Button, Card, Space, Tag, message } from 'antd'
+
+export default function Counter() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <Card title="React Transfer Demo">
+      <Tag color="success">Ant Design</Tag>
+      <div>Count: {count}</div>
+      <Space>
+        <Button type="primary" onClick={() => setCount(c => c + 1)}>+1</Button>
+        <Button onClick={() => setCount(0)}>Reset</Button>
+      </Space>
+    </Card>
+  )
+}
+`
+
+const rendered = await renderReactToDOM(source, {
+  filename: 'Counter.jsx',
+  globals: { 'antd': 'antd' },
+})
+
+rendered.mount('#root')
+```
+
+> 注意：
+> - React 版本默认使用 **React 19** 与 **自动 JSX 运行时**（`react/jsx-runtime`）。
+> - React 源码为 JSX/ESM，`<script>` 块同样只支持纯 JavaScript。
+> - 使用第三方组件库时，需要在 `globals` 中把裸模块导入映射到全局变量（如 `antd` -> `window.antd`），
+>   并在挂载前将对应库暴露到 `window` 上。
+> - 如果你想让 `renderReactToDOM` 使用外部 React（而不是库内置的 React chunk），
+>   请同时把 `React`、`ReactDOM`、`ReactJSXRuntime` 暴露到 `window`。
 
 ## API
 
@@ -125,7 +166,41 @@ rendered.unmount()
 
 ### `clearCompileCache()`
 
-清空 IndexedDB 编译缓存。
+清空 IndexedDB 编译缓存（Vue 与 React 共享同一个缓存库）。
+
+### `transformReactToJS(source, options)`
+
+| 选项 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `filename` | `string` | - | **必填**，源文件标识，用于缓存和错误报告 |
+| `isProduction` | `boolean` | `false` | 是否生产模式 |
+| `styleMode` | `'inject' \| 'inline' \| 'none'` | `'inject'` | 保留与 Vue 接口一致，React 源码通常不生成 CSS |
+| `useCache` | `boolean` | `true` | 是否使用 IndexedDB 编译缓存 |
+| `globals` | `Record<string, string>` | `undefined` | 将裸模块命名导入映射到全局变量 |
+
+返回 `Promise<ReactTransformResult>`，包含 `code`、可选的 `css` 和 `errors`。
+
+### `renderReactToDOM(source, options)`
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `source` | `string` | React JSX 源码 |
+| `options` | `ReactTransformOptions` | **必填**，与 `transformReactToJS` 相同 |
+
+返回 `Promise<RenderableReactComponent>`：
+
+| 属性/方法 | 类型 | 说明 |
+|-----------|------|------|
+| `component` | `ComponentType` | 编译后的 React 组件，可直接用于其他 React 应用 |
+| `style` | `HTMLStyleElement \| null` | 编译后的样式元素（React 源码通常没有） |
+| `mount(container, options?)` | `(string \| Element, ReactMountOptions?) => Root` | 挂载到指定容器，可选开启 StrictMode |
+| `unmount()` | `() => void` | 卸载组件并移除注入的样式 |
+
+### `ReactMountOptions`
+
+| 选项 | 类型 | 说明 |
+|------|------|------|
+| `strictMode` | `boolean` | 是否在 `React.StrictMode` 下渲染 |
 
 ## 性能
 
@@ -136,16 +211,26 @@ rendered.unmount()
 
 ## 演示
 
-构建后通过本地静态服务打开 `demo/index.html`。由于 demo 使用 `fetch` 加载 `demo/Counter.vue`，需要通过 HTTP 服务访问。
+构建后通过本地静态服务打开 `demo/index.html` 或 `demo/react.html`。由于 demo 使用 `fetch` 加载 `demo/Counter.vue` / `demo/Counter.jsx`，需要通过 HTTP 服务访问。
 
 `demo/vendor/` 目录下是 Vite 打包好的 Vue 运行时本地副本（`vendor.js`），避免 demo 运行时访问 CDN。Element Plus 组件和样式按组件拆分成独立 chunk，浏览器只加载当前 SFC 实际用到的组件和对应样式。
+
+`demo/vendor-react/` 目录下是 Vite 打包好的 React 19 + ReactDOM + Ant Design 本地副本（`vendor.js`）。代码分割策略如下：
+
+- `chunks/shared/core.js`：React / ReactDOM / JSX 运行时 / Scheduler 及少量通用第三方依赖。
+- `chunks/shared/antd-core.js`：Ant Design 公共基础设施（`_util`、`config-provider`、`locale`、`style` 等）。
+- `chunks/antd/<component>.js`：每个 Ant Design 组件独立 chunk，按 JSX 中实际使用的组件按需加载。
+
+所有 chunk 均使用语义化命名，不会出现 `1.js`、`2.js` 等数字后缀。
 
 ```bash
 pnpm build
 pnpm build:vendor
+pnpm build:vendor-react
 # 启动本地静态服务，例如：
 python3 -m http.server 8767
-# 打开 http://localhost:8767/demo/
+# Vue 示例：http://localhost:8767/demo/index.html
+# React 示例：http://localhost:8767/demo/react.html
 ```
 
-> 若 SFC 使用了未在 `demo/vendor-entry.ts` 的 `componentRegistry` 中注册的组件，需先补充映射再执行 `pnpm build:vendor`。
+> 若 SFC / JSX 使用了未在对应 `componentRegistry` 中注册的组件，需先补充映射再重新执行 `pnpm build:vendor` 或 `pnpm build:vendor-react`。

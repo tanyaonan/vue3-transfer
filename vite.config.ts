@@ -13,12 +13,15 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(import.meta.dirname, 'src/index.ts'),
+      entry: {
+        'vue3-transfer': resolve(import.meta.dirname, 'src/index.ts'),
+        'react': resolve(import.meta.dirname, 'src/react.ts'),
+      },
       formats: ['es'],
-      fileName: () => 'vue3-transfer.js',
+      fileName: (_format, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
-      // 将 @vue/compiler-sfc 浏览器版和 Vue 运行时一起打包，使库在浏览器中独立运行。
+      // 将编译器和运行时一起打包，使库在浏览器中独立运行。
       external: [],
       output: {
         chunkFileNames: 'chunks/[name].js',
@@ -28,6 +31,16 @@ export default defineConfig({
           }
           if (id.includes('vue.runtime-with-vapor')) {
             return 'vue-runtime'
+          }
+          if (id.includes('@babel/standalone')) {
+            return 'babel-standalone'
+          }
+          if (
+            /[\\/]react([\\/]|$)/.test(id) ||
+            /[\\/]react-dom([\\/]|$)/.test(id) ||
+            /[\\/]scheduler([\\/]|$)/.test(id)
+          ) {
+            return 'react-runtime'
           }
         },
       },

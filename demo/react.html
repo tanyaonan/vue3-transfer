@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Transfer Render Demo</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="module">
+    import { React, ReactDOM, ReactJSXRuntime, loadAntd, resolveAntdTags } from './vendor-react/vendor.js'
+    import { renderReactToDOM } from '../dist/react.js'
+
+    const response = await fetch('./Counter.jsx')
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Counter.jsx: ${response.status} ${response.statusText}`)
+    }
+    const source = await response.text()
+
+    const antdTags = resolveAntdTags(source)
+    const usesAntd = antdTags.length > 0
+
+    window.React = React
+    window.ReactDOM = ReactDOM
+    window.ReactJSXRuntime = ReactJSXRuntime
+    if (usesAntd) {
+      window.antd = await loadAntd(antdTags)
+    }
+
+    const rendered = await renderReactToDOM(source, {
+      filename: 'Counter.jsx',
+      globals: usesAntd
+        ? { 'antd': 'antd' }
+        : undefined,
+    })
+
+    rendered.mount('#root')
+
+    window.addEventListener('beforeunload', () => {
+      rendered.unmount()
+    })
+  </script>
+</body>
+</html>
