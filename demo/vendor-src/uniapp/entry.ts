@@ -5,6 +5,12 @@ import { createSelectorQuery, getCurrentPages } from './uniapp-stub.ts'
 
 export * as Vue from 'vue'
 
+declare global {
+  interface Window {
+    uni?: any
+  }
+}
+
 // 在 vendor 加载阶段提供一个最小 uni 对象，避免 Wot UI 组件在 mount 前访问
 // createSelectorQuery / getCurrentPages 时报错。完整的 uni API（showToast、
 // request 等）由 src/uniapp-runtime 在 renderUniAppToDOM().mount() 时注入。
