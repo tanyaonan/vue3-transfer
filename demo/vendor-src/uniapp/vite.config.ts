@@ -194,6 +194,9 @@ export default defineConfig({
         if (warning.code === 'INVALID_ANNOTATION') return
         warn(warning)
       },
+      checks: {
+        pluginTimings: false,
+      },
     },
     cssCodeSplit: false,
     cssMinify: 'esbuild',
