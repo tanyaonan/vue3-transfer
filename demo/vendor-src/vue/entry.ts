@@ -166,20 +166,20 @@ export async function loadElementPlus(
   }
 
   const componentModules = import.meta.glob(
-    '../node_modules/element-plus/es/components/*/index.mjs',
+    '/node_modules/element-plus/es/components/*/index.mjs',
   )
   const styleModules = import.meta.glob(
-    '../node_modules/element-plus/es/components/*/style/css.mjs',
+    '/node_modules/element-plus/es/components/*/style/css.mjs',
   )
 
   const result: Record<string, any> = {}
 
   for (const path of paths) {
     const componentLoader = componentModules[
-      `../node_modules/element-plus/es/components/${path}/index.mjs`
+      `/node_modules/element-plus/es/components/${path}/index.mjs`
     ]
     const styleLoader = styleModules[
-      `../node_modules/element-plus/es/components/${path}/style/css.mjs`
+      `/node_modules/element-plus/es/components/${path}/style/css.mjs`
     ]
 
     if (!componentLoader) {

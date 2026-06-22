@@ -176,7 +176,7 @@ React 源码是 JSX/ESM，没有 Vue SFC 的 `<style scoped>` 块，因此样式
 
 #### 推荐：styled-components（在 JSX 中直接管理）
 
-示例 `demo/Counter.jsx` 使用真正的 **styled-components**，把组件和样式写在一起：
+示例 `demo/components/counter.jsx` 使用真正的 **styled-components**，把组件和样式写在一起：
 
 ```jsx
 import styled from 'styled-components'
@@ -308,11 +308,11 @@ renderReactToDOM(source, {
 
 ## 演示
 
-构建后通过本地静态服务打开 `demo/index.html` 或 `demo/react.html`。由于 demo 使用 `fetch` 加载 `demo/Counter.vue` / `demo/Counter.jsx`，需要通过 HTTP 服务访问。
+构建后通过本地静态服务打开 `demo/pages/index.html`、`demo/pages/vue-mount.html` 或 `demo/pages/react.html`。由于 demo 使用 `fetch` 加载 `demo/components/counter.vue` / `demo/components/counter.jsx`，需要通过 HTTP 服务访问。
 
-`demo/vendor/` 目录下是 Vite 打包好的 Vue 运行时本地副本（`vendor.js`），避免 demo 运行时访问 CDN。Element Plus 组件和样式按组件拆分成独立 chunk，浏览器只加载当前 SFC 实际用到的组件和对应样式。
+`demo/vendor/vue/` 目录下是 Vite 打包好的 Vue 运行时本地副本（`vendor.js`），避免 demo 运行时访问 CDN。Element Plus 组件和样式按组件拆分成独立 chunk，浏览器只加载当前 SFC 实际用到的组件和对应样式。
 
-`demo/vendor-react/` 目录下是 Vite 打包好的 React 19 + ReactDOM + Ant Design 本地副本（`vendor.js`）。代码分割策略如下：
+`demo/vendor/react/` 目录下是 Vite 打包好的 React 19 + ReactDOM + Ant Design 本地副本（`vendor.js`）。代码分割策略如下：
 
 - `chunks/shared/core.js`：React / ReactDOM / JSX 运行时 / Scheduler 及少量通用第三方依赖。
 - `chunks/shared/antd-core.js`：Ant Design 公共基础设施（`_util`、`config-provider`、`locale`、`style` 等）。
@@ -326,8 +326,9 @@ pnpm build:vendor
 pnpm build:vendor-react
 # 启动本地静态服务，例如：
 python3 -m http.server 8767
-# Vue 示例：http://localhost:8767/demo/index.html
-# React 示例：http://localhost:8767/demo/react.html
+# Vue 直接渲染示例：http://localhost:8767/demo/pages/index.html
+# Vue 应用挂载示例：http://localhost:8767/demo/pages/vue-mount.html
+# React 直接渲染示例：http://localhost:8767/demo/pages/react.html
 ```
 
 > 若 SFC / JSX 使用了未在对应 `componentRegistry` 中注册的组件，需先补充映射再重新执行 `pnpm build:vendor` 或 `pnpm build:vendor-react`。

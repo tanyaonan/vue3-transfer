@@ -9,12 +9,12 @@
   <div id="root"></div>
 
   <script type="module">
-    import { React, ReactDOM, ReactJSXRuntime, styled, loadAntd, resolveAntdTags } from './vendor-react/vendor.js'
-    import { renderReactToDOM } from '../dist/react.js'
+    import { React, ReactDOM, ReactJSXRuntime, styled, loadAntd, resolveAntdTags } from '../vendor/react/vendor.js'
+    import { renderReactToDOM } from '../../dist/react.js'
 
-    const response = await fetch('./Counter.jsx')
+    const response = await fetch('../components/counter.jsx')
     if (!response.ok) {
-      throw new Error(`Failed to fetch Counter.jsx: ${response.status} ${response.statusText}`)
+      throw new Error(`Failed to fetch counter.jsx: ${response.status} ${response.statusText}`)
     }
     const source = await response.text()
 
@@ -30,7 +30,7 @@
     }
 
     const rendered = await renderReactToDOM(source, {
-      filename: 'Counter.jsx',
+      filename: 'counter.jsx',
       globals: {
         'antd': 'antd',
         'styled-components': 'styled',

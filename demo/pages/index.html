@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vue Transfer Render Demo</title>
-  <link rel="stylesheet" href="./vendor/styles/vendor.css">
+  <link rel="stylesheet" href="../vendor/vue/styles/vendor.css">
 </head>
 <body>
   <div id="app"></div>
 
   <script type="module">
-    import { Vue, loadElementPlus, resolveElementPlusTags } from './vendor/vendor.js'
-    import { renderVueToDOM } from '../dist/vue3-transfer.js'
+    import { Vue, loadElementPlus, resolveElementPlusTags } from '../vendor/vue/vendor.js'
+    import { renderVueToDOM } from '../../dist/vue3-transfer.js'
 
-    const response = await fetch('./Counter.vue')
+    const response = await fetch('../components/counter.vue')
     if (!response.ok) {
-      throw new Error(`Failed to fetch Counter.vue: ${response.status} ${response.statusText}`)
+      throw new Error(`Failed to fetch counter.vue: ${response.status} ${response.statusText}`)
     }
     const source = await response.text()
 
@@ -28,7 +28,7 @@
     }
 
     const rendered = await renderVueToDOM(source, {
-      filename: 'Counter.vue',
+      filename: 'counter.vue',
       vapor: false,
       globals: usesElementPlus
         ? { 'element-plus': 'ElementPlus' }

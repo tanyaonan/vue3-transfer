@@ -58,14 +58,15 @@ const corePackagePattern =
   /node_modules[\\/](?:react|react-dom|scheduler|@babel[\\/]standalone|@ant-design[\\/](?:colors|cssinjs(?:-utils)?|fast-color|icons(?:-svg)?|react-slick)|@ctrl[\\/]tinycolor|classnames|copy-to-clipboard|dayjs|rc-[a-z-]+|resize-observer-polyfill|scroll-into-view-if-needed|throttle-debounce|@rc-component[\\/]|warning|compute-scroll-into-view|toggle-selection|is-mobile|dom-align|@babel[\\/]runtime|async-validator|@emotion|stylis|memoize-one|rc-util|react-is|@floating-ui|object-assign|use-sync-external-store|js-tokens|loose-envify|prop-types|tiny-invariant|tiny-warning|@kurkle|chart\.js|styled-components|css-to-react-native|csstype)[\\/]/
 
 export default defineConfig({
+  root: resolve(__dirname, '../../../'),
   build: {
     lib: {
-      entry: resolve(__dirname, 'vendor-react-entry.ts'),
+      entry: resolve(__dirname, 'entry.ts'),
       name: 'VendorReact',
       formats: ['es'],
       fileName: () => 'vendor.js',
     },
-    outDir: resolve(__dirname, 'vendor-react'),
+    outDir: resolve(__dirname, '../../vendor/react'),
     emptyOutDir: true,
     rollupOptions: {
       external: [],

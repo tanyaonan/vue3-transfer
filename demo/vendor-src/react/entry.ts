@@ -160,14 +160,14 @@ export async function loadAntd(
   }
 
   const componentModules = import.meta.glob(
-    '../node_modules/antd/es/*/index.js',
+    '/node_modules/antd/es/*/index.js',
   )
 
   const result: Record<string, any> = {}
 
   for (const path of paths) {
     const loader = componentModules[
-      `../node_modules/antd/es/${path}/index.js`
+      `/node_modules/antd/es/${path}/index.js`
     ]
 
     if (!loader) {

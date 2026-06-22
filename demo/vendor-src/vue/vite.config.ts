@@ -106,14 +106,15 @@ function resolveChunkPath(chunkInfo: {
 }
 
 export default defineConfig({
+  root: resolve(__dirname, '../../../'),
   build: {
     lib: {
-      entry: resolve(__dirname, 'vendor-entry.ts'),
+      entry: resolve(__dirname, 'entry.ts'),
       name: 'Vendor',
       formats: ['es'],
       fileName: 'vendor',
     },
-    outDir: resolve(__dirname, 'vendor'),
+    outDir: resolve(__dirname, '../../vendor/vue'),
     emptyOutDir: true,
     rollupOptions: {
       external: [],
@@ -146,7 +147,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, '../src'),
+      '@': resolve(__dirname, '../../../src'),
     },
   },
 })
