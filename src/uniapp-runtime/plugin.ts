@@ -50,8 +50,9 @@ export function createUniAppH5RuntimePlugin(
         app.component(name, factory())
       }
 
-      // 注入 uni 运行时
-      if (typeof window !== 'undefined' && (options.overrideUni || !window.uni)) {
+      // 注入 uni 运行时。若 window.uni 已存在（如 vendor stub 先注入的最小实现），
+      // 则通过 Object.assign 合并，补充 showToast/request 等完整 API，不丢失已有属性。
+      if (typeof window !== 'undefined') {
         window.uni = Object.assign(window.uni || {}, createUniRuntime(vue)) as typeof window.uni
       }
     },

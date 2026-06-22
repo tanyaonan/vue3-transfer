@@ -1,23 +1,8 @@
 /**
- * @dcloudio/uni-app 的浏览器端存根。
+ * 浏览器端 `uni.createSelectorQuery` 实现。
  *
- * Wot UI 组件会从 @dcloudio/uni-app import 生命周期钩子（onShow/onHide），
- * 并在运行时直接使用全局 `uni.*` API。vendor 构建通过 alias 把该包映射到
- * 本文件，避免在浏览器中因找不到 @dcloudio/uni-app 而构建失败。
- *
- * 本文件只提供 vendor 加载阶段（renderUniAppToDOM().mount() 之前）所需的最小
- * 实现，避免组件加载/挂载时报错。完整的 uni API 由 src/uniapp-runtime 在 mount
- * 时注入到 window.uni 并覆盖同名属性。
- */
-
-export function onShow(_hook: () => void): void {}
-export function onHide(_hook: () => void): void {}
-
-/**
- * `uni.createSelectorQuery` 的最小 fallback 实现。
- *
- * Wot UI 的 getRect 工具函数依赖该 API 获取节点尺寸。此处基于 DOM 实现，
- * 支持 .in(scope).select(selector).boundingClientRect(callback).exec() 链式调用。
+ * Wot UI 组件依赖该 API 获取节点尺寸。此处提供基于 DOM 的查询，
+ * 支持 `.in(scope).select(selector).boundingClientRect(callback).exec()` 链式调用。
  */
 export function createSelectorQuery() {
   let selector = ''
@@ -76,16 +61,4 @@ export function createSelectorQuery() {
       if (callback) callback([])
     },
   }
-}
-
-/**
- * `getCurrentPages` 的最小 fallback 实现。
- */
-export function getCurrentPages(): any[] {
-  return [
-    {
-      route: typeof window !== 'undefined' ? window.location.pathname : '',
-      options: {},
-    },
-  ]
 }

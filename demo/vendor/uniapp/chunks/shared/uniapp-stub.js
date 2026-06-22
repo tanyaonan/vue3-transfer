@@ -45,7 +45,10 @@ function n() {
 	};
 }
 function r() {
-	return [{ route: window.location.pathname }];
+	return [{
+		route: typeof window < "u" ? window.location.pathname : "",
+		options: {}
+	}];
 }
 //#endregion
 export { e as i, r as n, t as r, n as t };

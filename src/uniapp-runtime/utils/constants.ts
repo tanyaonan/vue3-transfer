@@ -130,4 +130,13 @@ export interface UniRuntime {
   $on: (event: string, cb: UniEventCallback) => void
   $off: (event: string, cb?: UniEventCallback) => void
   $emit: (event: string, ...args: unknown[]) => void
+  createSelectorQuery: () => {
+    in: (scope: unknown) => any
+    select: (selector: string) => any
+    selectAll: (selector: string) => any
+    boundingClientRect: (callback?: (rect: any) => void) => any
+    fields: (config: any, callback?: (res: any) => void) => any
+    exec: (callback?: (res: any[]) => void) => any
+  }
+  getCurrentPages: () => any[]
 }

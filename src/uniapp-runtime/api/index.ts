@@ -5,6 +5,8 @@ import { getSystemInfoSync, getSystemInfo } from './system-info.js'
 import { getStorageSync, setStorageSync, removeStorageSync, clearStorageSync } from './storage.js'
 import { navigateTo, redirectTo, switchTab, reLaunch } from './navigate.js'
 import { $on, $off, $emit } from './event-bus.js'
+import { createSelectorQuery } from './createSelectorQuery.js'
+import { getCurrentPages } from './getCurrentPages.js'
 import type { UniRuntime } from '../utils/constants.js'
 
 export function createUniRuntime(_vue?: unknown): UniRuntime {
@@ -28,5 +30,7 @@ export function createUniRuntime(_vue?: unknown): UniRuntime {
     $on,
     $off,
     $emit,
+    createSelectorQuery,
+    getCurrentPages,
   }
 }

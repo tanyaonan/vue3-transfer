@@ -5,11 +5,14 @@ import { createSelectorQuery, getCurrentPages } from './uniapp-stub.ts'
 
 export * as Vue from 'vue'
 
-// 在浏览器环境中补齐 UniApp 全局 API，使 Wot UI 组件在 H5 预览时正常工作
+// 在 vendor 加载阶段提供一个最小 uni 对象，避免 Wot UI 组件在 mount 前访问
+// createSelectorQuery / getCurrentPages 时报错。完整的 uni API（showToast、
+// request 等）由 src/uniapp-runtime 在 renderUniAppToDOM().mount() 时注入。
 if (typeof window !== 'undefined') {
   const existing = (window as any).uni || {}
   window.uni = Object.assign(existing, {
     createSelectorQuery,
+    getCurrentPages,
   })
   ;(window as any).getCurrentPages = getCurrentPages
 }

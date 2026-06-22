@@ -4,7 +4,10 @@ import { t as n } from "./chunks/vue.runtime.js";
 //#region demo/vendor-src/uniapp/entry.ts
 if (typeof window < "u") {
 	let n = window.uni || {};
-	window.uni = Object.assign(n, { createSelectorQuery: t }), window.getCurrentPages = e;
+	window.uni = Object.assign(n, {
+		createSelectorQuery: t,
+		getCurrentPages: e
+	}), window.getCurrentPages = e;
 }
 var r = { "wd-slider": ["wd-icon"] }, i = {
 	"wd-action-sheet": { path: "action-sheet" },
