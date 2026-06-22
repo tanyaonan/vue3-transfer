@@ -16,6 +16,7 @@ export default defineConfig({
       entry: {
         'vue3-transfer': resolve(import.meta.dirname, 'src/index.ts'),
         'react': resolve(import.meta.dirname, 'src/react.ts'),
+        'uniapp': resolve(import.meta.dirname, 'src/uniapp.ts'),
       },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.js`,
@@ -25,6 +26,12 @@ export default defineConfig({
       external: [],
       output: {
         chunkFileNames: 'chunks/[name].js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'uniapp[extname]'
+          }
+          return 'assets/[name][extname]'
+        },
         manualChunks(id) {
           if (id.includes('compiler-sfc.esm-browser')) {
             return 'compiler'

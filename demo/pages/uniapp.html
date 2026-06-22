@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UniApp Transfer Render Demo</title>
+  <link rel="stylesheet" href="../vendor/uniapp/styles/vendor.css">
+  <link rel="stylesheet" href="../../dist/uniapp.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    #app { min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="module">
+    import { Vue, createWotUIPlugin } from '../vendor/uniapp/vendor.js'
+    import { renderUniAppToDOM } from '../../dist/uniapp.js'
+
+    const response = await fetch('../components/counter-uniapp.vue')
+    if (!response.ok) {
+      throw new Error(`Failed to fetch counter-uniapp.vue: ${response.status} ${response.statusText}`)
+    }
+    const source = await response.text()
+
+    window.Vue = Vue
+
+    const rendered = await renderUniAppToDOM(source, {
+      filename: 'counter-uniapp.vue',
+      platform: 'h5',
+    })
+
+    rendered.mount('#app', {
+      plugins: [createWotUIPlugin()],
+    })
+
+    window.addEventListener('beforeunload', () => {
+      rendered.unmount()
+    })
+  </script>
+</body>
+</html>

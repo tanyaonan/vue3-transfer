@@ -224,6 +224,90 @@ renderReactToDOM(source, {
 > 当前 `renderReactToDOM` 返回的 `style` 字段通常为 `null`；
 > 使用 styled-components 时，样式由 styled-components 运行时自动注入和管理。
 
+### UniApp 动态渲染
+
+UniApp 版本与 Vue / React 版本保持统一入口：
+
+```ts
+import { renderUniAppToDOM } from 'vue3-transfer/uniapp'
+
+const source = `
+<template>
+  <view class="counter-page">
+    <wd-card title="Wot UI Counter">
+      <view class="card-header">
+        <text>UniApp Transfer Demo</text>
+        <wd-tag type="primary">H5 / App / 小程序</wd-tag>
+      </view>
+      <view class="count-display">
+        <text>Count: {{ count }}</text>
+      </view>
+      <view class="actions">
+        <wd-button type="primary" @click="count++">+1</wd-button>
+        <wd-button type="info" @click="reset">Reset</wd-button>
+      </view>
+    </wd-card>
+  </view>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+function reset() {
+  count.value = 0
+  uni.showToast({ title: '已重置', icon: 'none' })
+}
+</script>
+`
+
+const rendered = await renderUniAppToDOM(source, {
+  filename: 'Counter.vue',
+  platform: 'h5',
+})
+
+rendered.mount('#app')
+```
+
+> 注意：
+> - UniApp 版本默认关闭 Vapor 模式，编译产物保留虚拟 DOM 语义，可迁移到 App、微信小程序、支付宝小程序等平台。
+> - 浏览器预览时会自动注入 `<view>`、`<text>`、`<button>` 等内置组件的 H5 映射，以及最小化 `uni` API 存根。
+> - 示例使用 **Wot UI 2.x**（`@wot-ui/ui`）作为移动端组件库：2026 年社区推荐，覆盖 H5、App、微信小程序、支付宝小程序、钉钉小程序等 70+ 组件。
+> - 同一份源码已放在 `demo/uniapp-cli/pages/index/index.vue`，可按 `demo/uniapp-cli/README.md` 使用 `uni` 命令编译到各平台。
+
+## UniApp H5 运行时对齐
+
+浏览器端预览时，`renderUniAppToDOM` 会注入一组与真实 UniApp H5 产物对齐的运行时组件和 `uni` API 存根，保证同一套 SFC 在本地预览与真机 H5 表现一致。
+
+### 内置组件
+
+| 组件 | 对齐要点 |
+|------|----------|
+| `<view>` | `hoverClass` 默认 `none`，支持 `hover-stop-propagation` |
+| `<text>` | `\n` 换行渲染为 `<br>`，`selectable` 通过 CSS 控制，移除内联 `user-select` |
+| `<button>` | 仅保留标准 `type` / `size`，移除非标准的样式 class；`loading` 使用真实动画 |
+| `<input>` | 占位符使用独立 `<div class="uni-input-placeholder">`，不再透传到 `<input>`；`placeholder-style` 中的 `rpx` 按 `1rpx = 1/32rem` 转换；`number/digit/tel` 的 `inputmode` / `step` 与真实 H5 一致；统一 `autocomplete="off"` |
+| `<image>` | 默认 `draggable=false`，移除非标准的 `mode` class，事件对象结构与 H5 一致 |
+
+### 弹窗与反馈
+
+- `uni.showToast` / `uni.showLoading` / `uni.hideToast` / `uni.hideLoading`
+  - 图标 SVG 路径取自真实 UniApp H5 bundle。
+  - `icon: 'error'` 已支持，图标填充色跟随系统亮/暗模式。
+  - `mask: true` 时遮罩为透明且阻止 `touchmove` 穿透。
+- `uni.showModal`
+  - 按钮使用 `<div>` 而非 `<a>`，与真实 H5 DOM 一致。
+  - 每次调用都会把状态重置为默认值再合并当前 `options`，连续调用不会串状态。
+  - `editable` 模式下使用 `<textarea rows="1" class="uni-modal__textarea">`，输入内容在弹窗打开时重置为当前 `content`。
+  - 弹窗及内容区阻止 `touchmove` 穿透。
+
+### 网络、存储与导航
+
+- `uni.request`：支持 `abort`、超时、`success` / `fail` / `complete`。
+- `uni.setStorageSync` / `getStorageSync` / `removeStorageSync` / `clearStorageSync`：基于 `localStorage` 的同步存根。
+- `uni.navigateTo` / `redirectTo` / `switchTab` / `reLaunch`：基于 `console.warn` 的导航占位，便于本地预览时验证调用参数。
+- `uni.getSystemInfoSync` / `uni.getSystemInfo`：返回 `platform`、`windowWidth`、`windowHeight`、`pixelRatio` 等常用字段。
+- `uni.$on` / `uni.$emit` / `uni.$off`：全局事件总线存根。
+
 ## API
 
 ### `transformVueToJS(source, options)`
@@ -308,7 +392,7 @@ renderReactToDOM(source, {
 
 ## 演示
 
-构建后通过本地静态服务打开 `demo/pages/index.html`、`demo/pages/vue-mount.html` 或 `demo/pages/react.html`。由于 demo 使用 `fetch` 加载 `demo/components/counter.vue` / `demo/components/counter.jsx`，需要通过 HTTP 服务访问。
+构建后通过本地静态服务打开 `demo/pages/index.html`、`demo/pages/vue-mount.html`、`demo/pages/react.html` 或 `demo/pages/uniapp.html`。由于 demo 使用 `fetch` 加载 `demo/components/counter.vue` / `demo/components/counter.jsx` / `demo/components/counter-uniapp.vue`，需要通过 HTTP 服务访问。
 
 `demo/vendor/vue/` 目录下是 Vite 打包好的 Vue 运行时本地副本（`vendor.js`），避免 demo 运行时访问 CDN。Element Plus 组件和样式按组件拆分成独立 chunk，浏览器只加载当前 SFC 实际用到的组件和对应样式。
 
@@ -324,11 +408,13 @@ renderReactToDOM(source, {
 pnpm build
 pnpm build:vendor
 pnpm build:vendor-react
+pnpm build:vendor-uniapp
 # 启动本地静态服务，例如：
 python3 -m http.server 8767
 # Vue 直接渲染示例：http://localhost:8767/demo/pages/index.html
 # Vue 应用挂载示例：http://localhost:8767/demo/pages/vue-mount.html
 # React 直接渲染示例：http://localhost:8767/demo/pages/react.html
+# UniApp H5 渲染示例：http://localhost:8767/demo/pages/uniapp.html
 ```
 
-> 若 SFC / JSX 使用了未在对应 `componentRegistry` 中注册的组件，需先补充映射再重新执行 `pnpm build:vendor` 或 `pnpm build:vendor-react`。
+> 若 SFC / JSX 使用了未在对应 `componentRegistry` 中注册的组件，需先补充映射再重新执行 `pnpm build:vendor`、`pnpm build:vendor-react` 或 `pnpm build:vendor-uniapp`。
