@@ -1,11 +1,11 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { B as n, Bt as r, J as i, Jt as a, Nt as o, On as s, Ut as c, Wt as l, ct as u, fn as d, kt as f, sn as p, un as m, vn as h, wn as g, yt as _ } from "../shared/core.js";
+import { B as n, Bt as r, J as i, Jt as a, Nt as o, Ut as s, Wt as c, ct as l, fn as u, kn as d, kt as f, sn as p, un as m, vn as h, wn as g, yt as _ } from "../shared/core.js";
 import { Bt as v, Ht as y, Jn as b, Qn as x, Rt as S, Sr as C, Vt as w, Wn as T, br as E, dr as D, en as O, gr as k, lr as A, nr as j, pr as M, rn as N, sr as P, tt as F, ur as I, wr as L, zt as R } from "../shared/antd-core.js";
 import { l as ee } from "./auto-complete.js";
 import { d as te, f as ne, u as z } from "./breadcrumb.js";
 //#region node_modules/.pnpm/@rc-component+tabs@1.9.1_re_1a9d52bab4f3d078d50a5e00a34d7aca/node_modules/@rc-component/tabs/es/TabContext.js
-var B = /* @__PURE__ */ t(s()), re = /*#__PURE__*/ (0, B.createContext)(null), V = (e) => {
+var B = /* @__PURE__ */ t(d()), re = /*#__PURE__*/ (0, B.createContext)(null), V = (e) => {
 	let { activeTabOffset: t, horizontal: n, rtl: i, indicator: a = {} } = e, { size: o, align: s = "center" } = a, [c, l] = (0, B.useState)(), u = (0, B.useRef)(), d = B.useCallback((e) => typeof o == "function" ? o(e) : typeof o == "number" ? o : e, [o]);
 	function f() {
 		r.cancel(u.current);
@@ -450,7 +450,7 @@ var ye = (e, t) => {
 	}
 	return [t, n];
 }, xe = (e, t) => e[+!t], Se = /*#__PURE__*/ B.forwardRef((e, t) => {
-	let { className: n, style: r, id: i, animated: a, activeKey: s, rtl: c, extra: l, editable: u, locale: f, tabPosition: p, tabBarGutter: m, children: g, onTabClick: _, onTabScroll: v, indicator: y, classNames: b, styles: x } = e, { prefixCls: S, tabs: C } = B.useContext(re), w = (0, B.useRef)(null), T = (0, B.useRef)(null), E = (0, B.useRef)(null), D = (0, B.useRef)(null), O = (0, B.useRef)(null), k = (0, B.useRef)(null), A = (0, B.useRef)(null), j = p === "top" || p === "bottom", [M, N] = U(0, (e, t) => {
+	let { className: n, style: r, id: i, animated: a, activeKey: s, rtl: c, extra: l, editable: d, locale: f, tabPosition: p, tabBarGutter: m, children: g, onTabClick: _, onTabScroll: v, indicator: y, classNames: b, styles: x } = e, { prefixCls: S, tabs: C } = B.useContext(re), w = (0, B.useRef)(null), T = (0, B.useRef)(null), E = (0, B.useRef)(null), D = (0, B.useRef)(null), O = (0, B.useRef)(null), k = (0, B.useRef)(null), A = (0, B.useRef)(null), j = p === "top" || p === "bottom", [M, N] = U(0, (e, t) => {
 		j && v && v({ direction: e > t ? "left" : "right" });
 	}), [P, F] = U(0, (e, t) => {
 		!j && v && v({ direction: e > t ? "top" : "bottom" });
@@ -477,7 +477,7 @@ var ye = (e, t) => {
 	let [Ae, je] = le(K, X, j ? M : P, J, Y, he, {
 		...e,
 		tabs: C
-	}), Me = d((e = s) => {
+	}), Me = u((e = s) => {
 		let t = K.get(e) || {
 			width: 0,
 			height: 0,
@@ -497,7 +497,7 @@ var ye = (e, t) => {
 		Pe(r);
 	}, Re = (e, t) => {
 		let n = $.indexOf(e), r = C.find((t) => t.key === e);
-		fe(r?.closable, r?.closeIcon, u, r?.disabled) && (t.preventDefault(), t.stopPropagation(), u.onEdit("remove", {
+		fe(r?.closable, r?.closeIcon, d, r?.disabled) && (t.preventDefault(), t.stopPropagation(), d.onEdit("remove", {
 			key: e,
 			event: t
 		}), n === $.length - 1 ? Le(-1) : Le(1));
@@ -554,7 +554,7 @@ var ye = (e, t) => {
 				remove: x?.remove
 			},
 			closable: e.closable,
-			editable: u,
+			editable: d,
 			active: n === s,
 			focus: n === Ne,
 			renderWrapper: g,
@@ -656,7 +656,7 @@ var ye = (e, t) => {
 		ref: A,
 		prefixCls: S,
 		locale: f,
-		editable: u,
+		editable: d,
 		style: {
 			...He.length === 0 ? void 0 : Ve,
 			visibility: Xe ? "hidden" : null
@@ -761,11 +761,11 @@ function Q() {
 	}, Q.apply(this, arguments);
 }
 var Ee = 0, De = /* @__PURE__ */ B.forwardRef((e, t) => {
-	let { id: n, prefixCls: r = "rc-tabs", className: i, items: a, direction: s, activeKey: c, defaultActiveKey: u, editable: d, animated: f, tabPosition: m = "top", tabBarGutter: h, tabBarStyle: g, tabBarExtraContent: _, locale: v, more: y, destroyOnHidden: b, renderTabBar: x, onChange: S, onTabClick: C, onTabScroll: w, getPopupContainer: T, popupClassName: E, indicator: D, classNames: O, styles: k, ...A } = e, j = B.useMemo(() => (a || []).filter((e) => e && typeof e == "object" && "key" in e), [a]), M = s === "rtl", N = Te(f), [P, F] = (0, B.useState)(!1);
+	let { id: n, prefixCls: r = "rc-tabs", className: i, items: a, direction: s, activeKey: l, defaultActiveKey: u, editable: d, animated: f, tabPosition: m = "top", tabBarGutter: h, tabBarStyle: g, tabBarExtraContent: _, locale: v, more: y, destroyOnHidden: b, renderTabBar: x, onChange: S, onTabClick: C, onTabScroll: w, getPopupContainer: T, popupClassName: E, indicator: D, classNames: O, styles: k, ...A } = e, j = B.useMemo(() => (a || []).filter((e) => e && typeof e == "object" && "key" in e), [a]), M = s === "rtl", N = Te(f), [P, F] = (0, B.useState)(!1);
 	(0, B.useEffect)(() => {
-		F(l());
+		F(c());
 	}, []);
-	let [I, L] = p(u ?? j[0]?.key, c), [R, ee] = (0, B.useState)(() => j.findIndex((e) => e.key === I));
+	let [I, L] = p(u ?? j[0]?.key, l), [R, ee] = (0, B.useState)(() => j.findIndex((e) => e.key === I));
 	(0, B.useEffect)(() => {
 		let e = j.findIndex((e) => e.key === I);
 		e === -1 && (e = Math.max(0, Math.min(R, j.length - 1)), L(j[e]?.key)), ee(e);
@@ -1508,14 +1508,14 @@ var Me = (e) => {
 		cardGutter: e.marginXXS / 2
 	};
 }), Be = () => null, Ve = /* @__PURE__ */ e({ default: () => He }), He = /* @__PURE__ */ B.forwardRef((e, t) => {
-	let { type: r, className: a, rootClassName: s, size: c, onEdit: l, hideAdd: d, centered: f, addIcon: p, removeIcon: m, moreIcon: h, more: g, popupClassName: _, children: v, items: y, animated: x, style: S, indicatorSize: w, indicator: D, classNames: k, styles: A, destroyInactiveTabPane: j, destroyOnHidden: M, tabPlacement: N, tabPosition: P, ...F } = e, { prefixCls: I } = F, { getPrefixCls: L, direction: R, getPopupContainer: ee, className: te, style: ne, classNames: z, styles: re } = C("tabs"), { tabs: V } = B.useContext(E), H = L("tabs", I), ie = T(H), [U, ae] = ze(H, ie), W = B.useRef(null);
+	let { type: r, className: a, rootClassName: s, size: c, onEdit: u, hideAdd: d, centered: f, addIcon: p, removeIcon: m, moreIcon: h, more: g, popupClassName: _, children: v, items: y, animated: x, style: S, indicatorSize: w, indicator: D, classNames: k, styles: A, destroyInactiveTabPane: j, destroyOnHidden: M, tabPlacement: N, tabPosition: P, ...F } = e, { prefixCls: I } = F, { getPrefixCls: L, direction: R, getPopupContainer: ee, className: te, style: ne, classNames: z, styles: re } = C("tabs"), { tabs: V } = B.useContext(E), H = L("tabs", I), ie = T(H), [U, ae] = ze(H, ie), W = B.useRef(null);
 	B.useImperativeHandle(t, () => ({ nativeElement: W.current }));
 	let G;
 	r === "editable-card" && (G = {
 		onEdit: (e, { key: t, event: n }) => {
-			l?.(e === "add" ? n : t, e);
+			u?.(e === "add" ? n : t, e);
 		},
-		removeIcon: m ?? V?.removeIcon ?? /*#__PURE__*/ B.createElement(u, null),
+		removeIcon: m ?? V?.removeIcon ?? /*#__PURE__*/ B.createElement(l, null),
 		addIcon: (p ?? V?.addIcon) || /*#__PURE__*/ B.createElement(n, null),
 		showAdd: d !== !0
 	});
@@ -1850,7 +1850,7 @@ var Ue = ({ prefixCls: e, className: t, hoverable: n = !0, ...r }) => {
 		}, /*#__PURE__*/ B.createElement("span", null, e));
 	}));
 }, et = /*#__PURE__*/ B.forwardRef((e, t) => {
-	let { prefixCls: n, className: r, rootClassName: i, style: a, extra: s, headStyle: l = {}, bodyStyle: u = {}, title: d, loading: f, bordered: p, variant: m, size: h, type: _, cover: v, actions: y, tabList: x, children: S, activeTabKey: w, defaultActiveTabKey: T, tabBarExtraContent: E, hoverable: D, tabProps: k = {}, classNames: A, styles: j, ...M } = e, { getPrefixCls: N, direction: P, className: I, style: L, classNames: R, styles: te } = C("card"), [ne] = ee("card", m, p), z = O(h), re = {
+	let { prefixCls: n, className: r, rootClassName: i, style: a, extra: c, headStyle: l = {}, bodyStyle: u = {}, title: d, loading: f, bordered: p, variant: m, size: h, type: _, cover: v, actions: y, tabList: x, children: S, activeTabKey: w, defaultActiveTabKey: T, tabBarExtraContent: E, hoverable: D, tabProps: k = {}, classNames: A, styles: j, ...M } = e, { getPrefixCls: N, direction: P, className: I, style: L, classNames: R, styles: te } = C("card"), [ne] = ee("card", m, p), z = O(h), re = {
 		...e,
 		size: z,
 		variant: ne
@@ -1875,7 +1875,7 @@ var Ue = ({ prefixCls: e, className: t, hoverable: n = !0, ...r }) => {
 			...t
 		}))
 	}) : null;
-	if (d || s || ue) {
+	if (d || c || ue) {
 		let e = o(`${W}-head`, V.header), t = o(`${W}-head-title`, V.title), n = o(`${W}-extra`, V.extra), r = {
 			...l,
 			...H.header
@@ -1886,10 +1886,10 @@ var Ue = ({ prefixCls: e, className: t, hoverable: n = !0, ...r }) => {
 		}, /*#__PURE__*/ B.createElement("div", { className: `${W}-head-wrapper` }, d && /*#__PURE__*/ B.createElement("div", {
 			className: t,
 			style: H.title
-		}, d), s && /*#__PURE__*/ B.createElement("div", {
+		}, d), c && /*#__PURE__*/ B.createElement("div", {
 			className: n,
 			style: H.extra
-		}, s)), ue);
+		}, c)), ue);
 	}
 	let J = o(`${W}-cover`, V.cover), de = v ? /*#__PURE__*/ B.createElement("div", {
 		className: J,
@@ -1904,7 +1904,7 @@ var Ue = ({ prefixCls: e, className: t, hoverable: n = !0, ...r }) => {
 		actionClasses: Y,
 		actionStyle: H.actions,
 		actions: y
-	}) : null, ge = c(M, ["onTabChange"]), _e = o(W, I, {
+	}) : null, ge = s(M, ["onTabChange"]), _e = o(W, I, {
 		[`${W}-loading`]: f,
 		[`${W}-bordered`]: ne !== "borderless",
 		[`${W}-hoverable`]: D,

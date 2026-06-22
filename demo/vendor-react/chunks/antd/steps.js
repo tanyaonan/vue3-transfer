@@ -1,10 +1,10 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Ht as n, Jt as r, Nt as i, On as a, ct as o, et as s, kt as c, yt as l } from "../shared/core.js";
+import { Ht as n, Jt as r, Nt as i, ct as a, et as o, kn as s, kt as c, yt as l } from "../shared/core.js";
 import { Jn as u, Sr as d, Yn as f, en as p, gr as m, nn as h, or as g, pr as _, sr as v, tn as y } from "../shared/antd-core.js";
 import { o as b, u as x } from "./avatar.js";
 //#region node_modules/.pnpm/@rc-component+steps@1.2.2_r_f330360365f5c144a953a2e7cc8f5758/node_modules/@rc-component/steps/es/Rail.js
-var S = /* @__PURE__ */ t(a());
+var S = /* @__PURE__ */ t(s());
 function C(e) {
 	let { prefixCls: t, className: n, style: r, status: a } = e, o = `${t}-rail`;
 	return /*#__PURE__*/ S.createElement("div", {
@@ -945,7 +945,7 @@ var B = (e, t, n) => {
 	finishIconBgColor: e.wireframe ? e.colorBgContainer : e.controlItemBgActive,
 	finishIconBorderColor: e.wireframe ? e.colorPrimary : e.controlItemBgActive
 })), se = /* @__PURE__ */ e({ default: () => Q }), ce = { itemIcon: h }, Q = (e) => {
-	let { size: t, className: n, rootClassName: r, style: a, variant: c = "filled", type: l, classNames: m, styles: h, direction: _, orientation: v, responsive: C = !0, progressDot: w, labelPlacement: T, titlePlacement: E, ellipsis: D, offset: O = 0, items: k, percent: A, current: j = 0, onChange: M, iconRender: N, ...ee } = e, I = S.useContext(P), L = d("steps"), { getPrefixCls: R, direction: z, className: B, style: V } = L, H, U, W = {};
+	let { size: t, className: n, rootClassName: r, style: s, variant: c = "filled", type: l, classNames: m, styles: h, direction: _, orientation: v, responsive: C = !0, progressDot: w, labelPlacement: T, titlePlacement: E, ellipsis: D, offset: O = 0, items: k, percent: A, current: j = 0, onChange: M, iconRender: N, ...ee } = e, I = S.useContext(P), L = d("steps"), { getPrefixCls: R, direction: z, className: B, style: V } = L, H, U, W = {};
 	I ? W = {
 		root: I.rootComponent,
 		item: I.itemComponent
@@ -978,14 +978,14 @@ var B = (e, t, n) => {
 		H,
 		m
 	], [U, h], { props: fe }), he = (e, t) => {
-		let { item: n, index: r, active: i, components: { Icon: a } } = t, { status: c, icon: l } = n, u = null;
+		let { item: n, index: r, active: i, components: { Icon: s } } = t, { status: c, icon: l } = n, u = null;
 		if (Q || l) u = l;
 		else switch (c) {
 			case "finish":
-				u = /*#__PURE__*/ S.createElement(s, { className: `${re}-finish` });
+				u = /*#__PURE__*/ S.createElement(o, { className: `${re}-finish` });
 				break;
 			case "error":
-				u = /*#__PURE__*/ S.createElement(o, { className: `${re}-error` });
+				u = /*#__PURE__*/ S.createElement(a, { className: `${re}-error` });
 				break;
 			default: {
 				let e = /*#__PURE__*/ S.createElement("span", { className: `${re}-number` }, t.index + 1);
@@ -996,12 +996,12 @@ var B = (e, t, n) => {
 				}, e)), u = e;
 			}
 		}
-		let d = /*#__PURE__*/ S.createElement(a, null, u);
+		let d = /*#__PURE__*/ S.createElement(s, null, u);
 		return N ? d = N(d, {
 			index: r,
 			active: i,
 			item: n,
-			components: { Icon: a }
+			components: { Icon: s }
 		}) : f(le) && (d = le(d, {
 			index: r,
 			...n
@@ -1019,7 +1019,7 @@ var B = (e, t, n) => {
 	}, _e = Z === "panel" ? (e) => /*#__PURE__*/ S.createElement(S.Fragment, null, e, /*#__PURE__*/ S.createElement(F, { prefixCls: K })) : void 0, ve = {
 		[Y("items-offset")]: `${O}`,
 		...V,
-		...a
+		...s
 	}, ye = i(B, `${K}-${c}`, {
 		[`${K}-${Z}`]: Z === "dot" ? !1 : Z,
 		[`${K}-rtl`]: z === "rtl",

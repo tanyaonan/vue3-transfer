@@ -1,10 +1,10 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Nt as n, On as r, Ut as i, sn as a, st as o } from "../shared/core.js";
+import { Nt as n, Ut as r, kn as i, sn as a, st as o } from "../shared/core.js";
 import { Jn as s, Jt as c, Rn as l, Sr as u, _ as d, br as f, bt as p, er as m, sr as h, xt as g, zn as _ } from "../shared/antd-core.js";
 import { c as v, i as y, n as b } from "./avatar.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/popconfirm/style/index.js
-var x = /* @__PURE__ */ t(r()), S = h("Popconfirm", (e) => {
+var x = /* @__PURE__ */ t(i()), S = h("Popconfirm", (e) => {
 	let { componentCls: t, iconCls: n, antCls: r, zIndexPopup: i, colorText: a, colorWarning: o, marginXXS: s, marginXS: c, fontSize: l, fontWeightStrong: u, colorTextHeading: d } = e;
 	return { [t]: {
 		zIndex: i,
@@ -81,7 +81,7 @@ var x = /* @__PURE__ */ t(r()), S = h("Popconfirm", (e) => {
 		})
 	});
 }, T = /* @__PURE__ */ e({ default: () => E }), E = /* @__PURE__ */ x.forwardRef((e, t) => {
-	let { prefixCls: r, placement: c = "top", trigger: l, okType: d = "primary", icon: f = /*#__PURE__*/ x.createElement(o, null), children: p, overlayClassName: m, onOpenChange: h, overlayStyle: g, styles: _, arrow: y, classNames: w, ...T } = e, { getPrefixCls: E, className: D, style: O, classNames: k, styles: A, arrow: j, trigger: M } = u("popconfirm"), [N, P] = a(e.defaultOpen ?? !1, e.open), F = v(y, j), I = l || M || "click", L = (e) => {
+	let { prefixCls: i, placement: c = "top", trigger: l, okType: d = "primary", icon: f = /*#__PURE__*/ x.createElement(o, null), children: p, overlayClassName: m, onOpenChange: h, overlayStyle: g, styles: _, arrow: y, classNames: w, ...T } = e, { getPrefixCls: E, className: D, style: O, classNames: k, styles: A, arrow: j, trigger: M } = u("popconfirm"), [N, P] = a(e.defaultOpen ?? !1, e.open), F = v(y, j), I = l || M || "click", L = (e) => {
 		P(e), h?.(e);
 	}, R = () => {
 		L(!1);
@@ -90,7 +90,7 @@ var x = /* @__PURE__ */ t(r()), S = h("Popconfirm", (e) => {
 	}, V = (t) => {
 		let { disabled: n = !1 } = e;
 		n || L(t);
-	}, H = E("popconfirm", r), U = {
+	}, H = E("popconfirm", i), U = {
 		...e,
 		placement: c,
 		trigger: I,
@@ -101,7 +101,7 @@ var x = /* @__PURE__ */ t(r()), S = h("Popconfirm", (e) => {
 	}, [W, G] = s([k, w], [A, _], { props: U }), K = n(H, D, m, W.root);
 	return S(H), /*#__PURE__*/ x.createElement(b, {
 		arrow: F,
-		...i(T, ["title"]),
+		...r(T, ["title"]),
 		trigger: I,
 		placement: c,
 		onOpenChange: V,

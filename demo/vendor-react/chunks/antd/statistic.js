@@ -1,9 +1,9 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Ht as n, Nt as r, On as i, fn as a, yt as o } from "../shared/core.js";
+import { Ht as n, Nt as r, fn as i, kn as a, yt as o } from "../shared/core.js";
 import { Jn as s, Mn as c, Sr as l, Yn as u, Zn as d, pr as f, sr as p, tt as m } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/statistic/Number.js
-var h = /* @__PURE__ */ t(i()), g = (e) => {
+var h = /* @__PURE__ */ t(a()), g = (e) => {
 	let { value: t, formatter: n, precision: r, decimalSeparator: i, groupSeparator: a = "", prefixCls: o, className: s, style: c } = e, l;
 	if (u(n)) l = n(t);
 	else {
@@ -148,11 +148,11 @@ function w(e) {
 	return new Date(e).getTime();
 }
 var T = (e) => {
-	let { value: t, format: n = "HH:mm:ss", onChange: r, onFinish: i, type: o, ...s } = e, l = o === "countdown", [u, d] = h.useState(null), f = a(() => {
+	let { value: t, format: n = "HH:mm:ss", onChange: r, onFinish: a, type: o, ...s } = e, l = o === "countdown", [u, d] = h.useState(null), f = i(() => {
 		let e = Date.now(), n = w(t);
 		d({});
-		let a = l ? n - e : e - n;
-		return r?.(a), l && n < e ? (i?.(), !1) : !0;
+		let i = l ? n - e : e - n;
+		return r?.(i), l && n < e ? (a?.(), !1) : !0;
 	});
 	h.useEffect(() => {
 		let e, t = () => {

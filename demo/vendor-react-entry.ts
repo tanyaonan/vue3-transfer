@@ -3,6 +3,7 @@
 export { default as React } from 'react'
 export { default as ReactDOM } from 'react-dom/client'
 export * as ReactJSXRuntime from 'react/jsx-runtime'
+export { default as styled } from 'styled-components'
 
 interface ComponentMeta {
   /** antd 组件目录名，例如 button、card */

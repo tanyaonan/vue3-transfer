@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'node:path'
-import { readdirSync, statSync } from 'node:fs'
 
 /**
  * 提取 antd/es 下的第一级目录名，例如 button、card、_util、style。
@@ -28,34 +27,35 @@ const antdSharedDirs = new Set([
 ])
 
 /**
- * 动态获取 antd/es 下第一个非共享的组件目录，仅用于兜底命名。
- * 如果某个组件目录被 bundler 用作 React 运行时的宿主，
- * 直接命名为 antd/core 更语义化。
+ * 判断是否为 antd 组件下的 locale 子路径。
+ * locale 文件不跟随组件实现一起打包，而是进入 shared/antd-core，
+ * 避免使用 Card 等组件时把 calendar、color-picker 等整个组件代码也拉进来。
+ * style 子路径保留在对应组件 chunk 中，保持样式按需加载。
  */
-function getFirstAntdComponentDir(): string | null {
-  try {
-    const antdEs = resolve(__dirname, '../node_modules/antd/es')
-    const dirs = readdirSync(antdEs).filter((name) => {
-      const full = resolve(antdEs, name)
-      try {
-        return statSync(full).isDirectory() && !antdSharedDirs.has(name)
-      } catch {
-        return false
-      }
-    })
-    return dirs.sort()[0] ?? null
-  } catch {
-    return null
-  }
+function isAntdLocaleSubpath(id: string): boolean {
+  const parts = id.split(/[\\/]/)
+  const esIdx = parts.indexOf('es')
+  if (esIdx === -1 || parts[esIdx - 1] !== 'antd') return false
+  return parts.includes('locale')
 }
 
-const firstAntdComponentDir = getFirstAntdComponentDir()
+/**
+ * 提取应该输出为 antd/<component> chunk 的组件目录名。
+ * 仅包含组件实现文件（index.js 及其同目录实现、style），locale 子路径返回 null。
+ */
+function extractAntdComponentChunkName(id: string | null): string | null {
+  if (!id) return null
+  const p = extractAntdPath(id)
+  if (!p || antdSharedDirs.has(p)) return null
+  if (isAntdLocaleSubpath(id)) return null
+  return p
+}
 
 /**
  * 第三方依赖中需要统一进 shared/core 的包，避免被打散到各个 antd 组件 chunk。
  */
 const corePackagePattern =
-  /node_modules[\\/](?:react|react-dom|scheduler|@babel[\\/]standalone|@ant-design[\\/](?:colors|cssinjs(?:-utils)?|fast-color|icons(?:-svg)?|react-slick)|@ctrl[\\/]tinycolor|classnames|copy-to-clipboard|dayjs|rc-[a-z-]+|resize-observer-polyfill|scroll-into-view-if-needed|throttle-debounce|@rc-component[\\/]|warning|compute-scroll-into-view|toggle-selection|is-mobile|dom-align|@babel[\\/]runtime|async-validator|@emotion|stylis|memoize-one|rc-util|react-is|@floating-ui|object-assign|use-sync-external-store|js-tokens|loose-envify|prop-types|tiny-invariant|tiny-warning|@kurkle|chart\.js)[\\/]/
+  /node_modules[\\/](?:react|react-dom|scheduler|@babel[\\/]standalone|@ant-design[\\/](?:colors|cssinjs(?:-utils)?|fast-color|icons(?:-svg)?|react-slick)|@ctrl[\\/]tinycolor|classnames|copy-to-clipboard|dayjs|rc-[a-z-]+|resize-observer-polyfill|scroll-into-view-if-needed|throttle-debounce|@rc-component[\\/]|warning|compute-scroll-into-view|toggle-selection|is-mobile|dom-align|@babel[\\/]runtime|async-validator|@emotion|stylis|memoize-one|rc-util|react-is|@floating-ui|object-assign|use-sync-external-store|js-tokens|loose-envify|prop-types|tiny-invariant|tiny-warning|@kurkle|chart\.js|styled-components|css-to-react-native|csstype)[\\/]/
 
 export default defineConfig({
   build: {
@@ -86,18 +86,18 @@ export default defineConfig({
               name: 'shared/antd-core',
               test: (id: string) => {
                 const p = extractAntdPath(id)
-                return p !== null && antdSharedDirs.has(p)
+                if (!p) return false
+                if (antdSharedDirs.has(p)) return true
+                return isAntdLocaleSubpath(id)
               },
               priority: 1,
             },
             {
               name: (id: string) => {
-                const p = extractAntdPath(id)
-                if (!p || antdSharedDirs.has(p)) return null
-                if (p === firstAntdComponentDir) return 'antd/core'
-                return `antd/${p}`
+                const p = extractAntdComponentChunkName(id)
+                return p ? `antd/${p}` : null
               },
-              test: (id: string) => extractAntdPath(id) !== null,
+              test: (id: string) => extractAntdComponentChunkName(id) !== null,
               priority: 0,
             },
           ],

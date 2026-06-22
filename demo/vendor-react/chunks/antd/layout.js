@@ -1,10 +1,10 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Mt as n, Nt as r, On as i, Ut as a, wn as o } from "../shared/core.js";
+import { Mt as n, Nt as r, Ut as i, kn as a, wn as o } from "../shared/core.js";
 import { Sr as s, br as c } from "../shared/antd-core.js";
 import { c as l, l as u, o as d, s as f } from "./breadcrumb.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/layout/hooks/useHasSider.js
-var p = /* @__PURE__ */ t(i());
+var p = /* @__PURE__ */ t(a());
 function m(e, t, n) {
 	return typeof n == "boolean" ? n : e.length ? !0 : o(t).some((e) => e.type === d);
 }
@@ -23,9 +23,9 @@ var h = ({ suffixCls: e, tagName: t, displayName: n }) => (n) => /* @__PURE__ */
 		...s
 	});
 }), _ = /*#__PURE__*/ p.forwardRef((e, t) => {
-	let { direction: i } = p.useContext(c), [o, d] = p.useState([]), { prefixCls: f, className: h, rootClassName: g, children: _, hasSider: v, tagName: y, style: b, ...x } = e, S = a(x, ["suffixCls"]), { getPrefixCls: C, className: w, style: T } = s("layout"), E = C("layout", f), D = m(o, _, v), [O, k] = l(E), A = r(E, {
+	let { direction: a } = p.useContext(c), [o, d] = p.useState([]), { prefixCls: f, className: h, rootClassName: g, children: _, hasSider: v, tagName: y, style: b, ...x } = e, S = i(x, ["suffixCls"]), { getPrefixCls: C, className: w, style: T } = s("layout"), E = C("layout", f), D = m(o, _, v), [O, k] = l(E), A = r(E, {
 		[`${E}-has-sider`]: D,
-		[`${E}-rtl`]: i === "rtl"
+		[`${E}-rtl`]: a === "rtl"
 	}, w, h, g, O, k), j = p.useMemo(() => ({ siderHook: {
 		addSider: (e) => {
 			d((t) => [].concat(n(t), [e]));

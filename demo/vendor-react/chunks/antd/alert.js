@@ -1,9 +1,9 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Ht as n, Nt as r, On as i, St as a, at as o, bt as s, ct as c, kt as l, lt as u, ot as d, pn as f, st as p, ut as m, xt as h } from "../shared/core.js";
+import { Ht as n, Nt as r, St as i, at as a, bt as o, ct as s, kn as c, kt as l, lt as u, ot as d, pn as f, st as p, ut as m, xt as h } from "../shared/core.js";
 import { Jn as g, Qn as _, Sr as v, Xn as y, dr as b, nr as x, pr as S, sr as C } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/alert/style/index.js
-var w = /* @__PURE__ */ t(i()), T = (e, t, n) => ({
+var w = /* @__PURE__ */ t(c()), T = (e, t, n) => ({
 	background: e,
 	[`${n}-icon`]: { color: t }
 }), E = (e) => {
@@ -143,11 +143,11 @@ var w = /* @__PURE__ */ t(i()), T = (e, t, n) => ({
 		style: i
 	}, t ?? l[n]);
 }, te = (e) => {
-	let { isClosable: t, prefixCls: n, closeIcon: i, handleClose: a, ariaProps: o, className: s, style: l } = e, u = i === !0 || i === void 0 ? /*#__PURE__*/ w.createElement(c, null) : i;
+	let { isClosable: t, prefixCls: n, closeIcon: i, handleClose: a, ariaProps: o, className: c, style: l } = e, u = i === !0 || i === void 0 ? /*#__PURE__*/ w.createElement(s, null) : i;
 	return t ? /*#__PURE__*/ w.createElement("button", {
 		type: "button",
 		onClick: a,
-		className: r(`${n}-close-icon`, s),
+		className: r(`${n}-close-icon`, c),
 		tabIndex: 0,
 		style: l,
 		...o
@@ -248,12 +248,12 @@ var w = /* @__PURE__ */ t(i()), T = (e, t, n) => ({
 }), j = /*#__PURE__*/ function(e) {
 	function t() {
 		var e;
-		return a(this, t), e = o(this, t, arguments), e.state = {
+		return i(this, t), e = a(this, t, arguments), e.state = {
 			error: void 0,
 			info: {}
 		}, e;
 	}
-	return s(t, e), h(t, [{
+	return o(t, e), h(t, [{
 		key: "componentDidCatch",
 		value: function(e, t) {
 			this.setState({

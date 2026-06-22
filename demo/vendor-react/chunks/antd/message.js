@@ -1,9 +1,9 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Mt as n, Nt as r, On as i, Pt as a } from "../shared/core.js";
+import { Mt as n, Nt as r, Pt as i, kn as a } from "../shared/core.js";
 import { Dn as o, Sr as s, Tn as c, Wn as l, an as u, br as d, cn as f, j as p, ln as m, on as h, sn as g, un as _, wn as v } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/message/PureList.js
-var y = /* @__PURE__ */ t(i()), b = (e) => {
+var y = /* @__PURE__ */ t(a()), b = (e) => {
 	let { items: t, classNames: n, style: i } = e, { getPrefixCls: a } = s("message"), o = a("message"), c = l(o), [u, d] = _(o, c), f = `${o}-notice`, p = t.map((e) => {
 		let { content: t, duration: n, key: r, type: i } = e, a = i ? `${f}-icon-${i}` : void 0;
 		return {
@@ -81,7 +81,7 @@ var D = /*#__PURE__*/ y.forwardRef((e, t) => {
 	if (!S) {
 		let e = document.createDocumentFragment(), t = { fragment: e };
 		S = t, C(() => {
-			a(/*#__PURE__*/ y.createElement(O, { ref: (e) => {
+			i(/*#__PURE__*/ y.createElement(O, { ref: (e) => {
 				let { instance: n, sync: r } = e || {};
 				Promise.resolve().then(() => {
 					!t.instance && n && (t.instance = n, t.sync = r, k());

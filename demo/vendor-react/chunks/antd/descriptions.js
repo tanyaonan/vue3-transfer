@@ -1,6 +1,6 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Nt as n, On as r, kt as i, wn as a, yt as o } from "../shared/core.js";
+import { Nt as n, kn as r, kt as i, wn as a, yt as o } from "../shared/core.js";
 import { Jn as s, Sr as c, Zn as l, en as u, er as d, gr as f, pr as p, sr as m, v as h } from "../shared/antd-core.js";
 import { u as g } from "./avatar.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/descriptions/constant.js

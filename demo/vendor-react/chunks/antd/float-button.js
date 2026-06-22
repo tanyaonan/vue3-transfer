@@ -1,13 +1,13 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { M as n, Nt as r, On as i, Ut as a, Z as o, ct as s, fn as c, kt as l, pn as u, sn as d, yt as f } from "../shared/core.js";
+import { M as n, Nt as r, Ut as i, Z as a, ct as o, fn as s, kn as c, kt as l, pn as u, sn as d, yt as f } from "../shared/core.js";
 import { Cr as p, Gn as m, Jn as h, Kn as g, Sr as _, Wn as ee, Wt as v, br as y, fn as te, nr as b, or as x, pr as S, s as C, sr as w, xt as T } from "../shared/antd-core.js";
 import { o as E } from "./avatar.js";
 import { t as ne } from "./badge.js";
 import { r as D } from "./dropdown.js";
 import { t as O } from "./flex.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/float-button/context.js
-var k = /* @__PURE__ */ t(i()), A = /*#__PURE__*/ k.createContext(null), j = (e) => {
+var k = /* @__PURE__ */ t(c()), A = /*#__PURE__*/ k.createContext(null), j = (e) => {
 	let { componentCls: t, floatButtonSize: n, iconCls: r, antCls: i, floatButtonIconSize: a } = e, [o, s] = x(i, "float-btn"), c = `${t}-badge`, u = Math.SQRT2, d = (u - 1) / u, f = e.calc(e.borderRadius).mul(d).equal(), p = e.calc(e.controlHeight).div(2).mul(d).equal();
 	return { [t]: [{ [o("size")]: l(n) }, {
 		flexDirection: "column",
@@ -125,7 +125,7 @@ var k = /* @__PURE__ */ t(i()), A = /*#__PURE__*/ k.createContext(null), j = (e)
 		v(e)
 	];
 }, () => ({}), { order: -998 }), N = "float-btn", P = /* @__PURE__ */ k.forwardRef((e, t) => {
-	let { prefixCls: i, className: o, rootClassName: s, style: c, type: l = "default", shape: u = "circle", icon: d, description: f, content: p, tooltip: m, badge: g = {}, classNames: _, styles: v, ...b } = e, { getPrefixCls: x, direction: S } = k.useContext(y), w = k.useContext(A), D = x(N, i), O = ee(D), { shape: j, individual: M, classNames: P, styles: F } = w || {}, I = j || u, L = M ?? !0, R = p ?? f, z = {
+	let { prefixCls: a, className: o, rootClassName: s, style: c, type: l = "default", shape: u = "circle", icon: d, description: f, content: p, tooltip: m, badge: g = {}, classNames: _, styles: v, ...b } = e, { getPrefixCls: x, direction: S } = k.useContext(y), w = k.useContext(A), D = x(N, a), O = ee(D), { shape: j, individual: M, classNames: P, styles: F } = w || {}, I = j || u, L = M ?? !0, R = p ?? f, z = {
 		...e,
 		type: l,
 		shape: I
@@ -139,7 +139,7 @@ var k = /* @__PURE__ */ t(i()), A = /*#__PURE__*/ k.createContext(null), j = (e)
 	], [F, v], { props: z }), U = !R && !d ? /*#__PURE__*/ k.createElement(n, null) : d, [ae] = te("FloatButton", c?.zIndex), W = {
 		...c,
 		zIndex: ae
-	}, G = a(g, [
+	}, G = i(g, [
 		"title",
 		"children",
 		"status",
@@ -165,7 +165,7 @@ var k = /* @__PURE__ */ t(i()), A = /*#__PURE__*/ k.createContext(null), j = (e)
 		_skipSemantic: !0
 	}, R, K);
 	return q && (J = /*#__PURE__*/ k.createElement(E, { ...q }, J)), J;
-}), F = /*#__PURE__*/ k.createElement(o, null), I = /*#__PURE__*/ k.forwardRef((e, t) => {
+}), F = /*#__PURE__*/ k.createElement(a, null), I = /*#__PURE__*/ k.forwardRef((e, t) => {
 	let { backTopIcon: n } = _("floatButton"), { prefixCls: i, className: a, type: o = "default", shape: s = "circle", visibilityHeight: c = 400, icon: l, target: d, onClick: f, duration: h = 450, ...ee } = e, v = l ?? n ?? F, [te, x] = (0, k.useState)(c === 0), S = k.useRef(null);
 	k.useImperativeHandle(t, () => ({ nativeElement: S.current }));
 	let C = () => S.current?.ownerDocument || window, w = p((e) => {
@@ -199,12 +199,12 @@ var k = /* @__PURE__ */ t(i()), A = /*#__PURE__*/ k.createContext(null), j = (e)
 		className: r(a, e)
 	}));
 }), L = (e) => {
-	let { prefixCls: t, className: i, style: a, classNames: o, styles: l, rootClassName: u, shape: f = "circle", type: p = "default", placement: m, icon: g = /*#__PURE__*/ k.createElement(n, null), closeIcon: v, trigger: y, children: x, onOpenChange: S, open: C, onClick: w, ...T } = e, { direction: E, getPrefixCls: ne, closeIcon: j, classNames: M, styles: F, className: I, style: L } = _("floatButtonGroup"), R = v ?? j ?? /*#__PURE__*/ k.createElement(s, null), z = ne(N, t), B = ee(z), [V, ie] = re(z, B), H = `${z}-group`, U = y && ["click", "hover"].includes(y), [ae] = te("FloatButton", a?.zIndex), W = k.useRef(null), G = [
+	let { prefixCls: t, className: i, style: a, classNames: c, styles: l, rootClassName: u, shape: f = "circle", type: p = "default", placement: m, icon: g = /*#__PURE__*/ k.createElement(n, null), closeIcon: v, trigger: y, children: x, onOpenChange: S, open: C, onClick: w, ...T } = e, { direction: E, getPrefixCls: ne, closeIcon: j, classNames: M, styles: F, className: I, style: L } = _("floatButtonGroup"), R = v ?? j ?? /*#__PURE__*/ k.createElement(o, null), z = ne(N, t), B = ee(z), [V, ie] = re(z, B), H = `${z}-group`, U = y && ["click", "hover"].includes(y), [ae] = te("FloatButton", a?.zIndex), W = k.useRef(null), G = [
 		"top",
 		"left",
 		"right",
 		"bottom"
-	].includes(m) ? m : "top", [K, q] = d(!1, C), J = y === "hover", Y = y === "click", X = c((e) => {
+	].includes(m) ? m : "top", [K, q] = d(!1, C), J = y === "hover", Y = y === "click", X = s((e) => {
 		K !== e && (q(e), S?.(e));
 	}), oe = () => {
 		J && X(!0);
@@ -226,7 +226,7 @@ var k = /* @__PURE__ */ t(i()), A = /*#__PURE__*/ k.createContext(null), j = (e)
 		shape: f,
 		type: p,
 		placement: G
-	}, [Q, $] = h([M, o], [F, l], { props: le }), ue = k.useMemo(() => ({
+	}, [Q, $] = h([M, c], [F, l], { props: le }), ue = k.useMemo(() => ({
 		shape: f,
 		individual: Z,
 		classNames: {

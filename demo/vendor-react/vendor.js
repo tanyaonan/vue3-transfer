@@ -1,8 +1,8 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { r as e } from "./chunks/rolldown-runtime.js";
-import { En as t, On as n, Tn as r } from "./chunks/shared/core.js";
+import { Dn as t, En as n, Tn as r, kn as i } from "./chunks/shared/core.js";
 //#region demo/vendor-react-entry.ts
-var i = /* @__PURE__ */ e(n(), 1), a = /* @__PURE__ */ e(t(), 1), o = /* @__PURE__ */ e(r(), 1), s = {
+var a = /* @__PURE__ */ e(i(), 1), o = /* @__PURE__ */ e(t(), 1), s = /* @__PURE__ */ e(n(), 1), c = {
 	Button: { path: "button" },
 	"Button.Group": { path: "button" },
 	Icon: { path: "icon" },
@@ -79,24 +79,24 @@ var i = /* @__PURE__ */ e(n(), 1), a = /* @__PURE__ */ e(t(), 1), o = /* @__PURE
 	message: { path: "message" },
 	notification: { path: "notification" }
 };
-function c(e) {
+function l(e) {
 	let t = /* @__PURE__ */ new Set(), n = e.matchAll(/import\s+\{([^}]+)\}\s+from\s+['"]antd['"];?/gi);
 	for (let e of n) for (let n of e[1].split(",")) {
 		let e = n.trim().split(/\s+as\s+/i).pop()?.trim();
 		e && t.add(e);
 	}
 	let r = e.matchAll(/<\s*([A-Z][A-Za-z0-9]*)/g);
-	for (let e of r) s[e[1]] && t.add(e[1]);
+	for (let e of r) c[e[1]] && t.add(e[1]);
 	return [...t];
 }
-async function l(e) {
+async function u(e) {
 	let t = /* @__PURE__ */ new Set();
 	for (let n of e) {
-		let e = s[n];
+		let e = c[n];
 		e && t.add(e.path);
 	}
 	let n = /* #__PURE__ */ Object.assign({
-		"../node_modules/antd/es/affix/index.js": () => import("./chunks/antd/anchor.js").then((e) => e.n),
+		"../node_modules/antd/es/affix/index.js": () => import("./chunks/antd/affix.js").then((e) => e.n),
 		"../node_modules/antd/es/alert/index.js": () => import("./chunks/antd/alert.js").then((e) => e.t),
 		"../node_modules/antd/es/anchor/index.js": () => import("./chunks/antd/anchor.js").then((e) => e.t),
 		"../node_modules/antd/es/app/index.js": () => import("./chunks/shared/antd-core.js").then((e) => e.A),
@@ -182,10 +182,10 @@ async function l(e) {
 			continue;
 		}
 		let a = await t();
-		for (let t of e) s[t]?.path === i && (a.default ? r[t] = a.default : a[t] && (r[t] = a[t]));
+		for (let t of e) c[t]?.path === i && (a.default ? r[t] = a.default : a[t] && (r[t] = a[t]));
 	}
 	return r;
 }
 //#endregion
-var u = i.default, d = a.default;
-export { u as React, d as ReactDOM, o as ReactJSXRuntime, l as loadAntd, c as resolveAntdTags };
+var d = a.default, f = o.default;
+export { d as React, f as ReactDOM, s as ReactJSXRuntime, u as loadAntd, l as resolveAntdTags, r as styled };

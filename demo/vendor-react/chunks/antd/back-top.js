@@ -1,9 +1,9 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Nt as n, On as r, Ut as i, Z as a, kt as o, yt as s } from "../shared/core.js";
+import { Nt as n, Ut as r, Z as i, kn as a, kt as o, yt as s } from "../shared/core.js";
 import { Cr as c, Gn as l, Kn as u, Mn as d, Wn as f, br as p, nr as m, pr as h, sr as g } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/back-top/style/index.js
-var _ = /* @__PURE__ */ t(r()), v = (e) => {
+var _ = /* @__PURE__ */ t(a()), v = (e) => {
 	let { componentCls: t, backTopFontSize: n, backTopSize: r, zIndexPopup: i } = e;
 	return { [t]: {
 		...h(e),
@@ -54,7 +54,7 @@ var _ = /* @__PURE__ */ t(r()), v = (e) => {
 	});
 	return [v(c), y(c)];
 }, (e) => ({ zIndexPopup: e.zIndexBase + 10 })), x = /* @__PURE__ */ e({ default: () => S }), S = (e) => {
-	let { prefixCls: t, className: r, rootClassName: o, visibilityHeight: s = 400, target: h, onClick: g, duration: v = 450, children: y } = e, [x, S] = _.useState(s === 0), C = _.useRef(null), w = () => C.current?.ownerDocument || window, T = c((e) => {
+	let { prefixCls: t, className: a, rootClassName: o, visibilityHeight: s = 400, target: h, onClick: g, duration: v = 450, children: y } = e, [x, S] = _.useState(s === 0), C = _.useRef(null), w = () => C.current?.ownerDocument || window, T = c((e) => {
 		S(u(e.target) >= s);
 	});
 	_.useEffect(() => {
@@ -68,14 +68,14 @@ var _ = /* @__PURE__ */ t(r()), v = (e) => {
 			getContainer: h || w,
 			duration: v
 		}), g?.(e);
-	}, { getPrefixCls: D, direction: O } = _.useContext(p), k = D("back-top", t), A = D(), [j, M] = b(k, f(k)), N = n(j, M, k, { [`${k}-rtl`]: O === "rtl" }, r, o), P = i(e, [
+	}, { getPrefixCls: D, direction: O } = _.useContext(p), k = D("back-top", t), A = D(), [j, M] = b(k, f(k)), N = n(j, M, k, { [`${k}-rtl`]: O === "rtl" }, a, o), P = r(e, [
 		"prefixCls",
 		"className",
 		"rootClassName",
 		"children",
 		"visibilityHeight",
 		"target"
-	]), F = /*#__PURE__*/ _.createElement("div", { className: `${k}-content` }, /*#__PURE__*/ _.createElement("div", { className: `${k}-icon` }, /*#__PURE__*/ _.createElement(a, null)));
+	]), F = /*#__PURE__*/ _.createElement("div", { className: `${k}-content` }, /*#__PURE__*/ _.createElement("div", { className: `${k}-icon` }, /*#__PURE__*/ _.createElement(i, null)));
 	return /*#__PURE__*/ _.createElement("div", {
 		...P,
 		className: N,

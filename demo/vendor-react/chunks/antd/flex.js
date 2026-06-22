@@ -1,9 +1,9 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Nt as n, On as r, Ut as i, yt as a } from "../shared/core.js";
+import { Nt as n, Ut as r, kn as i, yt as a } from "../shared/core.js";
 import { Xn as o, br as s, c, gn as l, sr as u } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/flex/utils.js
-var d = /* @__PURE__ */ t(r()), f = [
+var d = /* @__PURE__ */ t(i()), f = [
 	"wrap",
 	"nowrap",
 	"wrap-reverse"
@@ -94,7 +94,7 @@ var d = /* @__PURE__ */ t(r()), f = [
 		C(i)
 	];
 }, () => ({}), { resetStyle: !1 }), T = /* @__PURE__ */ e({ default: () => E }), E = /*#__PURE__*/ d.forwardRef((e, t) => {
-	let { prefixCls: r, rootClassName: a, className: u, style: f, flex: p, gap: m, vertical: h, orientation: g, component: _ = "div", children: y, ...b } = e, { flex: x, direction: S, getPrefixCls: C } = d.useContext(s), T = C("flex", r), [E, D] = w(T), [, O] = l(g, h ?? x?.vertical), k = n(u, a, x?.className, T, E, D, v(T, {
+	let { prefixCls: i, rootClassName: a, className: u, style: f, flex: p, gap: m, vertical: h, orientation: g, component: _ = "div", children: y, ...b } = e, { flex: x, direction: S, getPrefixCls: C } = d.useContext(s), T = C("flex", i), [E, D] = w(T), [, O] = l(g, h ?? x?.vertical), k = n(u, a, x?.className, T, E, D, v(T, {
 		...e,
 		vertical: O
 	}), {
@@ -109,7 +109,7 @@ var d = /* @__PURE__ */ t(r()), f = [
 		ref: t,
 		className: k,
 		style: A,
-		...i(b, [
+		...r(b, [
 			"justify",
 			"wrap",
 			"align"

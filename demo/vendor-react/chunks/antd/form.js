@@ -1,12 +1,12 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Bt as n, Lt as r, Mt as i, Nt as a, On as o, Rt as s, Ut as c, _n as l, cn as u, en as d, hn as f, j as p, kt as m, ln as h, lt as g, pn as _, rt as v, st as y, ut as b, wn as x, yt as S } from "../shared/core.js";
+import { Bt as n, Lt as r, Mt as i, Nt as a, Rt as o, Ut as s, _n as c, cn as l, en as u, hn as d, j as f, kn as p, kt as m, ln as h, lt as g, pn as _, rt as v, st as y, ut as b, wn as x, yt as S } from "../shared/core.js";
 import { An as C, Gt as w, It as T, Jn as E, Mn as D, On as O, Qn as k, Rn as A, Sr as j, Un as M, Wn as N, Xn as P, Yn as F, _t as I, at as L, b as R, br as z, cr as B, ct as ee, dt as te, en as ne, ft as re, gt as ie, ht as V, in as ae, kn as oe, lt as se, nr as H, or as ce, ot as U, pr as W, pt as G, qn as le, rr as ue, s as de, sr as K, st as q, ut as fe, vt as pe, zn as me } from "../shared/antd-core.js";
 import { o as he } from "./avatar.js";
 import { C as J, S as ge, w as Y, x as _e } from "./calendar.js";
 import { a as ve, r as ye } from "./col.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/form/hooks/useDebounce.js
-var X = /* @__PURE__ */ t(o());
+var X = /* @__PURE__ */ t(p());
 function Z(e) {
 	let [t, n] = X.useState(e);
 	return X.useEffect(() => {
@@ -501,17 +501,17 @@ function Re(e) {
 var ze = () => {
 	let { itemRef: e } = X.useContext(L), t = X.useRef({});
 	return (n, r) => {
-		let i = r && k(r) && f(r), a = n.join("_");
+		let i = r && k(r) && d(r), a = n.join("_");
 		return (t.current.name !== a || t.current.originRef !== i) && (t.current.name = a, t.current.originRef = i, t.current.ref = _(e(n), i)), t.current.ref;
 	};
 }, Be = (e) => {
 	let { formItemCls: t } = e;
 	return { "@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)": { [`${t}-control`]: { display: "flex" } } };
 }, Ve = B(["Form", "item-item"], (e, { rootPrefixCls: t }) => Be(Ae(e, t))), He = 24, Ue = (e) => {
-	let { prefixCls: t, status: n, labelCol: o, wrapperCol: c, children: l, errors: u, warnings: d, _internalItemRender: f, extra: p, help: m, fieldId: g, marginBottom: _, onErrorVisibleChanged: v, label: y } = e, b = `${t}-item`, x = X.useContext(L), { classNames: S, styles: C } = x, w = X.useMemo(() => {
+	let { prefixCls: t, status: n, labelCol: s, wrapperCol: c, children: l, errors: u, warnings: d, _internalItemRender: f, extra: p, help: m, fieldId: g, marginBottom: _, onErrorVisibleChanged: v, label: y } = e, b = `${t}-item`, x = X.useContext(L), { classNames: S, styles: C } = x, w = X.useMemo(() => {
 		let e = { ...c || x.wrapperCol || {} };
-		return y === null && !o && !c && x.labelCol && [void 0].concat(i(R)).forEach((t) => {
-			let n = t ? [t] : [], i = s(x.labelCol, n), a = k(i) ? i : {}, o = s(e, n), c = k(o) ? o : {};
+		return y === null && !s && !c && x.labelCol && [void 0].concat(i(R)).forEach((t) => {
+			let n = t ? [t] : [], i = o(x.labelCol, n), a = k(i) ? i : {}, s = o(e, n), c = k(s) ? s : {};
 			"span" in a && !("offset" in c) && a.span < He && (e = r(e, [].concat(n, ["offset"]), a.span));
 		}), e;
 	}, [
@@ -519,7 +519,7 @@ var ze = () => {
 		x.wrapperCol,
 		x.labelCol,
 		y,
-		o
+		s
 	]), T = a(`${b}-control`, w.className), E = X.useMemo(() => {
 		let { labelCol: e, wrapperCol: t, ...n } = x;
 		return n;
@@ -561,9 +561,9 @@ var ze = () => {
 		className: T
 	}, z), /*#__PURE__*/ X.createElement(Ve, { prefixCls: t }));
 }, We = ({ prefixCls: e, label: t, htmlFor: n, labelCol: r, labelAlign: i, colon: o, required: s, requiredMark: c, tooltip: l, vertical: u }) => {
-	let [d] = A("Form"), { labelAlign: f, labelCol: m, labelWrap: h, colon: g, classNames: _, styles: v, tooltip: y } = X.useContext(L);
+	let [d] = A("Form"), { labelAlign: p, labelCol: m, labelWrap: h, colon: g, classNames: _, styles: v, tooltip: y } = X.useContext(L);
 	if (!t) return null;
-	let b = r || m || {}, x = i || f, S = `${e}-item-label`, C = a(S, x === "left" && `${S}-left`, b.className, { [`${S}-wrap`]: !!h }), w = t, T = o === !0 || g !== !1 && o !== !1;
+	let b = r || m || {}, x = i || p, S = `${e}-item-label`, C = a(S, x === "left" && `${S}-left`, b.className, { [`${S}-wrap`]: !!h }), w = t, T = o === !0 || g !== !1 && o !== !1;
 	T && !u && typeof t == "string" && t.trim() && (w = t.replace(/[:|：]\s*$/, ""));
 	let E = de(l, y);
 	if (E) {
@@ -573,7 +573,7 @@ var ze = () => {
 				e.preventDefault();
 			},
 			tabIndex: -1
-		}, E.icon || E.children || /*#__PURE__*/ X.createElement(p, null)));
+		}, E.icon || E.children || /*#__PURE__*/ X.createElement(f, null)));
 		w = /*#__PURE__*/ X.createElement(X.Fragment, null, w, t);
 	}
 	let D = c === "optional", O = F(c), k = c === !1;
@@ -633,7 +633,7 @@ function Ke({ children: e, errors: t, warnings: n, hasFeedback: r, validateStatu
 //#endregion
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/form/FormItem/ItemHolder.js
 function qe(e) {
-	let { prefixCls: t, className: n, rootClassName: r, style: i, help: o, errors: s, warnings: l, validateStatus: u, meta: f, hasFeedback: p, hidden: m, children: g, fieldId: _, required: v, isRequired: y, onSubItemMetaChange: b, layout: x, name: S, ...C } = e, w = `${t}-item`, { requiredMark: T, layout: E } = X.useContext(L), D = x || E, O = D === "vertical", k = X.useRef(null), A = Z(s), j = Z(l), M = P(o) && o !== !1, N = !!(M || s.length || l.length), F = !!k.current && d(k.current), [I, R] = X.useState(null);
+	let { prefixCls: t, className: n, rootClassName: r, style: i, help: o, errors: c, warnings: l, validateStatus: d, meta: f, hasFeedback: p, hidden: m, children: g, fieldId: _, required: v, isRequired: y, onSubItemMetaChange: b, layout: x, name: S, ...C } = e, w = `${t}-item`, { requiredMark: T, layout: E } = X.useContext(L), D = x || E, O = D === "vertical", k = X.useRef(null), A = Z(c), j = Z(l), M = P(o) && o !== !1, N = !!(M || c.length || l.length), F = !!k.current && u(k.current), [I, R] = X.useState(null);
 	h(() => {
 		if (N && k.current) {
 			let e = getComputedStyle(k.current);
@@ -642,7 +642,7 @@ function qe(e) {
 	}, [N, F]);
 	let z = (e) => {
 		e || R(null);
-	}, B = ((e = !1) => J(e ? A : f.errors, e ? j : f.warnings, f, "", !!p, u))(), ee = a(w, n, r, {
+	}, B = ((e = !1) => J(e ? A : f.errors, e ? j : f.warnings, f, "", !!p, d))(), ee = a(w, n, r, {
 		[`${w}-with-help`]: M || A.length || j.length,
 		[`${w}-has-feedback`]: B && p,
 		[`${w}-has-success`]: B === "success",
@@ -658,7 +658,7 @@ function qe(e) {
 		ref: k
 	}, /*#__PURE__*/ X.createElement(ye, {
 		className: `${w}-row`,
-		...c(C, /* @__PURE__ */ "_internalItemRender.colon.dependencies.extra.fieldKey.getValueFromEvent.getValueProps.htmlFor.id.initialValue.isListField.label.labelAlign.labelCol.labelWrap.messageVariables.name.normalize.noStyle.preserve.requiredMark.rules.shouldUpdate.trigger.tooltip.validateFirst.validateTrigger.valuePropName.wrapperCol.validateDebounce".split("."))
+		...s(C, /* @__PURE__ */ "_internalItemRender.colon.dependencies.extra.fieldKey.getValueFromEvent.getValueProps.htmlFor.id.initialValue.isListField.label.labelAlign.labelCol.labelWrap.messageVariables.name.normalize.noStyle.preserve.requiredMark.rules.shouldUpdate.trigger.tooltip.validateFirst.validateTrigger.valuePropName.wrapperCol.validateDebounce".split("."))
 	}, /*#__PURE__*/ X.createElement(We, {
 		htmlFor: _,
 		...e,
@@ -711,9 +711,9 @@ function Ze() {
 	};
 }
 function Qe(e) {
-	let { name: t, noStyle: n, className: r, dependencies: o, prefixCls: s, shouldUpdate: c, rules: d, children: f, required: p, label: m, messageVariables: h, trigger: g = "onChange", validateTrigger: _, hidden: v, help: y, layout: b } = e, { getPrefixCls: x } = X.useContext(z), { name: S } = X.useContext(L), C = Ie(f), w = F(C), T = X.useContext(fe), { validateTrigger: E } = X.useContext(pe), O = P(_) ? _ : E, A = P(t), j = x("form", s), M = N(j), [R, B] = je(j, M);
+	let { name: t, noStyle: n, className: r, dependencies: o, prefixCls: s, shouldUpdate: u, rules: d, children: f, required: p, label: m, messageVariables: h, trigger: g = "onChange", validateTrigger: _, hidden: v, help: y, layout: b } = e, { getPrefixCls: x } = X.useContext(z), { name: S } = X.useContext(L), C = Ie(f), w = F(C), T = X.useContext(fe), { validateTrigger: E } = X.useContext(pe), O = P(_) ? _ : E, A = P(t), j = x("form", s), M = N(j), [R, B] = je(j, M);
 	le("Form.Item");
-	let ee = X.useContext(I), te = X.useRef(null), [ne, re] = Re({}), [V, ae] = u(() => Ze()), oe = (e) => {
+	let ee = X.useContext(I), te = X.useRef(null), [ne, re] = Re({}), [V, ae] = l(() => Ze()), oe = (e) => {
 		let t = ee?.getKey(e.name);
 		if (ae(e.destroy ? Ze() : e, !0), n && y !== !1 && T) {
 			let n = e.name;
@@ -776,7 +776,7 @@ function Qe(e) {
 		validateTrigger: O,
 		onMetaChange: oe
 	}, (n, r, a) => {
-		let s = Y(t).length && r ? r.name : [], u = ge(s, S), f = p === void 0 ? d?.some((e) => {
+		let s = Y(t).length && r ? r.name : [], l = ge(s, S), f = p === void 0 ? d?.some((e) => {
 			if (k(e) && e.required && !e.warningOnly) return !0;
 			if (F(e)) {
 				let t = e(a);
@@ -785,16 +785,16 @@ function Qe(e) {
 			return !1;
 		}) : p, m = { ...n }, h = null;
 		if (Array.isArray(C) && A) h = C;
-		else if (!(w && (!(c || o) || A)) && !(o && !w && !A)) if (/*#__PURE__*/ X.isValidElement(C)) {
+		else if (!(w && (!(u || o) || A)) && !(o && !w && !A)) if (/*#__PURE__*/ X.isValidElement(C)) {
 			let t = {
 				...C.props,
 				...m
 			};
-			if (t.id ||= u, y || H.length > 0 || ce.length > 0 || e.extra) {
+			if (t.id ||= l, y || H.length > 0 || ce.length > 0 || e.extra) {
 				let n = [];
-				(y || H.length > 0) && n.push(`${u}_help`), e.extra && n.push(`${u}_extra`), t["aria-describedby"] = n.join(" ");
+				(y || H.length > 0) && n.push(`${l}_help`), e.extra && n.push(`${l}_extra`), t["aria-describedby"] = n.join(" ");
 			}
-			H.length > 0 && (t["aria-invalid"] = "true"), f && (t["aria-required"] = "true"), l(C) && (t.ref = U(s, C)), new Set([].concat(i(Y(g)), i(Y(O)))).forEach((e) => {
+			H.length > 0 && (t["aria-invalid"] = "true"), f && (t["aria-required"] = "true"), c(C) && (t.ref = U(s, C)), new Set([].concat(i(Y(g)), i(Y(O)))).forEach((e) => {
 				t[e] = (...t) => {
 					m[e]?.(...t), C.props[e]?.(...t);
 				};
@@ -809,8 +809,8 @@ function Qe(e) {
 				update: C,
 				childProps: n
 			}, D(C, t));
-		} else h = w && (c || o) && !A ? C(a) : C;
-		return W(h, u, f);
+		} else h = w && (u || o) && !A ? C(a) : C;
+		return W(h, l, f);
 	});
 }
 var $e = Qe;

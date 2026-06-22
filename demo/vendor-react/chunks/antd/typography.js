@@ -1,11 +1,11 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Jt as n, Mt as r, Nt as i, On as a, Ut as o, Yt as s, a as c, et as l, fn as u, kt as d, ln as f, o as p, pn as m, pt as h, rt as g, s as _, sn as v, wn as y } from "../shared/core.js";
+import { Jt as n, Mt as r, Nt as i, Ut as a, Yt as o, a as s, et as c, fn as l, kn as u, kt as d, ln as f, o as p, pn as m, pt as h, rt as g, s as _, sn as v, wn as y } from "../shared/core.js";
 import { Jn as b, Mn as x, Qn as S, Rn as ee, Sr as C, Yn as w, er as T, fr as E, gr as D, o as O, sr as k, t as A, wr as te } from "../shared/antd-core.js";
 import { o as j } from "./avatar.js";
 import { n as M } from "./input.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/typography/style/mixins.js
-var N = /* @__PURE__ */ t(a()), P = (e, t, n, r) => {
+var N = /* @__PURE__ */ t(u()), P = (e, t, n, r) => {
 	let { titleMarginBottom: i, fontWeightStrong: a } = r;
 	return {
 		marginBottom: i,
@@ -317,7 +317,7 @@ var N = /* @__PURE__ */ t(a()), P = (e, t, n, r) => {
 	return e.format && (c.format = e.format), N.useEffect(() => s, []), {
 		copied: n,
 		copyLoading: i,
-		onClick: u(async (n) => {
+		onClick: l(async (n) => {
 			n?.preventDefault(), n?.stopPropagation(), a(!0);
 			try {
 				await A((w(e.text) ? await e.text() : e.text) || O(t, { skipEmpty: !0 }).join("") || "", c), a(!1), r(!0), s(), o.current = setTimeout(() => {
@@ -403,7 +403,7 @@ function pe(e) {
 	return e.removeChild(t), n.left > r.left || r.right > n.right || n.top > r.top || r.bottom > n.bottom;
 }
 var me = (e) => ["string", "number"].includes(typeof e), he = (e) => {
-	let { prefixCls: t, copied: n, locale: r, iconOnly: a, tooltips: o, icon: s, tabIndex: u, onCopy: d, loading: f, className: p, style: m } = e, h = B(o), _ = B(s), { copied: v, copy: y } = r ?? {}, b = n ? v : y, x = fe(h[+!!n], b), S = typeof x == "string" ? x : b;
+	let { prefixCls: t, copied: n, locale: r, iconOnly: a, tooltips: o, icon: l, tabIndex: u, onCopy: d, loading: f, className: p, style: m } = e, h = B(o), _ = B(l), { copied: v, copy: y } = r ?? {}, b = n ? v : y, x = fe(h[+!!n], b), S = typeof x == "string" ? x : b;
 	return /*#__PURE__*/ N.createElement(j, { title: x }, /*#__PURE__*/ N.createElement("button", {
 		type: "button",
 		className: i(`${t}-copy`, p, {
@@ -414,7 +414,7 @@ var me = (e) => ["string", "number"].includes(typeof e), he = (e) => {
 		onClick: d,
 		"aria-label": S,
 		tabIndex: u
-	}, n ? fe(_[1], /*#__PURE__*/ N.createElement(l, null), !0) : fe(_[0], f ? /*#__PURE__*/ N.createElement(g, null) : /*#__PURE__*/ N.createElement(c, null), !0)));
+	}, n ? fe(_[1], /*#__PURE__*/ N.createElement(c, null), !0) : fe(_[0], f ? /*#__PURE__*/ N.createElement(g, null) : /*#__PURE__*/ N.createElement(s, null), !0)));
 }, V = /*#__PURE__*/ N.forwardRef(({ style: e, children: t }, n) => {
 	let r = N.useRef(null);
 	return N.useImperativeHandle(n, () => ({
@@ -563,7 +563,7 @@ var we = "...", Te = [
 	"keyboard",
 	"italic"
 ], G = /*#__PURE__*/ N.forwardRef((e, t) => {
-	let { prefixCls: n, className: a, style: c, classNames: l, styles: u, direction: d, type: p, disabled: h, children: g, ellipsis: b, editable: x, copyable: S, actions: C, component: E, title: D, onMouseEnter: O, onMouseLeave: k, ...A } = e, [M] = ee("Text"), P = N.useRef(null), ne = N.useRef(null), [F, I, L, re] = ue(n, l, u, d, e), ie = o(A, Te), [R, z] = se(x), [B, fe] = v(!1, z.editing), { triggerType: V = ["icon"] } = z, ge = (e) => {
+	let { prefixCls: n, className: s, style: c, classNames: l, styles: u, direction: d, type: p, disabled: h, children: g, ellipsis: b, editable: x, copyable: S, actions: C, component: E, title: D, onMouseEnter: O, onMouseLeave: k, ...A } = e, [M] = ee("Text"), P = N.useRef(null), ne = N.useRef(null), [F, I, L, re] = ue(n, l, u, d, e), ie = a(A, Te), [R, z] = se(x), [B, fe] = v(!1, z.editing), { triggerType: V = ["icon"] } = z, ge = (e) => {
 		e && z.onStart?.(), fe(e);
 	}, _e = ce(B);
 	f(() => {
@@ -588,7 +588,7 @@ var we = "...", Te = [
 		U
 	]);
 	f(() => {
-		q && !Re && (ke(s("webkitLineClamp")), je(s("textOverflow")));
+		q && !Re && (ke(o("webkitLineClamp")), je(o("textOverflow")));
 	}, [Re, q]);
 	let [Q, ze] = N.useState(X), Be = N.useMemo(() => Re ? !1 : Z === 1 ? Ae : Oe, [
 		Re,
@@ -648,7 +648,7 @@ var we = "...", Te = [
 		onCancel: ye,
 		onEnd: z.onEnd,
 		prefixCls: L,
-		className: a,
+		className: s,
 		style: c,
 		direction: re,
 		component: E,
@@ -729,7 +729,7 @@ var we = "...", Te = [
 			[`${L}-ellipsis-single-line`]: Ue,
 			[`${L}-ellipsis-multiple-line`]: We,
 			[`${L}-link`]: E === "a"
-		}, a),
+		}, s),
 		classNames: F,
 		styles: I,
 		prefixCls: L,
@@ -784,11 +784,11 @@ var we = "...", Te = [
 		component: "div"
 	}, n);
 }), Oe = /*#__PURE__*/ N.forwardRef((e, t) => {
-	let { ellipsis: n, children: r, ...i } = e, a = N.useMemo(() => S(n) ? o(n, ["expandable", "rows"]) : n, [n]);
+	let { ellipsis: n, children: r, ...i } = e, o = N.useMemo(() => S(n) ? a(n, ["expandable", "rows"]) : n, [n]);
 	return /*#__PURE__*/ N.createElement(G, {
 		ref: t,
 		...i,
-		ellipsis: a,
+		ellipsis: o,
 		component: "span"
 	}, r);
 }), ke = [

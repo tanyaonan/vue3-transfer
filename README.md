@@ -93,27 +93,70 @@ import { renderReactToDOM } from 'vue3-transfer/react'
 
 const source = `
 import { useState } from 'react'
-import { Button, Card, Space, Tag, message } from 'antd'
+import { Button, Tag, message } from 'antd'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+`
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+`
+
+const Title = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+`
+
+const Display = styled.div`
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 24px 0;
+`
+
+const Actions = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+`
 
 export default function Counter() {
   const [count, setCount] = useState(0)
 
   return (
-    <Card title="React Transfer Demo">
-      <Tag color="success">Ant Design</Tag>
-      <div>Count: {count}</div>
-      <Space>
+    <Wrapper>
+      <Header>
+        <Title>Ant Design Counter</Title>
+        <Tag color="success">React Transfer Demo</Tag>
+      </Header>
+      <Display>Count: {count}</Display>
+      <Actions>
         <Button type="primary" onClick={() => setCount(c => c + 1)}>+1</Button>
-        <Button onClick={() => setCount(0)}>Reset</Button>
-      </Space>
-    </Card>
+        <Button onClick={() => setCount(c => c - 1)}>-1</Button>
+        <Button onClick={() => { setCount(0); message.info('Count 已重置') }}>Reset</Button>
+      </Actions>
+    </Wrapper>
   )
 }
 `
 
 const rendered = await renderReactToDOM(source, {
   filename: 'Counter.jsx',
-  globals: { 'antd': 'antd' },
+  globals: {
+    'antd': 'antd',
+    'styled-components': 'styled',
+  },
 })
 
 rendered.mount('#root')
@@ -126,6 +169,60 @@ rendered.mount('#root')
 >   并在挂载前将对应库暴露到 `window` 上。
 > - 如果你想让 `renderReactToDOM` 使用外部 React（而不是库内置的 React chunk），
 >   请同时把 `React`、`ReactDOM`、`ReactJSXRuntime` 暴露到 `window`。
+
+### React 样式与样式隔离
+
+React 源码是 JSX/ESM，没有 Vue SFC 的 `<style scoped>` 块，因此样式隔离需要自行处理。
+
+#### 推荐：styled-components（在 JSX 中直接管理）
+
+示例 `demo/Counter.jsx` 使用真正的 **styled-components**，把组件和样式写在一起：
+
+```jsx
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+`
+
+export default function Counter() {
+  return <Wrapper>...</Wrapper>
+}
+```
+
+在浏览器编译场景下，需要先把 `styled-components` 打包进 vendor，并暴露到 `window`：
+
+```ts
+renderReactToDOM(source, {
+  filename: 'Counter.jsx',
+  globals: {
+    'antd': 'antd',
+    'styled-components': 'styled',
+  },
+})
+```
+
+`renderReactToDOM` 会自动把源码中的 `import styled from 'styled-components'` 改写为 `const styled = window.styled`，因此写法与真正的 styled-components 完全一致，支持：
+
+- `styled.div`、`styled.span` 等标签函数
+- 模板字符串 CSS
+- `&` 嵌套选择器
+- `css`、`keyframes` 等命名导出（通过 `import { css } from 'styled-components'`）
+- props 驱动动态样式（如 `color: ${props => props.primary ? 'red' : 'blue'}`）
+
+#### 其他可选方案
+
+- **Tailwind CSS**：2026 年绿色项目中最流行的工具类方案，零运行时，但需要在宿主项目中引入 Tailwind 构建流程。
+- **零运行时 CSS-in-TS**（如 `vanilla-extract`、`Panda CSS`、`StyleX`）：适合设计系统，提供类型安全和设计令牌，但需要额外依赖和构建配置。
+- **CSS Modules**：如果项目已配置构建工具，仍可使用；但在浏览器即时编译场景下需要额外的 CSS 文件加载支持。
+
+> 当前 `renderReactToDOM` 返回的 `style` 字段通常为 `null`；
+> 使用 styled-components 时，样式由 styled-components 运行时自动注入和管理。
 
 ## API
 

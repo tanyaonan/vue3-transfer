@@ -1,10 +1,10 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Ht as n, Jt as r, Mt as i, Nt as a, On as o, _t as s, ct as c, fn as l, kt as u, ln as d, on as f, sn as p, yt as m } from "../shared/core.js";
+import { Ht as n, Jt as r, Mt as i, Nt as a, _t as o, ct as s, fn as c, kn as l, kt as u, ln as d, on as f, sn as p, yt as m } from "../shared/core.js";
 import { Fn as h, In as g, Jn as _, Mn as v, Rn as y, Sr as b, _r as x, br as S, dr as C, er as w, f as T, fn as E, g as D, k as O, m as k, or as A, p as j, pn as M, pr as N, sr as P, xn as F, xt as I, zn as L } from "../shared/antd-core.js";
 import { a as R } from "./avatar.js";
 //#region node_modules/.pnpm/@rc-component+tour@2.4.0_re_6755d380d209376a5ac86ce806ff2361/node_modules/@rc-component/tour/es/hooks/useClosable.js
-var z = /* @__PURE__ */ t(o());
+var z = /* @__PURE__ */ t(l());
 function B(e) {
 	return typeof e == "object" && !!e;
 }
@@ -46,7 +46,7 @@ function ne(e, t, n, r, i, a) {
 	d(() => {
 		s((typeof e == "function" ? e() : e) || null);
 	});
-	let [c, u] = (0, z.useState)(null), f = l(() => {
+	let [l, u] = (0, z.useState)(null), f = c(() => {
 		if (o) {
 			!i && !U(o) && t && o.scrollIntoView(r);
 			let { left: e, top: n, width: s, height: c } = o.getBoundingClientRect(), l = {
@@ -70,16 +70,16 @@ function ne(e, t, n, r, i, a) {
 		t,
 		f
 	]), [(0, z.useMemo)(() => {
-		if (!c) return c;
+		if (!l) return l;
 		let e = p(0), t = p(1), r = te(n?.radius) ? n?.radius : 2;
 		return {
-			left: c.left - e,
-			top: c.top - t,
-			width: c.width + e * 2,
-			height: c.height + t * 2,
+			left: l.left - e,
+			top: l.top - t,
+			width: l.width + e * 2,
+			height: l.height + t * 2,
 			radius: r
 		};
-	}, [c, n]), o];
+	}, [l, n]), o];
 }
 //#endregion
 //#region node_modules/.pnpm/@rc-component+tour@2.4.0_re_6755d380d209376a5ac86ce806ff2361/node_modules/@rc-component/tour/es/Mask.js
@@ -313,7 +313,7 @@ var le = {
 	block: "center",
 	inline: "center"
 }, de = (e) => {
-	let { prefixCls: t = "rc-tour", steps: n = [], defaultCurrent: i, current: o, keyboard: s = !0, onChange: c, onClose: u, onFinish: f, open: m, defaultOpen: g, mask: _ = !0, arrow: v = !0, rootClassName: y, placement: b, renderPanel: x, gap: S, animated: C, scrollIntoViewOptions: w = ue, zIndex: T = 1001, closeIcon: E, closable: D, builtinPlacements: O, disabledInteraction: k, styles: A, classNames: j, className: M, style: N, getPopupContainer: P, ...F } = e, I = z.useRef(), [L, R] = p(i || 0, o), [B, V] = p(g, m), U = L < 0 || L >= n.length ? !1 : B ?? !0, [te, W] = z.useState(U), G = z.useRef(U);
+	let { prefixCls: t = "rc-tour", steps: n = [], defaultCurrent: i, current: o, keyboard: s = !0, onChange: l, onClose: u, onFinish: f, open: m, defaultOpen: g, mask: _ = !0, arrow: v = !0, rootClassName: y, placement: b, renderPanel: x, gap: S, animated: C, scrollIntoViewOptions: w = ue, zIndex: T = 1001, closeIcon: E, closable: D, builtinPlacements: O, disabledInteraction: k, styles: A, classNames: j, className: M, style: N, getPopupContainer: P, ...F } = e, I = z.useRef(), [L, R] = p(i || 0, o), [B, V] = p(g, m), U = L < 0 || L >= n.length ? !1 : B ?? !0, [te, W] = z.useState(U), G = z.useRef(U);
 	d(() => {
 		U && (G.current || R(0), W(!0)), G.current = U;
 	}, [U, R]);
@@ -322,12 +322,12 @@ var le = {
 		I.current?.forceAlign();
 	}, [Q, L]);
 	let $ = (e) => {
-		R(e), c?.(e);
+		R(e), l?.(e);
 	}, Se = (0, z.useMemo)(() => O ? typeof O == "function" ? O({ arrowPointAtCenter: Q }) : O : oe(Q), [O, Q]), Ce = () => {
 		V(!1), u?.(L);
-	}, we = l(({ event: e }) => {
+	}, we = c(({ event: e }) => {
 		s && ge !== null && (e.preventDefault(), Ce());
-	}), Te = l((e) => {
+	}), Te = c((e) => {
 		if (!r.isEditableTarget(e)) {
 			if (s && e.key === "ArrowLeft") {
 				L > 0 && (e.preventDefault(), $(L - 1));
@@ -408,14 +408,14 @@ var le = {
 		}
 	})));
 }, fe = (e) => {
-	let { stepProps: t, current: r, type: o, indicatorsRender: s, actionsRender: l } = e, { prefixCls: u, total: d = 1, title: f, onClose: p, onPrev: m, onNext: h, onFinish: g, cover: _, description: v, nextButtonProps: b, prevButtonProps: x, type: S, closable: C, classNames: T = {}, styles: E = {} } = t, D = S ?? o, O = n(C ?? {}, !0), [k] = y("global", L.global), [A] = y("Tour", L.Tour), j = /*#__PURE__*/ z.createElement("button", {
+	let { stepProps: t, current: r, type: o, indicatorsRender: c, actionsRender: l } = e, { prefixCls: u, total: d = 1, title: f, onClose: p, onPrev: m, onNext: h, onFinish: g, cover: _, description: v, nextButtonProps: b, prevButtonProps: x, type: S, closable: C, classNames: T = {}, styles: E = {} } = t, D = S ?? o, O = n(C ?? {}, !0), [k] = y("global", L.global), [A] = y("Tour", L.Tour), j = /*#__PURE__*/ z.createElement("button", {
 		type: "button",
 		onClick: p,
 		className: a(`${u}-close`, T.close),
 		style: E.close,
 		"aria-label": k?.close,
 		...O
-	}, C?.closeIcon || /*#__PURE__*/ z.createElement(c, { className: `${u}-close-icon` })), M = r === d - 1, N = () => {
+	}, C?.closeIcon || /*#__PURE__*/ z.createElement(s, { className: `${u}-close-icon` })), M = r === d - 1, N = () => {
 		m?.(), x?.onClick?.();
 	}, P = () => {
 		M ? g?.() : h?.(), b?.onClick?.();
@@ -432,7 +432,7 @@ var le = {
 		className: a(`${u}-cover`, T.cover),
 		style: E.cover
 	}, _) : null, V;
-	V = s ? s(r, d) : i(Array.from({ length: d }).keys()).map((e, t) => /*#__PURE__*/ z.createElement("span", {
+	V = c ? c(r, d) : i(Array.from({ length: d }).keys()).map((e, t) => /*#__PURE__*/ z.createElement("span", {
 		key: e,
 		className: a(t === r && `${u}-indicator-active`, `${u}-indicator`, T.indicator),
 		style: E.indicator
@@ -608,8 +608,8 @@ var le = {
 }, (e) => ({
 	zIndexPopup: e.zIndexPopupBase + 70,
 	closeBtnSize: e.fontSize * e.lineHeight,
-	primaryPrevBtnBg: new s(e.colorTextLightSolid).setA(.15).toRgbString(),
-	primaryNextBtnHoverBg: new s(e.colorBgTextHover).onBackground(e.colorWhite).toRgbString(),
+	primaryPrevBtnBg: new o(e.colorTextLightSolid).setA(.15).toRgbString(),
+	primaryNextBtnHoverBg: new o(e.colorBgTextHover).onBackground(e.colorWhite).toRgbString(),
 	...j({
 		contentRadius: e.borderRadiusLG,
 		limitVerticalRadius: !0

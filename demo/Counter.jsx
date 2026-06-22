@@ -1,41 +1,57 @@
 import { useState } from 'react'
-import { Button, Card, Space, Tag, message } from 'antd'
+import { Button, Tag, message } from 'antd'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+`
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+`
+
+const Title = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+`
+
+const Display = styled.div`
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 24px 0;
+`
+
+const Actions = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+`
 
 export default function Counter() {
   const [count, setCount] = useState(0)
 
-  function increment() {
-    setCount((c) => c + 1)
-  }
-
-  function decrement() {
-    setCount((c) => c - 1)
-  }
-
-  function reset() {
-    setCount(0)
-    message.info('Count 已重置')
-  }
-
   return (
-    <Card
-      title={
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>Ant Design Counter</span>
-          <Tag color="success">React Transfer Demo</Tag>
-        </div>
-      }
-      style={{ maxWidth: 420, margin: '40px auto' }}
-    >
-      <div style={{ textAlign: 'center', fontSize: 28, fontWeight: 600, margin: '24px 0' }}>
-        Count: {count}
-      </div>
-
-      <Space style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <Button type="primary" onClick={increment}>+1</Button>
-        <Button onClick={decrement}>-1</Button>
-        <Button onClick={reset}>Reset</Button>
-      </Space>
-    </Card>
+    <Wrapper>
+      <Header>
+        <Title>Ant Design Counter</Title>
+        <Tag color="success">React Transfer Demo</Tag>
+      </Header>
+      <Display>Count: {count}</Display>
+      <Actions>
+        <Button type="primary" onClick={() => setCount(c => c + 1)}>+1</Button>
+        <Button onClick={() => setCount(c => c - 1)}>-1</Button>
+        <Button onClick={() => { setCount(0); message.info('Count 已重置') }}>Reset</Button>
+      </Actions>
+    </Wrapper>
   )
 }

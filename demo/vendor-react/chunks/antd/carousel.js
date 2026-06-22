@@ -1,9 +1,9 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Nt as n, On as r, R as i, Tt as a, kt as o, wn as s } from "../shared/core.js";
+import { Nt as n, R as r, Tt as i, kn as a, kt as o, wn as s } from "../shared/core.js";
 import { Qn as c, Sr as l, pr as u, sr as d } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/carousel/style/index.js
-var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
+var f = /* @__PURE__ */ t(a()), p = "--dot-duration", m = (e) => {
 	let { componentCls: t, antCls: n } = e;
 	return { [t]: {
 		...u(e),
@@ -111,7 +111,7 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 		}
 	} };
 }, g = (e) => {
-	let { componentCls: t, dotOffset: n, dotWidth: r, dotHeight: i, dotGap: o, colorBgContainer: s, motionDurationSlow: c } = e, l = new a(`${e.prefixCls}-dot-animation`, {
+	let { componentCls: t, dotOffset: n, dotWidth: r, dotHeight: a, dotGap: o, colorBgContainer: s, motionDurationSlow: c } = e, l = new i(`${e.prefixCls}-dot-animation`, {
 		from: { width: 0 },
 		to: { width: e.dotActiveWidth }
 	});
@@ -137,14 +137,14 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 			flex: "0 1 auto",
 			boxSizing: "content-box",
 			width: r,
-			height: i,
+			height: a,
 			marginInline: o,
 			padding: 0,
 			textAlign: "center",
 			textIndent: -999,
 			verticalAlign: "top",
 			transition: `all ${c}`,
-			borderRadius: i,
+			borderRadius: a,
 			overflow: "hidden",
 			"&::after": {
 				display: "block",
@@ -152,10 +152,10 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 				top: 0,
 				insetInlineStart: 0,
 				width: 0,
-				height: i,
+				height: a,
 				content: "\"\"",
 				background: "transparent",
-				borderRadius: i,
+				borderRadius: a,
 				opacity: 1,
 				outline: "none",
 				cursor: "pointer",
@@ -165,13 +165,13 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 				position: "relative",
 				display: "block",
 				width: "100%",
-				height: i,
+				height: a,
 				padding: 0,
 				color: "transparent",
 				fontSize: 0,
 				background: s,
 				border: 0,
-				borderRadius: i,
+				borderRadius: a,
 				outline: "none",
 				cursor: "pointer",
 				opacity: .2,
@@ -199,7 +199,7 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 		}
 	} } };
 }, _ = (e) => {
-	let { componentCls: t, dotOffset: n, arrowOffset: r, marginXXS: i } = e, s = new a(`${e.prefixCls}-dot-vertical-animation`, {
+	let { componentCls: t, dotOffset: n, arrowOffset: r, marginXXS: a } = e, s = new i(`${e.prefixCls}-dot-vertical-animation`, {
 		from: { height: 0 },
 		to: { height: e.dotActiveWidth }
 	}), c = {
@@ -240,7 +240,7 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 			},
 			li: {
 				...c,
-				margin: `${o(i)} 0`,
+				margin: `${o(a)} 0`,
 				verticalAlign: "baseline",
 				button: c,
 				"&::after": {
@@ -287,7 +287,7 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 	type: "button",
 	...n
 }), C = /*#__PURE__*/ f.forwardRef((e, t) => {
-	let { dots: r = !0, arrows: a = !1, prevArrow: o, nextArrow: u, draggable: d = !1, waitForAnimate: m = !1, dotPosition: h, dotPlacement: g, vertical: _, rootClassName: v, className: b, style: C, id: w, autoplay: T = !1, autoplaySpeed: E = 3e3, rtl: D, ...O } = e, k = f.useMemo(() => {
+	let { dots: i = !0, arrows: a = !1, prevArrow: o, nextArrow: u, draggable: d = !1, waitForAnimate: m = !1, dotPosition: h, dotPlacement: g, vertical: _, rootClassName: v, className: b, style: C, id: w, autoplay: T = !1, autoplaySpeed: E = 3e3, rtl: D, ...O } = e, k = f.useMemo(() => {
 		let e = g ?? h ?? "bottom";
 		switch (e) {
 			case "left": return "start";
@@ -323,7 +323,7 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 		...O
 	};
 	V.effect === "fade" && (V.fade = !0);
-	let H = j("carousel", V.prefixCls), U = !!r, W = n(x, `${x}-${k}`, typeof r == "boolean" ? !1 : r?.className), [G, K] = y(H), q = n(H, {
+	let H = j("carousel", V.prefixCls), U = !!i, W = n(x, `${x}-${k}`, typeof i == "boolean" ? !1 : i?.className), [G, K] = y(H), q = n(H, {
 		[`${H}-rtl`]: B,
 		[`${H}-vertical`]: V.vertical
 	}, G, K, v), J = T && c(T) && T.dotDuration ? { [p]: `${E}ms` } : {};
@@ -331,7 +331,7 @@ var f = /* @__PURE__ */ t(r()), p = "--dot-duration", m = (e) => {
 		className: q,
 		id: w,
 		style: J
-	}, /*#__PURE__*/ f.createElement(i, {
+	}, /*#__PURE__*/ f.createElement(r, {
 		ref: F,
 		...V,
 		dots: U,

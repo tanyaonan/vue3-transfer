@@ -1,9 +1,9 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Jt as n, Nt as r, On as i, _t as a, kt as o, rt as s, sn as c, yt as l } from "../shared/core.js";
+import { Jt as n, Nt as r, _t as i, kn as a, kt as o, rt as s, sn as c, yt as l } from "../shared/core.js";
 import { Jn as u, Lt as d, Sr as f, dr as p, en as m, kn as h, pr as g, sr as _, tn as v } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/@rc-component+switch@1.0.3__4beb483a1cbb03260b996eed5cbfeade/node_modules/@rc-component/switch/es/index.js
-var y = /* @__PURE__ */ t(i());
+var y = /* @__PURE__ */ t(a());
 function b() {
 	return b = Object.assign ? Object.assign.bind() : function(e) {
 		for (var t = 1; t < arguments.length; t++) {
@@ -257,17 +257,17 @@ var S = (e) => {
 		S(t)
 	];
 }, (e) => {
-	let { fontSize: t, lineHeight: n, controlHeight: r, colorWhite: i } = e, o = t * n, s = r / 2, c = o - 4, l = s - 4;
+	let { fontSize: t, lineHeight: n, controlHeight: r, colorWhite: a } = e, o = t * n, s = r / 2, c = o - 4, l = s - 4;
 	return {
 		trackHeight: o,
 		trackHeightSM: s,
 		trackMinWidth: c * 2 + 8,
 		trackMinWidthSM: l * 2 + 4,
 		trackPadding: 2,
-		handleBg: i,
+		handleBg: a,
 		handleSize: c,
 		handleSizeSM: l,
-		handleShadow: `0 2px 4px 0 ${new a("#00230b").setA(.2).toRgbString()}`,
+		handleShadow: `0 2px 4px 0 ${new i("#00230b").setA(.2).toRgbString()}`,
 		innerMinMargin: c / 2,
 		innerMaxMargin: c + 2 + 4,
 		innerMinMarginSM: l / 2,

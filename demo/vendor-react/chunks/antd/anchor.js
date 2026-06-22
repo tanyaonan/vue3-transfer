@@ -1,131 +1,19 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Mt as n, Nt as r, On as i, fn as a, it as o, kt as s, yt as c } from "../shared/core.js";
-import { Cr as l, Gn as u, Jn as d, Kn as ee, Qn as te, Sr as ne, Wn as f, Yn as p, Zn as m, br as h, gr as g, pr as _, sr as v, wr as y } from "../shared/antd-core.js";
-//#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/affix/style/index.js
-var b = /* @__PURE__ */ t(i()), x = v("Affix", (e) => {
-	let { componentCls: t } = e;
-	return { [t]: {
-		position: "fixed",
-		zIndex: e.zIndexPopup
-	} };
-}, (e) => ({ zIndexPopup: e.zIndexBase + 10 }));
-//#endregion
-//#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/affix/utils.js
-function S(e) {
-	return e === window ? {
-		top: 0,
-		bottom: window.innerHeight
-	} : e.getBoundingClientRect();
-}
-function C(e, t, n) {
-	if (n !== void 0 && Math.round(t.top) > Math.round(e.top) - n) return n + t.top;
-}
-function w(e, t, n) {
-	if (n !== void 0 && Math.round(t.bottom) < Math.round(e.bottom) + n) return n + (window.innerHeight - t.bottom);
-}
-//#endregion
-//#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/affix/index.js
-var T = /* @__PURE__ */ e({ default: () => A }), E = [
-	"resize",
-	"scroll",
-	"touchstart",
-	"touchmove",
-	"touchend",
-	"pageshow",
-	"load"
-], D = () => typeof window < "u" ? window : null, O = 0, k = 1, A = /*#__PURE__*/ b.forwardRef((e, t) => {
-	let { style: n, offsetTop: i, offsetBottom: a, prefixCls: o, className: s, rootClassName: c, children: u, target: d, onChange: ee, onTestUpdatePosition: te, ...f } = e, { getPrefixCls: p, className: m, style: g } = ne("affix"), { getTargetContainer: _ } = b.useContext(h), v = p("affix", o), [T, A] = b.useState(!1), [j, M] = b.useState(), [N, P] = b.useState(), F = b.useRef(O), I = b.useRef(null), L = b.useRef(null), R = b.useRef(null), z = b.useRef(null), B = b.useRef(null), V = d ?? _ ?? D, H = a === void 0 && i === void 0 ? 0 : i, U = () => {
-		if (F.current !== k || !z.current || !R.current || !V) return;
-		let e = V();
-		if (e) {
-			let t = { status: O }, n = S(R.current);
-			if (n.top === 0 && n.left === 0 && n.width === 0 && n.height === 0) return;
-			let r = S(e), i = C(n, r, H), o = w(n, r, a);
-			i === void 0 ? o !== void 0 && (t.affixStyle = {
-				position: "fixed",
-				bottom: o,
-				width: n.width,
-				height: n.height
-			}, t.placeholderStyle = {
-				width: n.width,
-				height: n.height
-			}) : (t.affixStyle = {
-				position: "fixed",
-				top: i,
-				width: n.width,
-				height: n.height
-			}, t.placeholderStyle = {
-				width: n.width,
-				height: n.height
-			}), t.lastAffix = !!t.affixStyle, T !== t.lastAffix && ee?.(t.lastAffix), F.current = t.status, M(t.affixStyle), P(t.placeholderStyle), A(t.lastAffix);
-		}
-	}, W = () => {
-		F.current = k, U();
-	}, G = l(() => {
-		W();
-	}), K = l(() => {
-		if (V && j) {
-			let e = V();
-			if (e && R.current) {
-				let t = S(e), n = S(R.current), r = C(n, t, H), i = w(n, t, a);
-				if (r !== void 0 && j.top === r || i !== void 0 && j.bottom === i) return;
-			}
-		}
-		W();
-	}), q = () => {
-		let e = V?.();
-		e && (E.forEach((t) => {
-			L.current && I.current?.removeEventListener(t, L.current), e?.addEventListener(t, K);
-		}), I.current = e, L.current = K);
-	}, J = () => {
-		let e = V?.();
-		E.forEach((t) => {
-			e?.removeEventListener(t, K), L.current && I.current?.removeEventListener(t, L.current);
-		}), G.cancel(), K.cancel();
-	};
-	b.useImperativeHandle(t, () => ({ updatePosition: G })), b.useEffect(() => (B.current = setTimeout(q), () => {
-		B.current &&= (clearTimeout(B.current), null), J();
-	}), []), b.useEffect(() => (q(), () => J()), [
-		d,
-		j,
-		T,
-		i,
-		a
-	]), b.useEffect(() => {
-		G();
-	}, [
-		d,
-		i,
-		a
-	]);
-	let [re, ie] = x(v), ae = r({ [r(c, re, v, ie)]: j });
-	return /*#__PURE__*/ b.createElement(y, { onResize: G }, /*#__PURE__*/ b.createElement("div", {
-		style: {
-			...g,
-			...n
-		},
-		className: r(s, m),
-		ref: R,
-		...f
-	}, j && /*#__PURE__*/ b.createElement("div", {
-		style: N,
-		"aria-hidden": "true"
-	}), /*#__PURE__*/ b.createElement("div", {
-		className: ae,
-		ref: z,
-		style: j
-	}, /*#__PURE__*/ b.createElement(y, { onResize: G }, u))));
-}), j = /*#__PURE__*/ b.createContext(void 0), M = (e) => {
-	let { href: t, title: n, prefixCls: i, children: a, className: o, target: s, replace: c, targetOffset: l } = e, { registerLink: u, unregisterLink: d, scrollTo: ee, onClick: te, activeLink: ne, direction: f, classNames: p, styles: m } = b.useContext(j) || {};
-	b.useEffect(() => (u?.(t, l), () => {
+import { Mt as n, Nt as r, fn as i, it as a, kn as o, kt as s, yt as c } from "../shared/core.js";
+import { Gn as l, Jn as u, Kn as d, Qn as f, Sr as p, Wn as m, Yn as h, Zn as g, br as _, gr as v, pr as y, sr as b } from "../shared/antd-core.js";
+import { t as x } from "./affix.js";
+//#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/anchor/context.js
+var S = /* @__PURE__ */ t(o()), C = /*#__PURE__*/ S.createContext(void 0), w = (e) => {
+	let { href: t, title: n, prefixCls: i, children: a, className: o, target: s, replace: c, targetOffset: l } = e, { registerLink: u, unregisterLink: d, scrollTo: f, onClick: p, activeLink: m, direction: h, classNames: g, styles: v } = S.useContext(C) || {};
+	S.useEffect(() => (u?.(t, l), () => {
 		d?.(t);
 	}), [t, l]);
-	let g = (e) => {
-		if (te?.(e, {
+	let y = (e) => {
+		if (p?.(e, {
 			title: n,
 			href: t
-		}), ee?.(t, l), e.defaultPrevented) return;
+		}), f?.(t, l), e.defaultPrevented) return;
 		if (t.startsWith("http://") || t.startsWith("https://")) {
 			c && (e.preventDefault(), window.location.replace(t));
 			return;
@@ -133,32 +21,32 @@ var T = /* @__PURE__ */ e({ default: () => A }), E = [
 		e.preventDefault();
 		let r = c ? "replaceState" : "pushState";
 		window.history[r](null, "", t);
-	}, { getPrefixCls: _ } = b.useContext(h), v = _("anchor", i), y = ne === t, x = r(`${v}-link`, o, p?.item, { [`${v}-link-active`]: y }), S = r(`${v}-link-title`, p?.itemTitle, { [`${v}-link-title-active`]: y });
-	return /*#__PURE__*/ b.createElement("div", {
-		className: x,
-		style: m?.item
-	}, /*#__PURE__*/ b.createElement("a", {
-		className: S,
-		style: m?.itemTitle,
+	}, { getPrefixCls: b } = S.useContext(_), x = b("anchor", i), w = m === t, T = r(`${x}-link`, o, g?.item, { [`${x}-link-active`]: w }), E = r(`${x}-link-title`, g?.itemTitle, { [`${x}-link-title-active`]: w });
+	return /*#__PURE__*/ S.createElement("div", {
+		className: T,
+		style: v?.item
+	}, /*#__PURE__*/ S.createElement("a", {
+		className: E,
+		style: v?.itemTitle,
 		href: t,
 		title: typeof n == "string" ? n : void 0,
 		target: s,
-		onClick: g
-	}, n), f === "horizontal" ? null : a);
-}, N = (e) => {
+		onClick: y
+	}, n), h === "horizontal" ? null : a);
+}, T = (e) => {
 	let { componentCls: t, holderOffsetBlock: n, motionDurationSlow: r, lineWidthBold: i, colorPrimary: a, lineType: o, colorSplit: c, calc: l } = e;
 	return { [`${t}-wrapper`]: {
 		marginBlockStart: l(n).mul(-1).equal(),
 		paddingBlockStart: n,
 		[t]: {
-			..._(e),
+			...y(e),
 			position: "relative",
 			paddingInlineStart: i,
 			[`${t}-link`]: {
 				paddingBlock: e.linkPaddingBlock,
 				paddingInline: `${s(e.linkPaddingInlineStart)} 0`,
 				"&-title": {
-					...g,
+					...v,
 					position: "relative",
 					display: "block",
 					marginBlockEnd: e.anchorTitleBlock,
@@ -192,7 +80,7 @@ var T = /* @__PURE__ */ e({ default: () => A }), E = [
 		} },
 		[`${t}-fixed ${t}-ink ${t}-ink`]: { display: "none" }
 	} };
-}, P = (e) => {
+}, E = (e) => {
 	let { componentCls: t, motionDurationSlow: n, lineWidthBold: r, colorPrimary: i } = e;
 	return { [`${t}-wrapper-horizontal`]: {
 		position: "relative",
@@ -226,147 +114,147 @@ var T = /* @__PURE__ */ e({ default: () => A }), E = [
 			}
 		}
 	} };
-}, F = v("Anchor", (e) => {
+}, ee = b("Anchor", (e) => {
 	let { fontSize: t, fontSizeLG: n, paddingXXS: r, calc: i } = e, a = c(e, {
 		holderOffsetBlock: r,
 		anchorPaddingBlockSecondary: i(r).div(2).equal(),
 		anchorTitleBlock: i(t).div(14).mul(3).equal(),
 		anchorBallSize: i(n).div(2).equal()
 	});
-	return [N(a), P(a)];
+	return [T(a), E(a)];
 }, (e) => ({
 	linkPaddingBlock: e.paddingXXS,
 	linkPaddingInlineStart: e.padding
 }));
 //#endregion
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/anchor/Anchor.js
-function I() {
+function te() {
 	return window;
 }
-function L(e, t) {
+function D(e, t) {
 	if (!e.getClientRects().length) return 0;
 	let n = e.getBoundingClientRect();
 	return n.width || n.height ? t === window ? n.top - e.ownerDocument.documentElement.clientTop : n.top - t.getBoundingClientRect().top : n.top;
 }
-var R = /#([\S ]+)$/, z = (e) => {
-	let { rootClassName: t, prefixCls: i, className: s, style: c, offsetTop: l, affix: g = !0, showInkInFixed: _ = !1, children: v, items: y, direction: x = "vertical", bounds: S, targetOffset: C, onClick: w, onChange: T, getContainer: E, getCurrentAnchor: D, replace: O, classNames: k, styles: N } = e, [P, z] = b.useState([]), [B, V] = b.useState(null), H = b.useRef(B), U = b.useRef(null), W = b.useRef(null), G = b.useRef(!1), K = b.useRef(null), q = b.useRef({}), { direction: J, getPrefixCls: re, className: ie, style: ae, classNames: oe, styles: se } = ne("anchor"), { getTargetContainer: ce } = b.useContext(h), Y = re("anchor", i), le = f(Y), [ue, de] = F(Y, le), X = E ?? ce ?? I, fe = JSON.stringify(P), pe = (e, t) => {
-		z((t) => t.includes(e) ? t : [].concat(n(t), [e])), t !== void 0 && (q.current[e] = t);
-	}, me = (e) => {
-		z((t) => t.filter((t) => t !== e)), delete q.current[e];
-	}, he = () => {
-		let e = U.current?.querySelector(`.${Y}-link-title-active`);
-		if (e && W.current) {
-			let { style: t } = W.current, n = x === "horizontal";
-			t.top = n ? "" : `${e.offsetTop + e.clientHeight / 2}px`, t.height = n ? "" : `${e.clientHeight}px`, t.left = n ? `${e.offsetLeft}px` : "", t.width = n ? `${e.clientWidth}px` : "", n && o(e, {
+var O = /#([\S ]+)$/, k = (e) => {
+	let { rootClassName: t, prefixCls: o, className: s, style: c, offsetTop: v, affix: y = !0, showInkInFixed: b = !1, children: T, items: E, direction: k = "vertical", bounds: A, targetOffset: j, onClick: M, onChange: ne, getContainer: re, getCurrentAnchor: N, replace: ie, classNames: ae, styles: oe } = e, [P, F] = S.useState([]), [I, se] = S.useState(null), L = S.useRef(I), R = S.useRef(null), z = S.useRef(null), B = S.useRef(!1), V = S.useRef(null), H = S.useRef({}), { direction: ce, getPrefixCls: le, className: ue, style: de, classNames: fe, styles: pe } = p("anchor"), { getTargetContainer: me } = S.useContext(_), U = le("anchor", o), W = m(U), [he, ge] = ee(U, W), G = re ?? me ?? te, K = JSON.stringify(P), _e = (e, t) => {
+		F((t) => t.includes(e) ? t : [].concat(n(t), [e])), t !== void 0 && (H.current[e] = t);
+	}, ve = (e) => {
+		F((t) => t.filter((t) => t !== e)), delete H.current[e];
+	}, ye = () => {
+		let e = R.current?.querySelector(`.${U}-link-title-active`);
+		if (e && z.current) {
+			let { style: t } = z.current, n = k === "horizontal";
+			t.top = n ? "" : `${e.offsetTop + e.clientHeight / 2}px`, t.height = n ? "" : `${e.clientHeight}px`, t.left = n ? `${e.offsetLeft}px` : "", t.width = n ? `${e.clientWidth}px` : "", n && a(e, {
 				scrollMode: "if-needed",
 				block: "nearest"
 			});
 		}
-	}, ge = (e, t, n = 5, r) => {
-		let i = [], a = X();
+	}, be = (e, t, n = 5, r) => {
+		let i = [], a = G();
 		return e.forEach((e) => {
-			let o = R.exec(e?.toString());
+			let o = O.exec(e?.toString());
 			if (!o) return;
 			let s = document.getElementById(o[1]);
 			if (s) {
-				let o = r?.[e] ?? t, c = L(s, a);
+				let o = r?.[e] ?? t, c = D(s, a);
 				c <= o + n && i.push({
 					link: e,
 					top: c
 				});
 			}
 		}), i.length ? i.reduce((e, t) => t.top > e.top ? t : e).link : "";
-	}, _e = a((e) => {
-		if (H.current === e) return;
-		let t = p(D) ? D(e) : e;
-		V(t), H.current = t, T?.(e);
-	}), Z = b.useCallback(() => {
-		G.current || _e(ge(P, m(C) ? C : l || 0, S, q.current));
+	}, q = i((e) => {
+		if (L.current === e) return;
+		let t = h(N) ? N(e) : e;
+		se(t), L.current = t, ne?.(e);
+	}), J = S.useCallback(() => {
+		B.current || q(be(P, g(j) ? j : v || 0, A, H.current));
 	}, [
 		P,
-		C,
-		l,
-		S
-	]), ve = b.useCallback((e, t) => {
-		let n = H.current;
-		_e(e);
-		let r = R.exec(e);
+		j,
+		v,
+		A
+	]), Y = S.useCallback((e, t) => {
+		let n = L.current;
+		q(e);
+		let r = O.exec(e);
 		if (!r) return;
 		let i = document.getElementById(r[1]);
 		if (!i) return;
-		if (G.current) {
+		if (B.current) {
 			if (n === e) return;
-			K.current?.();
+			V.current?.();
 		}
-		let a = X(), o = ee(a) + L(i, a);
-		o -= t ?? C ?? l ?? 0, G.current = !0, K.current = u(o, {
-			getContainer: X,
+		let a = G(), o = d(a) + D(i, a);
+		o -= t ?? j ?? v ?? 0, B.current = !0, V.current = l(o, {
+			getContainer: G,
 			callback() {
-				G.current = !1;
+				B.current = !1;
 			}
 		});
-	}, [C, l]), ye = {
+	}, [j, v]), xe = {
 		...e,
-		direction: x
-	}, [Q, $] = d([oe, k], [se, N], { props: ye }), be = r(ue, de, le, t, `${Y}-wrapper`, {
-		[`${Y}-wrapper-horizontal`]: x === "horizontal",
-		[`${Y}-rtl`]: J === "rtl"
-	}, s, ie, Q.root), xe = r(Y, { [`${Y}-fixed`]: !g && !_ }), Se = r(`${Y}-ink`, Q.indicator, { [`${Y}-ink-visible`]: B }), Ce = {
-		maxHeight: l ? `calc(100vh - ${l}px)` : "100vh",
-		...$.root,
-		...ae,
+		direction: k
+	}, [X, Z] = u([fe, ae], [pe, oe], { props: xe }), Se = r(he, ge, W, t, `${U}-wrapper`, {
+		[`${U}-wrapper-horizontal`]: k === "horizontal",
+		[`${U}-rtl`]: ce === "rtl"
+	}, s, ue, X.root), Ce = r(U, { [`${U}-fixed`]: !y && !b }), we = r(`${U}-ink`, X.indicator, { [`${U}-ink-visible`]: I }), Te = {
+		maxHeight: v ? `calc(100vh - ${v}px)` : "100vh",
+		...Z.root,
+		...de,
 		...c
-	}, we = (e) => Array.isArray(e) ? e.map((e) => /*#__PURE__*/ b.createElement(M, {
-		replace: O,
+	}, Q = (e) => Array.isArray(e) ? e.map((e) => /*#__PURE__*/ S.createElement(w, {
+		replace: ie,
 		...e,
 		key: e.key
-	}, x === "vertical" && we(e.children))) : null, Te = /*#__PURE__*/ b.createElement("div", {
-		ref: U,
-		className: be,
-		style: Ce
-	}, /*#__PURE__*/ b.createElement("div", { className: xe }, /*#__PURE__*/ b.createElement("span", {
+	}, k === "vertical" && Q(e.children))) : null, $ = /*#__PURE__*/ S.createElement("div", {
+		ref: R,
 		className: Se,
-		ref: W,
-		style: $.indicator
-	}), "items" in e ? we(y) : v));
-	b.useEffect(() => {
-		let e = X();
-		return Z(), e?.addEventListener("scroll", Z), () => {
-			e?.removeEventListener("scroll", Z);
+		style: Te
+	}, /*#__PURE__*/ S.createElement("div", { className: Ce }, /*#__PURE__*/ S.createElement("span", {
+		className: we,
+		ref: z,
+		style: Z.indicator
+	}), "items" in e ? Q(E) : T));
+	S.useEffect(() => {
+		let e = G();
+		return J(), e?.addEventListener("scroll", J), () => {
+			e?.removeEventListener("scroll", J);
 		};
-	}, [fe]), b.useEffect(() => {
-		p(D) && _e(D(H.current || ""));
-	}, [D]), b.useEffect(() => {
-		he();
+	}, [K]), S.useEffect(() => {
+		h(N) && q(N(L.current || ""));
+	}, [N]), S.useEffect(() => {
+		ye();
 	}, [
-		x,
-		D,
-		fe,
-		B
+		k,
+		N,
+		K,
+		I
 	]);
-	let Ee = b.useMemo(() => ({
-		registerLink: pe,
-		unregisterLink: me,
-		scrollTo: ve,
-		activeLink: B,
-		onClick: w,
-		direction: x,
-		classNames: Q,
-		styles: $
+	let Ee = S.useMemo(() => ({
+		registerLink: _e,
+		unregisterLink: ve,
+		scrollTo: Y,
+		activeLink: I,
+		onClick: M,
+		direction: k,
+		classNames: X,
+		styles: Z
 	}), [
-		B,
-		w,
-		ve,
-		x,
-		$,
-		Q
-	]), De = te(g) ? g : void 0;
-	return /*#__PURE__*/ b.createElement(j.Provider, { value: Ee }, g ? /*#__PURE__*/ b.createElement(A, {
-		offsetTop: l,
-		target: X,
+		I,
+		M,
+		Y,
+		k,
+		Z,
+		X
+	]), De = f(y) ? y : void 0;
+	return /*#__PURE__*/ S.createElement(C.Provider, { value: Ee }, y ? /*#__PURE__*/ S.createElement(x, {
+		offsetTop: v,
+		target: G,
 		...De
-	}, Te) : Te);
-}, B = /* @__PURE__ */ e({ default: () => V }), V = z;
-V.Link = M;
+	}, $) : $);
+}, A = /* @__PURE__ */ e({ default: () => j }), j = k;
+j.Link = w;
 //#endregion
-export { T as n, B as t };
+export { A as t };

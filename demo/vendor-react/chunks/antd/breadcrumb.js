@@ -1,11 +1,11 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { $ as n, Bt as r, Cn as i, Dn as a, Gt as o, Ht as s, J as c, Jt as l, Nt as u, On as d, Ut as f, X as p, Y as m, Zt as h, _n as g, _t as _, fn as v, gn as y, hn as b, kt as x, nt as S, on as C, pn as w, sn as T, vn as E, wn as D, yn as O, yt as k } from "../shared/core.js";
+import { $ as n, Bt as r, Cn as i, Gt as a, Ht as o, J as s, Jt as c, Nt as l, On as u, Ut as d, X as f, Y as p, Zt as m, _n as h, _t as g, fn as _, gn as v, hn as y, kn as b, kt as x, nt as S, on as C, pn as w, sn as T, vn as E, wn as D, yn as O, yt as k } from "../shared/core.js";
 import { $n as A, Bt as j, Fn as M, Ft as N, Gt as P, Ht as F, Jn as ee, Mn as I, O as L, Qn as R, Rt as z, Sr as te, Ut as B, Vt as V, Wn as H, Xn as U, Yn as ne, _r as re, br as ie, dr as W, er as G, f as ae, fn as oe, g as se, gr as K, in as ce, it as q, lr as le, m as ue, mr as de, nr as fe, p as pe, pn as me, pr as J, qn as he, sr as Y, ur as ge, zt as _e } from "../shared/antd-core.js";
 import { f as ve } from "./auto-complete.js";
 import { o as ye } from "./avatar.js";
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/breadcrumb/BreadcrumbContext.js
-var X = /* @__PURE__ */ t(d()), be = /*#__PURE__*/ X.createContext({}), { ESC: xe, TAB: Z } = l;
+var X = /* @__PURE__ */ t(b()), be = /*#__PURE__*/ X.createContext({}), { ESC: xe, TAB: Z } = c;
 function Se({ visible: e, triggerRef: t, onVisibleChange: n, autoFocus: i, overlayRef: a }) {
 	let o = X.useRef(!1), s = () => {
 		e && (t.current?.focus?.(), n?.(!1));
@@ -33,8 +33,8 @@ var Ce = /*#__PURE__*/ (0, X.forwardRef)((e, t) => {
 	let { overlay: n, arrow: r, prefixCls: i } = e, a = (0, X.useMemo)(() => {
 		let e;
 		return e = typeof n == "function" ? n() : n, e;
-	}, [n]), o = w(t, b(a));
-	return /*#__PURE__*/ X.createElement(X.Fragment, null, r && /*#__PURE__*/ X.createElement("div", { className: `${i}-arrow` }), /*#__PURE__*/ X.cloneElement(a, { ref: g(a) ? o : void 0 }));
+	}, [n]), o = w(t, y(a));
+	return /*#__PURE__*/ X.createElement(X.Fragment, null, r && /*#__PURE__*/ X.createElement("div", { className: `${i}-arrow` }), /*#__PURE__*/ X.cloneElement(a, { ref: h(a) ? o : void 0 }));
 }), we = {
 	adjustX: 1,
 	adjustY: 1
@@ -90,7 +90,7 @@ function De() {
 //#endregion
 //#region node_modules/.pnpm/@rc-component+dropdown@1.0._10a31a0bc65d94f368a74c6c42119dd8/node_modules/@rc-component/dropdown/es/index.js
 var Oe = /* @__PURE__ */ X.forwardRef((e, t) => {
-	let { arrow: n = !1, prefixCls: r = "rc-dropdown", transitionName: i, animation: a, align: o, placement: s = "bottomLeft", placements: c = Ee, getPopupContainer: l, showAction: d, hideAction: f, overlayClassName: p, overlayStyle: m, visible: h, trigger: _ = ["hover"], autoFocus: v, overlay: y, children: x, onVisibleChange: S, ...C } = e, [T, E] = X.useState(), D = "visible" in e ? h : T, O = a ? `${r}-${a}` : i, k = X.useRef(null), A = X.useRef(null), j = X.useRef(null);
+	let { arrow: n = !1, prefixCls: r = "rc-dropdown", transitionName: i, animation: a, align: o, placement: s = "bottomLeft", placements: c = Ee, getPopupContainer: u, showAction: d, hideAction: f, overlayClassName: p, overlayStyle: m, visible: g, trigger: _ = ["hover"], autoFocus: v, overlay: b, children: x, onVisibleChange: S, ...C } = e, [T, E] = X.useState(), D = "visible" in e ? g : T, O = a ? `${r}-${a}` : i, k = X.useRef(null), A = X.useRef(null), j = X.useRef(null);
 	X.useImperativeHandle(t, () => k.current);
 	let N = (e) => {
 		E(e), S?.(e);
@@ -107,23 +107,23 @@ var Oe = /* @__PURE__ */ X.forwardRef((e, t) => {
 		E(!1), n && n(t);
 	}, F = () => /*#__PURE__*/ X.createElement(Ce, {
 		ref: A,
-		overlay: y,
+		overlay: b,
 		prefixCls: r,
 		arrow: n
-	}), ee = () => typeof y == "function" ? F : F(), I = () => {
+	}), ee = () => typeof b == "function" ? F : F(), I = () => {
 		let { minOverlayWidthMatchTrigger: t, alignPoint: n } = e;
 		return "minOverlayWidthMatchTrigger" in e ? t : !n;
 	}, L = /*#__PURE__*/ X.cloneElement(x, {
-		className: u(x.props?.className, D && (() => {
+		className: l(x.props?.className, D && (() => {
 			let { openClassName: t } = e;
 			return t === void 0 ? `${r}-open` : t;
 		})()),
-		ref: g(x) ? w(j, b(x)) : void 0
+		ref: h(x) ? w(j, y(x)) : void 0
 	}), R = f;
 	return !R && _.indexOf("contextMenu") !== -1 && (R = ["click"]), /*#__PURE__*/ X.createElement(M, De({ builtinPlacements: c }, C, {
 		prefixCls: r,
 		ref: k,
-		popupClassName: u(p, { [`${r}-show-arrow`]: n }),
+		popupClassName: l(p, { [`${r}-show-arrow`]: n }),
 		popupStyle: m,
 		action: _,
 		showAction: d,
@@ -136,9 +136,9 @@ var Oe = /* @__PURE__ */ X.forwardRef((e, t) => {
 		popup: ee(),
 		onOpenChange: N,
 		onPopupClick: P,
-		getPopupContainer: l
+		getPopupContainer: u
 	}), L);
-}), ke = /* @__PURE__ */ t(a()), Ae = /*#__PURE__*/ X.createContext(null);
+}), ke = /* @__PURE__ */ t(u()), Ae = /*#__PURE__*/ X.createContext(null);
 function je(e, t) {
 	return `${e}-${t}`;
 }
@@ -156,7 +156,7 @@ function Ne(e, t) {
 	}), n;
 }
 function Pe({ children: e, locked: t, ...n }) {
-	let r = X.useContext(Q), i = O(() => Ne(r, n), [r, n], (e, n) => !t && (e[0] !== n[0] || !o(e[1], n[1], !0)));
+	let r = X.useContext(Q), i = O(() => Ne(r, n), [r, n], (e, n) => !t && (e[0] !== n[0] || !a(e[1], n[1], !0)));
 	return /*#__PURE__*/ X.createElement(Q.Provider, { value: i }, e);
 }
 //#endregion
@@ -170,7 +170,7 @@ function ze(e) {
 	let t = X.useContext(Re);
 	return X.useMemo(() => e === void 0 ? t : [...t, e], [t, e]);
 }
-var Be = /*#__PURE__*/ X.createContext(null), Ve = /*#__PURE__*/ X.createContext({}), { LEFT: He, RIGHT: Ue, UP: We, DOWN: Ge, ENTER: Ke, ESC: qe, HOME: Je, END: Ye } = l, Xe = [
+var Be = /*#__PURE__*/ X.createContext(null), Ve = /*#__PURE__*/ X.createContext({}), { LEFT: He, RIGHT: Ue, UP: We, DOWN: Ge, ENTER: Ke, ESC: qe, HOME: Je, END: Ye } = c, Xe = [
 	We,
 	Ge,
 	He,
@@ -240,7 +240,7 @@ function $e(e, t) {
 	return null;
 }
 function et(e, t) {
-	return h(e, !0).filter((e) => t.has(e));
+	return m(e, !0).filter((e) => t.has(e));
 }
 function tt(e, t, n, r = 1) {
 	if (!e) return null;
@@ -411,7 +411,7 @@ function ht() {
 }
 var gt = class extends X.Component {
 	render() {
-		let { title: e, attribute: t, elementRef: n, ...r } = this.props, a = f(r, [
+		let { title: e, attribute: t, elementRef: n, ...r } = this.props, a = d(r, [
 			"eventKey",
 			"popupClassName",
 			"popupOffset",
@@ -420,7 +420,7 @@ var gt = class extends X.Component {
 		return i(!t, "`attribute` of Menu.Item is deprecated. Please pass attribute directly."), /*#__PURE__*/ X.createElement(ve.Item, ht({}, t, { title: typeof e == "string" ? e : void 0 }, a, { ref: n }));
 	}
 }, _t = /*#__PURE__*/ X.forwardRef((e, t) => {
-	let { style: n, className: r, eventKey: i, warnKey: a, disabled: o, itemIcon: s, children: c, role: d, onMouseEnter: p, onMouseLeave: m, onClick: h, onKeyDown: g, onFocus: _, ...v } = e, y = Me(i), { prefixCls: b, onItemClick: x, disabled: S, overflowDisabled: C, itemIcon: w, selectedKeys: T, onActive: D } = X.useContext(Q), { _internalRenderMenuItem: O } = X.useContext(Ve), k = `${b}-item`, A = X.useRef(), j = X.useRef(), M = S || o, N = E(t, j), P = ze(i), F = (e) => ({
+	let { style: n, className: r, eventKey: i, warnKey: a, disabled: o, itemIcon: s, children: u, role: f, onMouseEnter: p, onMouseLeave: m, onClick: h, onKeyDown: g, onFocus: _, ...v } = e, y = Me(i), { prefixCls: b, onItemClick: x, disabled: S, overflowDisabled: C, itemIcon: w, selectedKeys: T, onActive: D } = X.useContext(Q), { _internalRenderMenuItem: O } = X.useContext(Ve), k = `${b}-item`, A = X.useRef(), j = X.useRef(), M = S || o, N = E(t, j), P = ze(i), F = (e) => ({
 		key: i,
 		keyPath: [...P].reverse(),
 		item: A.current,
@@ -430,7 +430,7 @@ var gt = class extends X.Component {
 		let t = F(e);
 		h?.(mt(t)), x(t);
 	}, B = (e) => {
-		if (g?.(e), e.which === l.ENTER) {
+		if (g?.(e), e.which === c.ENTER) {
 			let t = F(e);
 			h?.(mt(t)), x(t);
 		}
@@ -441,17 +441,17 @@ var gt = class extends X.Component {
 	let U = /*#__PURE__*/ X.createElement(gt, ht({
 		ref: A,
 		elementRef: N,
-		role: d === null ? "none" : d || "menuitem",
+		role: f === null ? "none" : f || "menuitem",
 		tabIndex: o ? null : -1,
 		"data-menu-id": C && y ? null : y
-	}, f(v, ["extra"]), L, H, {
+	}, d(v, ["extra"]), L, H, {
 		component: "li",
 		"aria-disabled": o,
 		style: {
 			...z,
 			...n
 		},
-		className: u(k, {
+		className: l(k, {
 			[`${k}-active`]: I,
 			[`${k}-selected`]: R,
 			[`${k}-disabled`]: M
@@ -459,7 +459,7 @@ var gt = class extends X.Component {
 		onClick: te,
 		onKeyDown: B,
 		onFocus: V
-	}), c, /*#__PURE__*/ X.createElement(pt, {
+	}), u, /*#__PURE__*/ X.createElement(pt, {
 		props: {
 			...e,
 			isSelected: R
@@ -491,7 +491,7 @@ function bt() {
 var xt = /*#__PURE__*/ X.forwardRef(({ className: e, children: t, ...n }, r) => {
 	let { prefixCls: i, mode: a, rtl: o } = X.useContext(Q);
 	return /*#__PURE__*/ X.createElement("ul", bt({
-		className: u(i, o && `${i}-rtl`, `${i}-sub`, `${i}-${a === "inline" ? "inline" : "vertical"}`, e),
+		className: l(i, o && `${i}-rtl`, `${i}-sub`, `${i}-${a === "inline" ? "inline" : "vertical"}`, e),
 		role: "menu"
 	}, n, {
 		"data-menu-list": !0,
@@ -600,15 +600,15 @@ var Et = {
 	"vertical-left": "rightTop",
 	"vertical-right": "leftTop"
 };
-function Dt({ prefixCls: e, visible: t, children: n, popup: i, popupStyle: a, popupClassName: o, popupOffset: s, disabled: c, mode: l, onVisibleChange: d }) {
+function Dt({ prefixCls: e, visible: t, children: n, popup: i, popupStyle: a, popupClassName: o, popupOffset: s, disabled: c, mode: u, onVisibleChange: d }) {
 	let { getPopupContainer: f, rtl: p, subMenuOpenDelay: m, subMenuCloseDelay: h, builtinPlacements: g, triggerSubMenuAction: _, forceSubMenuRender: v, rootClassName: y, motion: b, defaultMotions: x } = X.useContext(Q), [S, C] = X.useState(!1), w = p ? {
 		...wt,
 		...g
 	} : {
 		...Ct,
 		...g
-	}, T = Et[l], E = Tt(l, b, x), D = X.useRef(E);
-	l !== "inline" && (D.current = E);
+	}, T = Et[u], E = Tt(u, b, x), D = X.useRef(E);
+	u !== "inline" && (D.current = E);
 	let O = {
 		...D.current,
 		leavedClassName: `${e}-hidden`,
@@ -621,8 +621,8 @@ function Dt({ prefixCls: e, visible: t, children: n, popup: i, popupStyle: a, po
 		r.cancel(k.current);
 	}), [t]), /*#__PURE__*/ X.createElement(M, {
 		prefixCls: e,
-		popupClassName: u(`${e}-popup`, { [`${e}-rtl`]: p }, o, y),
-		stretch: l === "horizontal" ? "minWidth" : null,
+		popupClassName: l(`${e}-popup`, { [`${e}-rtl`]: p }, o, y),
+		stretch: u === "horizontal" ? "minWidth" : null,
 		getPopupContainer: f,
 		builtinPlacements: w,
 		popupPlacement: T,
@@ -685,7 +685,7 @@ function At() {
 	}, At.apply(this, arguments);
 }
 var jt = /*#__PURE__*/ X.forwardRef((e, t) => {
-	let { style: n, className: r, styles: i, classNames: a, title: o, eventKey: s, warnKey: c, disabled: l, internalPopupClose: d, children: f, itemIcon: p, expandIcon: m, popupClassName: h, popupOffset: g, popupStyle: _, onClick: v, onMouseEnter: y, onMouseLeave: b, onTitleClick: x, onTitleMouseEnter: S, onTitleMouseLeave: C, popupRender: w, ...T } = e, E = Me(s), { prefixCls: D, mode: O, openKeys: k, disabled: A, overflowDisabled: j, activeKey: M, selectedKeys: N, itemIcon: P, expandIcon: F, onItemClick: ee, onOpenChange: I, onActive: L, popupRender: R } = X.useContext(Q), { _internalRenderSubMenuItem: z } = X.useContext(Ve), { isSubPathKey: te } = X.useContext(Be), B = ze(), V = `${D}-submenu`, H = A || l, U = X.useRef(), ne = X.useRef(), re = p ?? P, ie = m ?? F, W = k.includes(s), G = !j && W, ae = te(N, s), { active: oe, ...se } = dt(s, H, S, C), [K, ce] = X.useState(!1), q = (e) => {
+	let { style: n, className: r, styles: i, classNames: a, title: o, eventKey: s, warnKey: c, disabled: u, internalPopupClose: d, children: f, itemIcon: p, expandIcon: m, popupClassName: h, popupOffset: g, popupStyle: _, onClick: v, onMouseEnter: y, onMouseLeave: b, onTitleClick: x, onTitleMouseEnter: S, onTitleMouseLeave: C, popupRender: w, ...T } = e, E = Me(s), { prefixCls: D, mode: O, openKeys: k, disabled: A, overflowDisabled: j, activeKey: M, selectedKeys: N, itemIcon: P, expandIcon: F, onItemClick: ee, onOpenChange: I, onActive: L, popupRender: R } = X.useContext(Q), { _internalRenderSubMenuItem: z } = X.useContext(Ve), { isSubPathKey: te } = X.useContext(Be), B = ze(), V = `${D}-submenu`, H = A || u, U = X.useRef(), ne = X.useRef(), re = p ?? P, ie = m ?? F, W = k.includes(s), G = !j && W, ae = te(N, s), { active: oe, ...se } = dt(s, H, S, C), [K, ce] = X.useState(!1), q = (e) => {
 		H || ce(e);
 	}, le = (e) => {
 		q(!0), y?.({
@@ -786,7 +786,7 @@ var jt = /*#__PURE__*/ X.forwardRef((e, t) => {
 	}, T, {
 		component: "li",
 		style: n,
-		className: u(V, `${V}-${O}`, r, {
+		className: l(V, `${V}-${O}`, r, {
 			[`${V}-open`]: G,
 			[`${V}-active`]: de,
 			[`${V}-selected`]: ae,
@@ -828,7 +828,7 @@ function Nt({ className: e, style: t }) {
 	let { prefixCls: n } = X.useContext(Q);
 	return Le() ? null : /*#__PURE__*/ X.createElement("li", {
 		role: "separator",
-		className: u(`${n}-item-divider`, e),
+		className: l(`${n}-item-divider`, e),
 		style: t
 	});
 }
@@ -844,26 +844,26 @@ function Pt() {
 	}, Pt.apply(this, arguments);
 }
 var Ft = /*#__PURE__*/ X.forwardRef((e, t) => {
-	let { className: n, title: r, eventKey: i, children: a, ...o } = e, { prefixCls: s, classNames: c, styles: l } = X.useContext(Q), d = `${s}-item-group`;
+	let { className: n, title: r, eventKey: i, children: a, ...o } = e, { prefixCls: s, classNames: c, styles: u } = X.useContext(Q), d = `${s}-item-group`;
 	return /*#__PURE__*/ X.createElement("li", Pt({
 		ref: t,
 		role: "presentation"
 	}, o, {
 		onClick: (e) => e.stopPropagation(),
-		className: u(d, n)
+		className: l(d, n)
 	}), /*#__PURE__*/ X.createElement("div", {
 		role: "presentation",
-		className: u(`${d}-title`, c?.listTitle),
-		style: l?.listTitle,
+		className: l(`${d}-title`, c?.listTitle),
+		style: u?.listTitle,
 		title: typeof r == "string" ? r : void 0
 	}, r), /*#__PURE__*/ X.createElement("ul", {
 		role: "group",
-		className: u(`${d}-list`, c?.list),
-		style: l?.list
+		className: l(`${d}-list`, c?.list),
+		style: u?.list
 	}, a));
 }), It = /*#__PURE__*/ X.forwardRef((e, t) => {
 	let { eventKey: n, children: r } = e, i = St(r, ze(n));
-	return Le() ? i : /*#__PURE__*/ X.createElement(Ft, Pt({ ref: t }, f(e, ["warnKey"])), i);
+	return Le() ? i : /*#__PURE__*/ X.createElement(Ft, Pt({ ref: t }, d(e, ["warnKey"])), i);
 });
 //#endregion
 //#region node_modules/.pnpm/@rc-component+menu@1.3.1_re_a393575b937801b51ab86f309f4c125e/node_modules/@rc-component/menu/es/utils/nodeUtil.js
@@ -911,7 +911,7 @@ function Bt() {
 	}, Bt.apply(this, arguments);
 }
 var Vt = [], Ht = /* @__PURE__ */ X.forwardRef((e, t) => {
-	let { prefixCls: n = "rc-menu", rootClassName: r, style: i, className: a, styles: s, classNames: c, tabIndex: l = 0, items: d, children: f, direction: p, id: m, mode: h = "vertical", inlineCollapsed: g, disabled: _, disabledOverflow: v, subMenuOpenDelay: y = .1, subMenuCloseDelay: b = .1, forceSubMenuRender: x, defaultOpenKeys: S, openKeys: w, activeKey: E, defaultActiveFirst: D, selectable: O = !0, multiple: k = !1, defaultSelectedKeys: A, selectedKeys: j, onSelect: M, onDeselect: N, inlineIndent: P = 24, motion: F, defaultMotions: ee, triggerSubMenuAction: I = "hover", builtinPlacements: L, itemIcon: R, expandIcon: z, overflowedIndicator: te = "...", overflowedIndicatorPopupClassName: B, getPopupContainer: V, onClick: H, onOpenChange: U, onKeyDown: ne, openAnimation: re, openTransitionName: ie, _internalRenderMenuItem: W, _internalRenderSubMenuItem: G, _internalComponents: ae, popupRender: oe, ...se } = e, [K, ce] = X.useMemo(() => [zt(f, d, Vt, ae, n), zt(f, d, Vt, {}, n)], [
+	let { prefixCls: n = "rc-menu", rootClassName: r, style: i, className: o, styles: s, classNames: c, tabIndex: u = 0, items: d, children: f, direction: p, id: m, mode: h = "vertical", inlineCollapsed: g, disabled: _, disabledOverflow: v, subMenuOpenDelay: y = .1, subMenuCloseDelay: b = .1, forceSubMenuRender: x, defaultOpenKeys: S, openKeys: w, activeKey: E, defaultActiveFirst: D, selectable: O = !0, multiple: k = !1, defaultSelectedKeys: A, selectedKeys: j, onSelect: M, onDeselect: N, inlineIndent: P = 24, motion: F, defaultMotions: ee, triggerSubMenuAction: I = "hover", builtinPlacements: L, itemIcon: R, expandIcon: z, overflowedIndicator: te = "...", overflowedIndicatorPopupClassName: B, getPopupContainer: V, onClick: H, onOpenChange: U, onKeyDown: ne, openAnimation: re, openTransitionName: ie, _internalRenderMenuItem: W, _internalRenderSubMenuItem: G, _internalComponents: ae, popupRender: oe, ...se } = e, [K, ce] = X.useMemo(() => [zt(f, d, Vt, ae, n), zt(f, d, Vt, {}, n)], [
 		f,
 		d,
 		ae
@@ -975,7 +975,7 @@ var Vt = [], Ht = /* @__PURE__ */ X.forwardRef((e, t) => {
 			let t = Le(e);
 			n = n.filter((e) => !t.has(e));
 		}
-		o(J, n, !0) || he(n, !0);
+		a(J, n, !0) || he(n, !0);
 	}), Qe = rt(Z, He, fe, de, ue, Fe, Ne, Ue, (e, t) => {
 		Ze(e, t ?? !J.includes(e));
 	}, ne);
@@ -996,14 +996,14 @@ var Vt = [], Ht = /* @__PURE__ */ X.forwardRef((e, t) => {
 		prefixCls: `${n}-overflow`,
 		component: "ul",
 		itemComponent: yt,
-		className: u(n, `${n}-root`, `${n}-${Z}`, a, {
+		className: l(n, `${n}-root`, `${n}-${Z}`, o, {
 			[`${n}-inline-collapsed`]: Ce,
 			[`${n}-rtl`]: fe
 		}, r),
 		dir: p,
 		style: i,
 		role: "menu",
-		tabIndex: l,
+		tabIndex: u,
 		data: tt,
 		renderRawItem: (e) => e,
 		renderRawRest: (e) => {
@@ -1209,7 +1209,7 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 	let e = 0;
 	return (t = "") => (e += 1, `${t}${e}`);
 })(), $t = /*#__PURE__*/ X.forwardRef((e, t) => {
-	let { prefixCls: n, className: r, trigger: i, children: a, defaultCollapsed: o = !1, theme: s = "dark", style: c = {}, collapsible: l = !1, reverseArrow: d = !1, width: h = 200, collapsedWidth: g = 80, zeroWidthTriggerStyle: _, breakpoint: v, onCollapse: y, onBreakpoint: b, ...x } = e, { siderHook: C } = (0, X.useContext)(Ut), [w, T] = (0, X.useState)("collapsed" in e ? e.collapsed : o), [E, D] = (0, X.useState)(!1);
+	let { prefixCls: n, className: r, trigger: i, children: a, defaultCollapsed: o = !1, theme: s = "dark", style: c = {}, collapsible: u = !1, reverseArrow: m = !1, width: h = 200, collapsedWidth: g = 80, zeroWidthTriggerStyle: _, breakpoint: v, onCollapse: y, onBreakpoint: b, ...x } = e, { siderHook: C } = (0, X.useContext)(Ut), [w, T] = (0, X.useState)("collapsed" in e ? e.collapsed : o), [E, D] = (0, X.useState)(!1);
 	(0, X.useEffect)(() => {
 		"collapsed" in e && T(e.collapsed);
 	}, [e.collapsed]);
@@ -1232,13 +1232,13 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 	}, []);
 	let F = () => {
 		O(!w, "clickTrigger");
-	}, ee = f(x, ["collapsed"]), I = w ? g : h, L = Xt(I) ? `${I}px` : String(I), R = Number.parseFloat(String(g || 0)) === 0 ? /*#__PURE__*/ X.createElement("span", {
+	}, ee = d(x, ["collapsed"]), I = w ? g : h, L = Xt(I) ? `${I}px` : String(I), R = Number.parseFloat(String(g || 0)) === 0 ? /*#__PURE__*/ X.createElement("span", {
 		onClick: F,
-		className: u(`${j}-zero-width-trigger`, `${j}-zero-width-trigger-${d ? "right" : "left"}`),
+		className: l(`${j}-zero-width-trigger`, `${j}-zero-width-trigger-${m ? "right" : "left"}`),
 		style: _
-	}, i || /*#__PURE__*/ X.createElement(m, null)) : null, z = A === "rtl" == !d, te = {
-		expanded: z ? /*#__PURE__*/ X.createElement(S, null) : /*#__PURE__*/ X.createElement(p, null),
-		collapsed: z ? /*#__PURE__*/ X.createElement(p, null) : /*#__PURE__*/ X.createElement(S, null)
+	}, i || /*#__PURE__*/ X.createElement(p, null)) : null, z = A === "rtl" == !m, te = {
+		expanded: z ? /*#__PURE__*/ X.createElement(S, null) : /*#__PURE__*/ X.createElement(f, null),
+		collapsed: z ? /*#__PURE__*/ X.createElement(f, null) : /*#__PURE__*/ X.createElement(S, null)
 	}[w ? "collapsed" : "expanded"], B = i === null ? null : R || /*#__PURE__*/ X.createElement("div", {
 		className: `${j}-trigger`,
 		onClick: F,
@@ -1249,9 +1249,9 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		maxWidth: L,
 		minWidth: L,
 		width: L
-	}, H = u(j, `${j}-${s}`, {
+	}, H = l(j, `${j}-${s}`, {
 		[`${j}-collapsed`]: !!w,
-		[`${j}-has-trigger`]: l && i !== null && !R,
+		[`${j}-has-trigger`]: u && i !== null && !R,
 		[`${j}-below`]: !!E,
 		[`${j}-zero-width`]: Number.parseFloat(L) === 0
 	}, r, M, N), U = X.useMemo(() => ({ siderCollapsed: w }), [w]);
@@ -1260,7 +1260,7 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		...ee,
 		style: V,
 		ref: t
-	}, /*#__PURE__*/ X.createElement("div", { className: `${j}-children` }, a), l || E && R ? B : null));
+	}, /*#__PURE__*/ X.createElement("div", { className: `${j}-children` }, a), u || E && R ? B : null));
 }), en = /*#__PURE__*/ (0, X.createContext)({
 	prefixCls: "",
 	firstLevel: !0,
@@ -1268,15 +1268,15 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 	styles: null,
 	classNames: null
 }), tn = (e) => {
-	let { prefixCls: t, className: n, dashed: r, ...i } = e, { getPrefixCls: a } = X.useContext(ie), o = u({ [`${a("menu", t)}-item-divider-dashed`]: !!r }, n);
+	let { prefixCls: t, className: n, dashed: r, ...i } = e, { getPrefixCls: a } = X.useContext(ie), o = l({ [`${a("menu", t)}-item-divider-dashed`]: !!r }, n);
 	return /*#__PURE__*/ X.createElement(Nt, {
 		className: o,
 		...i
 	});
 }, nn = (e) => {
-	let { className: t, children: n, icon: r, title: i, danger: a, extra: o } = e, { prefixCls: s, firstLevel: c, direction: l, disableMenuItemTitleTooltip: d, tooltip: p, inlineCollapsed: m, styles: h, classNames: g } = X.useContext(en), _ = (e) => {
+	let { className: t, children: n, icon: r, title: i, danger: a, extra: o } = e, { prefixCls: s, firstLevel: c, direction: u, disableMenuItemTitleTooltip: f, tooltip: p, inlineCollapsed: m, styles: h, classNames: g } = X.useContext(en), _ = (e) => {
 		let t = n?.[0], i = /*#__PURE__*/ X.createElement("span", {
-			className: u(`${s}-title-content`, c ? g?.itemContent : g?.subMenu?.itemContent, { [`${s}-title-content-with-extra`]: !!o || o === 0 }),
+			className: l(`${s}-title-content`, c ? g?.itemContent : g?.subMenu?.itemContent, { [`${s}-title-content-with-extra`]: !!o || o === 0 }),
 			style: c ? h?.itemContent : h?.subMenu?.itemContent
 		}, n);
 		return (!r || /*#__PURE__*/ X.isValidElement(n) && n.type === "span") && n && e && c && typeof t == "string" ? /*#__PURE__*/ X.createElement("div", { className: `${s}-inline-collapsed-noicon` }, t.charAt(0)) : i;
@@ -1288,12 +1288,12 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 	};
 	!v && !m && (S.title = null, S.open = !1);
 	let C = D(n).length, w = /*#__PURE__*/ X.createElement(yt, {
-		...f(e, [
+		...d(e, [
 			"title",
 			"icon",
 			"danger"
 		]),
-		className: u(c ? g?.item : g?.subMenu?.item, {
+		className: l(c ? g?.item : g?.subMenu?.item, {
 			[`${s}-item-danger`]: a,
 			[`${s}-item-only-child`]: (r ? C + 1 : C) === 1
 		}, t),
@@ -1303,16 +1303,16 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		},
 		title: typeof i == "string" ? i : void 0
 	}, I(r, (e) => ({
-		className: u(`${s}-item-icon`, c ? g?.itemIcon : g?.subMenu?.itemIcon, e.className),
+		className: l(`${s}-item-icon`, c ? g?.itemIcon : g?.subMenu?.itemIcon, e.className),
 		style: {
 			...c ? h?.itemIcon : h?.subMenu?.itemIcon,
 			...e.style
 		}
 	})), _(m));
-	if (!d && p !== !1) {
-		let e = b && b.placement ? b.placement : l === "rtl" ? "left" : "right", t = `${s}-inline-collapsed-tooltip`, n = (e) => ({
+	if (!f && p !== !1) {
+		let e = b && b.placement ? b.placement : u === "rtl" ? "left" : "right", t = `${s}-inline-collapsed-tooltip`, n = (e) => ({
 			...e,
-			root: u(t, e?.root)
+			root: l(t, e?.root)
 		}), r = ne(b?.classNames) ? (e) => n(b.classNames(e)) : n(b?.classNames);
 		w = /*#__PURE__*/ X.createElement(ye, {
 			...S,
@@ -1331,7 +1331,7 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		r.mode,
 		r.selectable,
 		r.rootClassName
-	]), o = y(n), s = E(t, o ? b(n) : null);
+	]), o = v(n), s = E(t, o ? y(n) : null);
 	return /*#__PURE__*/ X.createElement(rn.Provider, { value: a }, /*#__PURE__*/ X.createElement(q, { space: !0 }, o ? /*#__PURE__*/ X.cloneElement(n, { ref: s }) : n));
 }), on = (e) => {
 	let { componentCls: t, motionDurationSlow: n, horizontalLineHeight: r, colorSplit: i, lineWidth: a, lineType: o, itemPaddingInline: s } = e;
@@ -1823,7 +1823,7 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		{ [`${t}-layout-header`]: { [n]: { lineHeight: "inherit" } } }
 	];
 }, hn = (e) => {
-	let { colorPrimary: t, colorError: n, colorTextDisabled: r, colorErrorBg: i, colorText: a, colorTextDescription: o, colorBgContainer: s, colorFillAlter: c, colorFillContent: l, lineWidth: u, lineWidthBold: d, controlItemBgActive: f, colorBgTextHover: p, controlHeightLG: m, lineHeight: h, colorBgElevated: g, marginXXS: v, padding: y, fontSize: b, controlHeightSM: x, fontSizeLG: S, colorTextLightSolid: C, colorErrorHover: w } = e, T = e.activeBarWidth ?? 0, E = e.activeBarBorderWidth ?? u, D = e.itemMarginInline ?? e.marginXXS, O = new _(C).setA(.65).toRgbString();
+	let { colorPrimary: t, colorError: n, colorTextDisabled: r, colorErrorBg: i, colorText: a, colorTextDescription: o, colorBgContainer: s, colorFillAlter: c, colorFillContent: l, lineWidth: u, lineWidthBold: d, controlItemBgActive: f, colorBgTextHover: p, controlHeightLG: m, lineHeight: h, colorBgElevated: _, marginXXS: v, padding: y, fontSize: b, controlHeightSM: x, fontSizeLG: S, colorTextLightSolid: C, colorErrorHover: w } = e, T = e.activeBarWidth ?? 0, E = e.activeBarBorderWidth ?? u, D = e.itemMarginInline ?? e.marginXXS, O = new g(C).setA(.65).toRgbString();
 	return {
 		dropdownWidth: 160,
 		zIndexPopup: e.zIndexPopupBase + 50,
@@ -1880,7 +1880,7 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		itemHeight: m,
 		groupTitleLineHeight: h,
 		collapsedWidth: m * 2,
-		popupBg: g,
+		popupBg: _,
 		itemMarginBlock: v,
 		itemPaddingInline: y,
 		horizontalLineHeight: `${m * 1.15}px`,
@@ -1888,7 +1888,7 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		iconMarginInlineEnd: x - b,
 		collapsedIconSize: S,
 		groupTitleFontSize: b,
-		darkItemDisabledColor: new _(C).setA(.25).toRgbString(),
+		darkItemDisabledColor: new g(C).setA(.25).toRgbString(),
 		darkItemColor: O,
 		darkDangerItemColor: n,
 		darkItemBg: "#001529",
@@ -1978,15 +1978,15 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 	injectStyle: n,
 	unitless: { groupTitleLineHeight: !0 }
 })(e, t), _n = (e) => {
-	let { popupClassName: t, icon: n, title: r, theme: i } = e, a = X.useContext(en), { prefixCls: o, inlineCollapsed: s, theme: c, classNames: l, styles: d } = a, p = ze(), m;
+	let { popupClassName: t, icon: n, title: r, theme: i } = e, a = X.useContext(en), { prefixCls: o, inlineCollapsed: s, theme: c, classNames: u, styles: f } = a, p = ze(), m;
 	if (!n) m = s && !p.length && r && typeof r == "string" ? /*#__PURE__*/ X.createElement("div", { className: `${o}-inline-collapsed-noicon` }, r.charAt(0)) : /*#__PURE__*/ X.createElement("span", { className: `${o}-title-content` }, r);
 	else {
 		let e = /*#__PURE__*/ X.isValidElement(r) && r.type === "span";
 		m = /*#__PURE__*/ X.createElement(X.Fragment, null, I(n, (e) => ({
-			className: u(e.className, `${o}-item-icon`, l?.itemIcon),
+			className: l(e.className, `${o}-item-icon`, u?.itemIcon),
 			style: {
 				...e.style,
-				...d?.itemIcon
+				...f?.itemIcon
 			}
 		})), e ? r : /*#__PURE__*/ X.createElement("span", { className: `${o}-title-content` }, r));
 	}
@@ -1995,21 +1995,21 @@ var Ut = /*#__PURE__*/ X.createContext({ siderHook: {
 		firstLevel: !1
 	}), [a]), [g] = oe("Menu");
 	return /*#__PURE__*/ X.createElement(en.Provider, { value: h }, /*#__PURE__*/ X.createElement(Mt, {
-		...f(e, ["icon"]),
+		...d(e, ["icon"]),
 		title: m,
 		classNames: {
-			list: l?.subMenu?.list,
-			listTitle: l?.subMenu?.itemTitle
+			list: u?.subMenu?.list,
+			listTitle: u?.subMenu?.itemTitle
 		},
 		styles: {
-			list: d?.subMenu?.list,
-			listTitle: d?.subMenu?.itemTitle
+			list: f?.subMenu?.list,
+			listTitle: f?.subMenu?.itemTitle
 		},
-		popupClassName: u(o, t, l?.popup?.root, `${o}-${i || c}`),
+		popupClassName: l(o, t, u?.popup?.root, `${o}-${i || c}`),
 		popupStyle: {
 			zIndex: g,
 			...e.popupStyle,
-			...d?.popup?.root
+			...f?.popup?.root
 		}
 	}));
 };
@@ -2023,16 +2023,16 @@ var yn = {
 	submenu: _n,
 	divider: tn
 }, bn = /*#__PURE__*/ (0, X.forwardRef)((e, t) => {
-	let n = X.useContext(rn), r = n || {}, { prefixCls: i, className: a, style: o, theme: s = "light", expandIcon: l, _internalDisableMenuItemTitleTooltip: d, tooltip: p, inlineCollapsed: m, siderCollapsed: h, rootClassName: g, mode: _, selectable: y, onClick: b, overflowedIndicatorPopupClassName: x, classNames: S, styles: C, ...w } = e, { menu: T } = X.useContext(ie), { getPrefixCls: E, getPopupContainer: D, direction: O, className: k, style: A, classNames: j, styles: M } = te("menu"), N = E(), P = f(w, ["collapsedWidth"]);
-	r.validator?.({ mode: _ });
-	let F = v((...e) => {
+	let n = X.useContext(rn), r = n || {}, { prefixCls: i, className: a, style: o, theme: c = "light", expandIcon: u, _internalDisableMenuItemTitleTooltip: f, tooltip: p, inlineCollapsed: m, siderCollapsed: h, rootClassName: g, mode: v, selectable: y, onClick: b, overflowedIndicatorPopupClassName: x, classNames: S, styles: C, ...w } = e, { menu: T } = X.useContext(ie), { getPrefixCls: E, getPopupContainer: D, direction: O, className: k, style: A, classNames: j, styles: M } = te("menu"), N = E(), P = d(w, ["collapsedWidth"]);
+	r.validator?.({ mode: v });
+	let F = _((...e) => {
 		b?.(...e), r.onClick?.();
-	}), L = r.mode || _, R = y ?? r.selectable, z = m ?? h, B = {
+	}), L = r.mode || v, R = y ?? r.selectable, z = m ?? h, B = {
 		...e,
 		mode: L,
 		inlineCollapsed: z,
 		selectable: R,
-		theme: s
+		theme: c
 	}, [V, U] = ee([j, S], [M, C], { props: B }, {
 		popup: { _default: "root" },
 		subMenu: { _default: "item" }
@@ -2040,14 +2040,14 @@ var yn = {
 		horizontal: { motionName: `${N}-slide-up` },
 		inline: ce(N),
 		other: { motionName: `${N}-zoom-big` }
-	}, W = E("menu", i || r.prefixCls), G = H(W), [ae, oe] = gn(W, G, !n), se = u(`${W}-${s}`, k, a), K = X.useMemo(() => {
-		if (ne(l) || vn(l)) return l || null;
+	}, W = E("menu", i || r.prefixCls), G = H(W), [ae, oe] = gn(W, G, !n), se = l(`${W}-${c}`, k, a), K = X.useMemo(() => {
+		if (ne(u) || vn(u)) return u || null;
 		if (ne(r.expandIcon) || vn(r.expandIcon)) return r.expandIcon || null;
 		if (ne(T?.expandIcon) || vn(T?.expandIcon)) return T?.expandIcon || null;
-		let e = l ?? r?.expandIcon ?? T?.expandIcon;
-		return I(e, { className: u(`${W}-submenu-expand-icon`, /*#__PURE__*/ X.isValidElement(e) ? e.props?.className : void 0) });
+		let e = u ?? r?.expandIcon ?? T?.expandIcon;
+		return I(e, { className: l(`${W}-submenu-expand-icon`, /*#__PURE__*/ X.isValidElement(e) ? e.props?.className : void 0) });
 	}, [
-		l,
+		u,
 		r?.expandIcon,
 		T?.expandIcon,
 		W
@@ -2056,9 +2056,9 @@ var yn = {
 		inlineCollapsed: z || !1,
 		direction: O,
 		firstLevel: !0,
-		theme: s,
+		theme: c,
 		mode: L,
-		disableMenuItemTitleTooltip: d,
+		disableMenuItemTitleTooltip: f,
 		tooltip: p,
 		classNames: V,
 		styles: U
@@ -2066,8 +2066,8 @@ var yn = {
 		W,
 		z,
 		O,
-		d,
-		s,
+		f,
+		c,
 		L,
 		V,
 		U,
@@ -2075,8 +2075,8 @@ var yn = {
 	]);
 	return /*#__PURE__*/ X.createElement(rn.Provider, { value: null }, /*#__PURE__*/ X.createElement(en.Provider, { value: q }, /*#__PURE__*/ X.createElement(Ht, {
 		getPopupContainer: D,
-		overflowedIndicator: /*#__PURE__*/ X.createElement(c, null),
-		overflowedIndicatorPopupClassName: u(W, `${W}-${s}`, x),
+		overflowedIndicator: /*#__PURE__*/ X.createElement(s, null),
+		overflowedIndicatorPopupClassName: l(W, `${W}-${c}`, x),
 		classNames: {
 			list: V.list,
 			listTitle: V.itemTitle
@@ -2101,7 +2101,7 @@ var yn = {
 		defaultMotions: re,
 		expandIcon: K,
 		ref: t,
-		rootClassName: u(g, ae, r.rootClassName, oe, G, V.root),
+		rootClassName: l(g, ae, r.rootClassName, oe, G, V.root),
 		_internalComponents: yn
 	})));
 }), xn = /* @__PURE__ */ e({ default: () => Sn }), Sn = /*#__PURE__*/ (0, X.forwardRef)((e, t) => {
@@ -2339,7 +2339,7 @@ var Cn = (e) => {
 	}),
 	...se(e)
 }), { resetStyle: !1 }), En = /*#__PURE__*/ X.forwardRef((e, t) => {
-	let { menu: n, arrow: r, prefixCls: i, children: a, trigger: o, disabled: s, dropdownRender: c, popupRender: l, getPopupContainer: d, overlayClassName: m, rootClassName: h, overlayStyle: g, open: _, onOpenChange: y, mouseEnterDelay: x = .15, mouseLeaveDelay: C = .1, autoAdjustOverflow: w = !0, placement: D = "", transitionName: O, classNames: k, styles: j, destroyPopupOnHide: M, destroyOnHidden: N } = e, { getPrefixCls: P, direction: F, getPopupContainer: L, className: z, style: B, classNames: V, styles: U } = te("dropdown"), ne = {
+	let { menu: n, arrow: r, prefixCls: i, children: a, trigger: o, disabled: s, dropdownRender: c, popupRender: u, getPopupContainer: p, overlayClassName: m, rootClassName: h, overlayStyle: g, open: v, onOpenChange: b, mouseEnterDelay: x = .15, mouseLeaveDelay: C = .1, autoAdjustOverflow: w = !0, placement: D = "", transitionName: O, classNames: k, styles: j, destroyPopupOnHide: M, destroyOnHidden: N } = e, { getPrefixCls: P, direction: F, getPopupContainer: L, className: z, style: B, classNames: V, styles: U } = te("dropdown"), ne = {
 		...e,
 		mouseEnterDelay: x,
 		mouseLeaveDelay: C,
@@ -2348,7 +2348,7 @@ var Cn = (e) => {
 		...B,
 		...g,
 		...W.root
-	}, se = l || c;
+	}, se = u || c;
 	he("Dropdown");
 	let K = X.useMemo(() => {
 		let e = P();
@@ -2357,22 +2357,22 @@ var Cn = (e) => {
 		P,
 		D,
 		O
-	]), ce = X.useMemo(() => D ? D.includes("Center") ? D.slice(0, D.indexOf("Center")) : D : F === "rtl" ? "bottomRight" : "bottomLeft", [D, F]), q = P("dropdown", i), le = H(q), [ue, de] = Tn(q, le), [, fe] = re(), pe = X.Children.only(A(a) ? /*#__PURE__*/ X.createElement("span", null, a) : a), J = E(t, b(pe)), Y = I(pe, {
-		className: u(`${q}-trigger`, { [`${q}-rtl`]: F === "rtl" }, pe.props.className),
+	]), ce = X.useMemo(() => D ? D.includes("Center") ? D.slice(0, D.indexOf("Center")) : D : F === "rtl" ? "bottomRight" : "bottomLeft", [D, F]), q = P("dropdown", i), le = H(q), [ue, de] = Tn(q, le), [, fe] = re(), pe = X.Children.only(A(a) ? /*#__PURE__*/ X.createElement("span", null, a) : a), J = E(t, y(pe)), Y = I(pe, {
+		className: l(`${q}-trigger`, { [`${q}-rtl`]: F === "rtl" }, pe.props.className),
 		disabled: pe.props.disabled ?? s,
 		ref: J
-	}), ge = s ? [] : o, _e = !!ge?.includes("contextMenu"), [ve, ye] = T(!1, _), be = v((e) => {
-		y?.(e, { source: "trigger" }), ye(e);
-	}), xe = u(m, h, ue, de, le, z, ie.root, { [`${q}-rtl`]: F === "rtl" }), Z = ae({
+	}), ge = s ? [] : o, _e = !!ge?.includes("contextMenu"), [ve, ye] = T(!1, v), be = _((e) => {
+		b?.(e, { source: "trigger" }), ye(e);
+	}), xe = l(m, h, ue, de, le, z, ie.root, { [`${q}-rtl`]: F === "rtl" }), Z = ae({
 		arrowPointAtCenter: R(r) && r.pointAtCenter,
 		autoAdjustOverflow: w,
 		offset: fe.marginXXS,
 		arrowWidth: r ? fe.sizePopupArrow : 0,
 		borderRadius: fe.borderRadius
-	}), Se = v(() => {
-		n?.selectable && n?.multiple || (y?.(!1, { source: "menu" }), ye(!1));
+	}), Se = _(() => {
+		n?.selectable && n?.multiple || (b?.(!1, { source: "menu" }), ye(!1));
 	}), Ce = () => {
-		let e = f(ie, ["root"]), t = f(W, ["root"]), r;
+		let e = d(ie, ["root"]), t = d(W, ["root"]), r;
 		return n?.items && (r = /*#__PURE__*/ X.createElement(Sn, {
 			...n,
 			classNames: {
@@ -2385,8 +2385,8 @@ var Cn = (e) => {
 			}
 		})), se && (r = se(r)), r = X.Children.only(typeof r == "string" ? /*#__PURE__*/ X.createElement("span", null, r) : r), /*#__PURE__*/ X.createElement(an, {
 			prefixCls: `${q}-menu`,
-			rootClassName: u(de, le),
-			expandIcon: /*#__PURE__*/ X.createElement("span", { className: `${q}-menu-submenu-arrow` }, F === "rtl" ? /*#__PURE__*/ X.createElement(p, { className: `${q}-menu-submenu-arrow-icon` }) : /*#__PURE__*/ X.createElement(S, { className: `${q}-menu-submenu-arrow-icon` })),
+			rootClassName: l(de, le),
+			expandIcon: /*#__PURE__*/ X.createElement("span", { className: `${q}-menu-submenu-arrow` }, F === "rtl" ? /*#__PURE__*/ X.createElement(f, { className: `${q}-menu-submenu-arrow-icon` }) : /*#__PURE__*/ X.createElement(S, { className: `${q}-menu-submenu-arrow-icon` })),
 			mode: "vertical",
 			selectable: !1,
 			onClick: Se,
@@ -2394,7 +2394,7 @@ var Cn = (e) => {
 		}, r);
 	}, [we, Te] = oe("Dropdown", G.zIndex), Ee = /*#__PURE__*/ X.createElement(Oe, {
 		alignPoint: _e,
-		...f(e, ["rootClassName", "onOpenChange"]),
+		...d(e, ["rootClassName", "onOpenChange"]),
 		mouseEnterDelay: x,
 		mouseLeaveDelay: C,
 		visible: ve,
@@ -2402,7 +2402,7 @@ var Cn = (e) => {
 		arrow: !!r,
 		overlayClassName: xe,
 		prefixCls: q,
-		getPopupContainer: d || L,
+		getPopupContainer: p || L,
 		transitionName: K,
 		trigger: ge,
 		overlay: Ce,
@@ -2422,7 +2422,7 @@ En._InternalPanelDoNotUseOrYouWillBeFired = (e) => /*#__PURE__*/ X.createElement
 var On = ({ children: e }) => {
 	let { getPrefixCls: t } = X.useContext(ie), n = t("breadcrumb"), { classNames: r, styles: i } = X.useContext(be);
 	return /*#__PURE__*/ X.createElement("li", {
-		className: u(`${n}-separator`, r?.separator),
+		className: l(`${n}-separator`, r?.separator),
 		style: i?.separator,
 		"aria-hidden": "true"
 	}, e === "" ? e : e || "/");
@@ -2437,8 +2437,8 @@ function kn(e, t) {
 }
 function An(e, t, n, r) {
 	if (!G(n)) return null;
-	let { className: i, onClick: a, ...o } = t, c = {
-		...s(o, {
+	let { className: i, onClick: a, ...s } = t, c = {
+		...o(s, {
 			data: !0,
 			aria: !0
 		}),
@@ -2446,10 +2446,10 @@ function An(e, t, n, r) {
 	};
 	return r === void 0 ? /*#__PURE__*/ X.createElement("span", {
 		...c,
-		className: u(`${e}-link`, i)
+		className: l(`${e}-link`, i)
 	}, n) : /*#__PURE__*/ X.createElement("a", {
 		...c,
-		className: u(`${e}-link`, i),
+		className: l(`${e}-link`, i),
 		href: r
 	}, n);
 }
@@ -2459,7 +2459,7 @@ function jn(e, t) {
 //#endregion
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/breadcrumb/BreadcrumbItem.js
 var Mn = (e) => {
-	let { prefixCls: t, separator: n = "/", children: r, menu: i, dropdownProps: a, href: o, dropdownIcon: s } = e, { classNames: c, styles: l } = X.useContext(be), d = ((e) => {
+	let { prefixCls: t, separator: n = "/", children: r, menu: i, dropdownProps: a, href: o, dropdownIcon: s } = e, { classNames: c, styles: u } = X.useContext(be), d = ((e) => {
 		if (i) {
 			let n = { ...a };
 			if (i) {
@@ -2484,8 +2484,8 @@ var Mn = (e) => {
 		return e;
 	})(r);
 	return U(d) ? /*#__PURE__*/ X.createElement(X.Fragment, null, /*#__PURE__*/ X.createElement("li", {
-		className: u(`${t}-item`, c?.item),
-		style: l?.item
+		className: l(`${t}-item`, c?.item),
+		style: u?.item
 	}, d), n && /*#__PURE__*/ X.createElement(On, null, n)) : null;
 }, Nn = (e) => {
 	let { prefixCls: t, children: n, href: r, ...i } = e, { getPrefixCls: a } = X.useContext(ie), o = a("breadcrumb", t);
@@ -2586,24 +2586,24 @@ var Rn = (e, t) => {
 		n = n.replace(`:${t}`, e[t]);
 	}), n;
 }, zn = (e) => {
-	let { prefixCls: t, separator: r, style: i, className: a, rootClassName: o, routes: c, items: l, children: d, itemRender: f, params: p = {}, classNames: m, styles: h, dropdownIcon: g, ..._ } = e, { getPrefixCls: v, direction: y, className: b, style: x, classNames: S, styles: C, separator: w, dropdownIcon: T } = te("breadcrumb"), E = r ?? w ?? "/", O = g ?? T ?? /*#__PURE__*/ X.createElement(n, null), k, A = v("breadcrumb", t), [j, M] = Fn(A), N = Ln(l, c), P = X.useMemo(() => ({
+	let { prefixCls: t, separator: r, style: i, className: a, rootClassName: s, routes: c, items: u, children: d, itemRender: f, params: p = {}, classNames: m, styles: h, dropdownIcon: g, ..._ } = e, { getPrefixCls: v, direction: y, className: b, style: x, classNames: S, styles: C, separator: w, dropdownIcon: T } = te("breadcrumb"), E = r ?? w ?? "/", O = g ?? T ?? /*#__PURE__*/ X.createElement(n, null), k, A = v("breadcrumb", t), [j, M] = Fn(A), N = Ln(u, c), P = X.useMemo(() => ({
 		...e,
 		separator: E
 	}), [e, E]), [F, L] = ee([S, m], [C, h], { props: P }), R = jn(A, f);
 	if (N && N.length > 0) {
-		let e = [], t = l || c;
+		let e = [], t = u || c;
 		k = N.map((n, r) => {
-			let { path: i, key: a, type: o, menu: c, onClick: l, className: u, style: d, separator: f, dropdownProps: m } = n, h = Rn(p, i);
+			let { path: i, key: a, type: s, menu: c, onClick: l, className: u, style: d, separator: f, dropdownProps: m } = n, h = Rn(p, i);
 			h !== void 0 && e.push(h);
 			let g = a ?? r;
-			if (o === "separator") return /*#__PURE__*/ X.createElement(On, { key: g }, f);
+			if (s === "separator") return /*#__PURE__*/ X.createElement(On, { key: g }, f);
 			let _ = {}, v = r === N.length - 1;
 			c && (_.menu = c);
 			let { href: y } = n;
 			return e.length && h !== void 0 && (y = `#/${e.join("/")}`), /*#__PURE__*/ X.createElement(Mn, {
 				key: g,
 				..._,
-				...s(n, {
+				...o(n, {
 					data: !0,
 					aria: !0
 				}),
@@ -2624,7 +2624,7 @@ var Rn = (e, t) => {
 			key: n
 		}));
 	}
-	let z = u(A, b, { [`${A}-rtl`]: y === "rtl" }, a, o, F.root, j, M), B = {
+	let z = l(A, b, { [`${A}-rtl`]: y === "rtl" }, a, s, F.root, j, M), B = {
 		...L.root,
 		...x,
 		...i

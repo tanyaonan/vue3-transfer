@@ -9,7 +9,7 @@
   <div id="root"></div>
 
   <script type="module">
-    import { React, ReactDOM, ReactJSXRuntime, loadAntd, resolveAntdTags } from './vendor-react/vendor.js'
+    import { React, ReactDOM, ReactJSXRuntime, styled, loadAntd, resolveAntdTags } from './vendor-react/vendor.js'
     import { renderReactToDOM } from '../dist/react.js'
 
     const response = await fetch('./Counter.jsx')
@@ -24,15 +24,17 @@
     window.React = React
     window.ReactDOM = ReactDOM
     window.ReactJSXRuntime = ReactJSXRuntime
+    window.styled = styled
     if (usesAntd) {
       window.antd = await loadAntd(antdTags)
     }
 
     const rendered = await renderReactToDOM(source, {
       filename: 'Counter.jsx',
-      globals: usesAntd
-        ? { 'antd': 'antd' }
-        : undefined,
+      globals: {
+        'antd': 'antd',
+        'styled-components': 'styled',
+      },
     })
 
     rendered.mount('#root')

@@ -1,15 +1,15 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Bt as n, Gt as r, Mt as i, Nt as a, On as o, dn as s, fn as c } from "../shared/core.js";
+import { Bt as n, Gt as r, Mt as i, Nt as a, dn as o, fn as s, kn as c } from "../shared/core.js";
 import { $ as l, Sr as u, _r as d, o as f } from "../shared/antd-core.js";
 //#region node_modules/.pnpm/@rc-component+mutate-observ_a72358b3f7d6c9d3afae3f428b826cf9/node_modules/@rc-component/mutate-observer/es/useMutateObserver.js
-var p = /* @__PURE__ */ t(o()), m = {
+var p = /* @__PURE__ */ t(c()), m = {
 	subtree: !0,
 	childList: !0,
 	attributeFilter: ["style", "class"]
 }, h = (e, t, n = m) => {
 	p.useEffect(() => {
-		if (!s() || !e) return;
+		if (!o() || !e) return;
 		let r, i = Array.isArray(e) ? e : [e];
 		return "MutationObserver" in window && (r = new MutationObserver(t), i.forEach((e) => {
 			r.observe(e, n);
@@ -58,7 +58,7 @@ var p = /* @__PURE__ */ t(o()), m = {
 //#endregion
 //#region node_modules/.pnpm/antd@6.4.4_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/antd/es/watermark/useRafDebounce.js
 function v(e) {
-	let t = p.useRef(!1), r = p.useRef(null), i = c(e);
+	let t = p.useRef(!1), r = p.useRef(null), i = s(e);
 	return () => {
 		t.current || (t.current = !0, i(), r.current = n(() => {
 			t.current = !1;
@@ -89,7 +89,7 @@ var C = (e, t) => {
 	let n = !1;
 	return e.removedNodes.length && (n = Array.from(e.removedNodes).some(t)), e.type === "attributes" && t(e.target) && (n = !0), n;
 }, w = () => {}, T = { visibility: "visible !important" }, E = (e, t) => {
-	let n = p.useRef(/* @__PURE__ */ new Map()), r = c(t ?? w);
+	let n = p.useRef(/* @__PURE__ */ new Map()), r = s(t ?? w);
 	return [
 		(i, a, o) => {
 			if (o) {
@@ -122,7 +122,7 @@ var k = 100, A = 100, j = 1, M = {
 	position: "relative",
 	overflow: "hidden"
 }, N = (e) => {
-	let { zIndex: t, rotate: n = -22, width: r, height: o, image: s, content: m, font: g = {}, style: _, className: b, rootClassName: x, gap: w = [k, A], offset: T, children: D, inherit: N = !0, onRemove: P } = e, { className: F, style: te } = u("watermark"), ne = {
+	let { zIndex: t, rotate: n = -22, width: r, height: o, image: c, content: m, font: g = {}, style: _, className: b, rootClassName: x, gap: w = [k, A], offset: T, children: D, inherit: N = !0, onRemove: P } = e, { className: F, style: te } = u("watermark"), ne = {
 		...M,
 		...te,
 		..._
@@ -149,7 +149,7 @@ var k = 100, A = 100, j = 1, M = {
 		return [].concat(e, i(Array.from(Z)));
 	}, [X, Z]), oe = (e) => {
 		let t = 120, n = 64;
-		if (!s && e.measureText) {
+		if (!c && e.measureText) {
 			e.font = `${Number(z)}px ${H}`;
 			let r = f(m), a = r.map((t) => {
 				let n = e.measureText(t);
@@ -181,13 +181,13 @@ var k = 100, A = 100, j = 1, M = {
 				], [o, s] = ce(a, () => se.apply(void 0, a));
 				le([o, s]);
 			};
-			if (s) {
+			if (c) {
 				let e = new Image();
 				e.onload = () => {
 					a(e);
 				}, e.onerror = () => {
 					a(m);
-				}, e.crossOrigin = "anonymous", e.referrerPolicy = "no-referrer", e.src = s;
+				}, e.crossOrigin = "anonymous", e.referrerPolicy = "no-referrer", e.src = c;
 			} else a(m);
 		}
 	}), [de, fe, pe] = E(re, P);
@@ -195,7 +195,7 @@ var k = 100, A = 100, j = 1, M = {
 		$ && Q.forEach((e) => {
 			de($[0], $[1], e);
 		});
-	}, [$, Q]), h(Q, c((e) => {
+	}, [$, Q]), h(Q, s((e) => {
 		e.forEach((e) => {
 			if (C(e, pe)) ue();
 			else if (e.target === X && e.attributeName === "style") {
@@ -211,7 +211,7 @@ var k = 100, A = 100, j = 1, M = {
 		L,
 		r,
 		o,
-		s,
+		c,
 		m,
 		R,
 		z,

@@ -1,10 +1,10 @@
 globalThis.process === void 0 && (globalThis.process = { env: { NODE_ENV: "production" } });
 import { n as e, r as t } from "../rolldown-runtime.js";
-import { Ht as n, Jt as r, Nt as i, On as a, b as o, kt as s, sn as c, yt as l } from "../shared/core.js";
+import { Ht as n, Jt as r, Nt as i, b as a, kn as o, kt as s, sn as c, yt as l } from "../shared/core.js";
 import { Qn as u, Sr as d, en as f, kn as p, pr as m, sr as h } from "../shared/antd-core.js";
 import { o as g } from "./avatar.js";
 //#region node_modules/.pnpm/@rc-component+rate@1.0.1_re_67b3dda043bc45b68686eba2801e3125/node_modules/@rc-component/rate/es/Star.js
-var _ = /* @__PURE__ */ t(a());
+var _ = /* @__PURE__ */ t(o());
 function v(e, t) {
 	let { disabled: n, prefixCls: a, character: o, characterRender: s, index: c, count: l, value: u, allowHalf: d, focused: f, onHover: p, onClick: m } = e, h = (e) => {
 		p(e, c);
@@ -211,7 +211,7 @@ var E = /* @__PURE__ */ _.forwardRef(T), D = (e) => {
 	starHoverScale: "scale(1.1)",
 	starBg: e.colorFillContent
 })), j = /* @__PURE__ */ e({ default: () => M }), M = /*#__PURE__*/ _.forwardRef((e, t) => {
-	let { prefixCls: n, className: r, rootClassName: a, style: s, tooltips: c, character: l = /*#__PURE__*/ _.createElement(o, null), disabled: m, size: h, ...v } = e, y = (e, { index: t }) => {
+	let { prefixCls: n, className: r, rootClassName: o, style: s, tooltips: c, character: l = /*#__PURE__*/ _.createElement(a, null), disabled: m, size: h, ...v } = e, y = (e, { index: t }) => {
 		if (!c) return e;
 		let n = c[t];
 		return u(n) ? /*#__PURE__*/ _.createElement(g, { ...n }, e) : /*#__PURE__*/ _.createElement(g, { title: n }, e);
@@ -228,7 +228,7 @@ var E = /* @__PURE__ */ _.forwardRef(T), D = (e) => {
 		className: i({
 			[`${w}-large`]: M === "large",
 			[`${w}-small`]: M === "small"
-		}, r, a, T, D, S),
+		}, r, o, T, D, S),
 		style: O,
 		prefixCls: w,
 		direction: x
