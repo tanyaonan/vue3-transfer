@@ -26,6 +26,15 @@ interface ComponentMeta {
 }
 
 /**
+ * 部分 Wot UI 组件在模板中直接使用了其他 Wot UI 组件，但没有通过 import 引入，
+ * 依赖 UniApp 的 easycom 自动注册。浏览器端没有 easycom，因此需要在按需
+ * 加载时连带加载这些隐式依赖。
+ */
+const componentDependencies: Record<string, string[]> = {
+  'wd-slider': ['wd-icon'],
+}
+
+/**
  * 支持的 Wot UI 组件映射表（全量）。
  * key 为模板中使用的标签名（短横线），
  * value 为组件在 @wot-ui/ui/components 下的目录名。
@@ -273,9 +282,24 @@ export function resolveWotUITags(source: string): string[] {
  */
 export async function loadWotUI(refs: string[]): Promise<Record<string, any>> {
   const result: Record<string, any> = {}
+  const loaded = new Set<string>()
+  const queue: string[] = [...refs]
+
+  // 递归加载隐式依赖
+  for (const ref of refs) {
+    const deps = componentDependencies[ref]
+    if (deps) {
+      for (const dep of deps) {
+        if (!queue.includes(dep)) queue.push(dep)
+      }
+    }
+  }
 
   await Promise.all(
-    refs.map(async (ref) => {
+    queue.map(async (ref) => {
+      if (loaded.has(ref)) return
+      loaded.add(ref)
+
       const loader = componentLoaders[ref]
       if (!loader) {
         if (componentRegistry[ref]) {

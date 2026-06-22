@@ -6,7 +6,7 @@ if (typeof window < "u") {
 	let n = window.uni || {};
 	window.uni = Object.assign(n, { createSelectorQuery: t }), window.getCurrentPages = e;
 }
-var r = {
+var r = { "wd-slider": ["wd-icon"] }, i = {
 	"wd-action-sheet": { path: "action-sheet" },
 	"wd-avatar": { path: "avatar" },
 	"wd-avatar-group": { path: "avatar-group" },
@@ -106,7 +106,7 @@ var r = {
 	"wd-upload": { path: "upload" },
 	"wd-video-preview": { path: "video-preview" },
 	"wd-watermark": { path: "watermark" }
-}, i = {
+}, a = {
 	"wd-action-sheet": () => import("./chunks/wd-action-sheet.js").then((e) => e.n),
 	"wd-avatar": () => import("./chunks/wd-avatar.js").then((e) => e.n),
 	"wd-avatar-group": () => import("./chunks/wd-avatar-group.js"),
@@ -207,29 +207,35 @@ var r = {
 	"wd-video-preview": () => import("./chunks/wd-video-preview.js").then((e) => e.n),
 	"wd-watermark": () => import("./chunks/wd-watermark.js")
 };
-function a(e) {
+function o(e) {
 	let t = /* @__PURE__ */ new Set(), n = e.matchAll(/<\s*(wd-[\w-]+)/gi);
 	for (let e of n) t.add(e[1]);
 	let r = e.matchAll(/<\s*(wd-[\w-]+)\s*\/?>/gi);
 	for (let e of r) t.add(e[1]);
 	return [...t];
 }
-async function o(e) {
-	let t = {};
-	return await Promise.all(e.map(async (e) => {
-		let n = i[e];
-		if (!n) {
-			r[e] && console.warn(`[vue3-transfer] Wot UI component loader missing: ${e}`);
+async function s(e) {
+	let t = {}, n = /* @__PURE__ */ new Set(), o = [...e];
+	for (let t of e) {
+		let e = r[t];
+		if (e) for (let t of e) o.includes(t) || o.push(t);
+	}
+	return await Promise.all(o.map(async (e) => {
+		if (n.has(e)) return;
+		n.add(e);
+		let r = a[e];
+		if (!r) {
+			i[e] && console.warn(`[vue3-transfer] Wot UI component loader missing: ${e}`);
 			return;
 		}
-		let a = await n();
-		t[e] = a.default || a;
+		let o = await r();
+		t[e] = o.default || o;
 	})), t;
 }
-function s(e) {
+function c(e) {
 	return { install(t) {
 		for (let [n, r] of Object.entries(e)) t.component(n, r);
 	} };
 }
 //#endregion
-export { n as Vue, s as createWotUIPlugin, o as loadWotUI, a as resolveWotUITags };
+export { n as Vue, c as createWotUIPlugin, s as loadWotUI, o as resolveWotUITags };
