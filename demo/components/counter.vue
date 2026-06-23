@@ -12,16 +12,17 @@
     </div>
 
     <div class="actions">
-      <el-button type="primary" @click="increment">+1</el-button>
-      <el-button type="warning" @click="decrement">-1</el-button>
-      <el-button type="info" @click="reset">Reset</el-button>
+      <MyButton type="primary" @click="increment">+1</MyButton>
+      <MyButton type="warning" @click="decrement">-1</MyButton>
+      <MyButton type="info" @click="reset">Reset</MyButton>
     </div>
   </el-card>
 </template>
 
 <script setup>
-import { ElCard, ElTag, ElText, ElButton, ElMessage } from 'element-plus'
+import { ElCard, ElTag, ElText, ElMessage } from 'element-plus'
 import { ref } from 'vue'
+import MyButton from './button.vue'
 
 const count = ref(0)
 

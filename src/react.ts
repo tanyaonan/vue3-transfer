@@ -24,12 +24,20 @@ function createSourceHash(source: string): string {
   return generateId(source)
 }
 
-function createCacheKey(options: ReactTransformOptions): string {
+function createCacheKey(options: ReactTransformOptions, resolvedSources?: Record<string, string>): string {
   return generateId(
     JSON.stringify({
       filename: options.filename,
       isProduction: options.isProduction,
       styleMode: options.styleMode,
+      resolvedSources: resolvedSources
+        ? Object.entries(resolvedSources)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([k, v]) => `${k}:${createSourceHash(v)}`)
+            .join(',')
+        : undefined,
+      // 在缓存 key 中混入编译器实现指纹，避免旧版编译器缓存被新版复用。
+      compilerFingerprint: transformReactToJS.toString().length,
     }),
   )
 }
@@ -115,6 +123,91 @@ function convertExports(code: string): string {
 }
 
 /**
+ * 从源码中提取相对路径的本地导入（如 `import X from './button.jsx'`）。
+ * 返回去重后的相对路径列表。
+ */
+function extractLocalImports(code: string): string[] {
+  const specifiers = new Set<string>()
+  const patterns = [
+    /import\s+\w+\s+from\s+['"](\.\/[^'"]+\.(?:jsx?|tsx?))['"];?/g,
+    /import\s+\{[^}]+\}\s+from\s+['"](\.\/[^'"]+\.(?:jsx?|tsx?))['"];?/g,
+  ]
+  for (const pattern of patterns) {
+    let match: RegExpExecArray | null
+    while ((match = pattern.exec(code)) !== null) {
+      specifiers.add(match[1])
+    }
+  }
+  return [...specifiers]
+}
+
+interface LocalImportRewriteResult {
+  code: string
+  bindings: string[]
+}
+
+/**
+ * 将源码中的相对路径导入改写为从本地模块表读取。
+ */
+function rewriteLocalImports(code: string): LocalImportRewriteResult {
+  const bindings: string[] = []
+
+  // import X from './xxx.jsx'
+  let newCode = code.replace(
+    /import\s+(\w+)\s+from\s+['"](\.\/[^'"]+\.(?:jsx?|tsx?))['"];?/g,
+    (_match, binding: string, specifier: string) => {
+      bindings.push(binding)
+      return `const ${binding} = __local_modules__[${JSON.stringify(specifier)}]`
+    },
+  )
+
+  // import { X, Y as Z } from './xxx.jsx'
+  newCode = newCode.replace(
+    /import\s+\{([^}]+)\}\s+from\s+['"](\.\/[^'"]+\.(?:jsx?|tsx?))['"];?/g,
+    (_match, imports: string, specifier: string) => {
+      const pairs = imports.split(',').map((s: string) => s.trim())
+      const destructuring = pairs.map((pair: string) => {
+        const parts = pair.split(/\s+as\s+/).map((s: string) => s.trim())
+        if (parts.length === 2) {
+          bindings.push(parts[1])
+          return `${parts[0]}: ${parts[1]}`
+        }
+        bindings.push(parts[0])
+        return parts[0]
+      }).join(', ')
+      return `const { ${destructuring} } = __local_modules__[${JSON.stringify(specifier)}]`
+    },
+  )
+
+  return { code: newCode, bindings }
+}
+
+/**
+ * 将本地模块编译产物封装为可在主组件代码中执行的模块表。
+ * 子模块中的 React / JSX 运行时 / globals 导入也需要重写为全局读取。
+ */
+function createLocalModulesCode(
+  localModules: Record<string, ReactTransformResult>,
+  globals?: Record<string, string>,
+): string {
+  const entries = Object.entries(localModules).map(([specifier, result]) => {
+    let moduleCode = convertExports(result.code)
+    moduleCode = rewriteImports(moduleCode, 'react/jsx-runtime', 'ReactJSXRuntime').code
+    moduleCode = rewriteImports(moduleCode, 'react', 'React').code
+    moduleCode = rewriteImports(moduleCode, 'react-dom/client', 'ReactDOM').code
+    if (globals) {
+      for (const [specifier, globalName] of Object.entries(globals)) {
+        moduleCode = rewriteImports(moduleCode, specifier, globalName).code
+      }
+    }
+    return `${JSON.stringify(specifier)}: (function() {
+${moduleCode}
+})()`
+  })
+  return `const __local_modules__ = {\n${entries.join(',\n')}\n}`
+}
+
+/**
  * 将 React JSX 源码编译为纯 JavaScript 代码。
  *
  * 该函数在浏览器中运行，使用 @babel/standalone 把 JSX 转换为
@@ -133,7 +226,20 @@ export async function transformReactToJS(
 
   const useCache = options.useCache ?? true
   const sourceHash = createSourceHash(source)
-  const cacheKey = useCache ? createCacheKey(options) : null
+
+  // 在编译前通过 resolver 异步解析本地依赖，并把依赖内容参与缓存 key。
+  const resolvedSources: Record<string, string> = {}
+  if (options.resolver) {
+    const localImports = extractLocalImports(source)
+    for (const specifier of localImports) {
+      const depSource = await options.resolver.resolve(specifier, options.filename)
+      if (depSource != null) {
+        resolvedSources[specifier] = depSource
+      }
+    }
+  }
+
+  const cacheKey = useCache ? createCacheKey(options, resolvedSources) : null
 
   if (cacheKey) {
     const cached = await getCacheEntry(cacheKey, sourceHash)
@@ -142,6 +248,7 @@ export async function transformReactToJS(
         code: cached.code,
         css: cached.css,
         errors: cached.errors,
+        localModules: cached.localModules,
       }
     }
   }
@@ -172,9 +279,41 @@ export async function transformReactToJS(
       ],
     })
 
+    // 递归编译本地依赖（如 `import MyButton from './button.jsx'`），
+    // 并把子组件直接内联到当前产物中，避免缓存中保留无法执行的相对路径导入。
+    const localModules: Record<string, ReactTransformResult> = {}
+    if (options.resolver) {
+      for (const [specifier, depSource] of Object.entries(resolvedSources)) {
+        if (!localModules[specifier]) {
+          const depResult = await transformReactToJS(depSource, {
+            ...options,
+            filename: specifier,
+          })
+          if (depResult.errors.length) {
+            return {
+              code: '',
+              errors: depResult.errors,
+            }
+          }
+          localModules[specifier] = depResult
+          Object.assign(localModules, depResult.localModules)
+        }
+      }
+    }
+
+    let code = transformed.code ?? ''
+
+    // 把本地依赖内联为模块表并替换源码中的相对路径导入
+    if (Object.keys(localModules).length) {
+      code = createLocalModulesCode(localModules, options.globals) + '\n\n' + code
+      const localRewrite = rewriteLocalImports(code)
+      code = localRewrite.code
+    }
+
     const result: ReactTransformResult = {
-      code: transformed.code ?? '',
+      code,
       errors: [],
+      localModules,
     }
 
     if (cacheKey) {

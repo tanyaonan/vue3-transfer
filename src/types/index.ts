@@ -40,6 +40,26 @@ export interface TransformOptions {
    * 会被改写为 `const { ElMessage } = window.ElementPlus`。
    */
   globals?: Record<string, string>
+
+  /**
+   * 模块解析器，用于在浏览器运行时异步解析相对路径组件导入
+   *（如 `import MyButton from './button.vue'`）。
+   * 返回对应模块的源码字符串；若无法解析，返回 `null`。
+   */
+  resolver?: ModuleResolver
+}
+
+/**
+ * 浏览器运行时模块解析器。
+ */
+export interface ModuleResolver {
+  /**
+   * 解析相对路径模块。
+   * @param specifier 源码中使用的相对路径，例如 `'./button.vue'`。
+   * @param importer 当前正在编译的文件名，例如 `'counter.vue'`。
+   * @returns 模块源码；解析失败时返回 `null`。
+   */
+  resolve(specifier: string, importer: string): Promise<string | null>
 }
 
 export interface TransformResult {
@@ -57,6 +77,12 @@ export interface TransformResult {
    * 编译过程中产生的错误信息。
    */
   errors: string[]
+
+  /**
+   * 递归编译的本地依赖模块，键为相对路径，值为该依赖的编译结果。
+   * 仅在调用方传入 `resolver` 选项且源码中存在相对路径导入时返回。
+   */
+  localModules?: Record<string, TransformResult>
 }
 
 export interface MountOptions {

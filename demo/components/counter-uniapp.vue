@@ -320,6 +320,15 @@
       </wd-popup>
     </view>
 
+    <view class="section">
+      <text class="section-title">本地组件引入</text>
+      <view class="actions">
+        <demo-button type="primary" @click="increment">+1</demo-button>
+        <demo-button type="warning" @click="decrement">-1</demo-button>
+        <demo-button type="info" @click="reset">Reset</demo-button>
+      </view>
+    </view>
+
     <view class="section status-section">
       <text class="section-title">最后结果 / 状态</text>
       <text class="status-text" selectable>{{ status }}</text>
@@ -338,6 +347,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import DemoButton from './button-uniapp.vue'
 
 const localImage =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAIAAAC2BqGFAAACPElEQVR4nO3dzVHDMBBAYYVJE24jTXGkFh9pSmXgEjjCHXIBrd6sVu8d+Zlkv1kcknji28fnV7P5vQC3YUJzudFQQkMJDSU0lNBQQkMJDSU0lNBQQkMJDSU0lNBQQkMJDSU0lNBQ9wb2eG/Z6q/QDd2AN2cf+Xx58bnQSxAz3LOglyOezT3lwXBp5Tbn/sdDr648aYpg6BrKM2aJhK6kHD5RGHQ95di5YqCrKgdO51NwqADo2uscNaMbDTUKvcM6h0zqRkMJvQL0PseN8XndaCihoYSGEhpKaCihoYSGErriCTSDXW9PvnicbYnui/r+/m5y8fu6xE9/OC33Sw3lwd/aF/oa8MppnRH6GpZKaJ0O+goyymadC/oK1UllnQu6cImgrwkLmGepE0HXTujNoK9pf+NJjh5ZoMsnNJTQUEJDCQ0l9GbQx7QX7JO8FZAFunxC7wd9nGWPG7mga5cL+jhrrnM66Bank0o5I3SLMMqmnBS6jUklVM4L3f7rlVM5+ylhx/mHV+7TEi8A/UPQs0mhjtw7u+oxulhCQwkNJTSU0FBCQwkNJfQK0NinXCdpZF43GkroRaD3OXr0sUndaKgA6B2Wug/P6EZDxUDXXuoeMV3YRle17kFzRR466ln3uImCj9GVrHvoLPEPhjWse/QUU/7rWN26T7j/Xitr8WtlLffpx33pq7/lF++VrmdoPgXn8rUOKKGhhIYSGkpoKKGhhIYSGkpoKKGhhIYSGkpoKKGhhIYSGkroxvQNPmh0gWYXLMUAAAAASUVORK5CYII='

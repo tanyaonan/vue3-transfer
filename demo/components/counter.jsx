@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Button, Tag, message } from 'antd'
+import { Tag, message } from 'antd'
 import styled from 'styled-components'
+import MyButton from './button.jsx'
 
 const Wrapper = styled.div`
   max-width: 420px;
@@ -48,9 +49,9 @@ export default function Counter() {
       </Header>
       <Display>Count: {count}</Display>
       <Actions>
-        <Button type="primary" onClick={() => setCount(c => c + 1)}>+1</Button>
-        <Button onClick={() => setCount(c => c - 1)}>-1</Button>
-        <Button onClick={() => { setCount(0); message.info('Count 已重置') }}>Reset</Button>
+        <MyButton type="primary" onClick={() => setCount(c => c + 1)}>+1</MyButton>
+        <MyButton onClick={() => setCount(c => c - 1)}>-1</MyButton>
+        <MyButton onClick={() => { setCount(0); message.info('Count 已重置') }}>Reset</MyButton>
       </Actions>
     </Wrapper>
   )

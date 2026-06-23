@@ -33,6 +33,13 @@
       globals: usesElementPlus
         ? { 'element-plus': 'ElementPlus' }
         : undefined,
+      resolver: {
+        async resolve(specifier) {
+          const url = new URL(specifier, new URL('../components/', location.href))
+          const res = await fetch(url)
+          return res.ok ? res.text() : null
+        },
+      },
     })
 
     // renderVueToDOM 默认使用 inline 模式，样式需要手动注入

@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
 import type { Root } from 'react-dom/client'
+import type { ModuleResolver } from './index.js'
 
 export interface ReactTransformOptions {
   /**
@@ -32,6 +33,13 @@ export interface ReactTransformOptions {
    * 改写为 `const { Button } = window.antd`。
    */
   globals?: Record<string, string>
+
+  /**
+   * 模块解析器，用于在浏览器运行时异步解析相对路径组件导入
+   *（如 `import MyButton from './button.jsx'`）。
+   * 返回对应模块的源码字符串；若无法解析，返回 `null`。
+   */
+  resolver?: ModuleResolver
 }
 
 export interface ReactTransformResult {
@@ -49,6 +57,12 @@ export interface ReactTransformResult {
    * 编译过程中产生的错误信息。
    */
   errors: string[]
+
+  /**
+   * 递归编译的本地依赖模块，键为相对路径，值为该依赖的编译结果。
+   * 仅在调用方传入 `resolver` 选项且源码中存在相对路径导入时返回。
+   */
+  localModules?: Record<string, ReactTransformResult>
 }
 
 export interface ReactMountOptions {

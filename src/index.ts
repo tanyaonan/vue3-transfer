@@ -34,6 +34,92 @@ function rewriteNamedImports(code: string, specifier: string, globalName: string
   })
   return { code: newCode, bindings }
 }
+
+/**
+ * 从源码中提取相对路径的本地导入（如 `import X from './button.vue'`）。
+ * 返回去重后的相对路径列表。
+ */
+function extractLocalImports(code: string): string[] {
+  const specifiers = new Set<string>()
+  const patterns = [
+    /import\s+\w+\s+from\s+['"](\.\/[^'"]+)['"];?/g,
+    /import\s+\{[^}]+\}\s+from\s+['"](\.\/[^'"]+)['"];?/g,
+  ]
+  for (const pattern of patterns) {
+    let match: RegExpExecArray | null
+    while ((match = pattern.exec(code)) !== null) {
+      specifiers.add(match[1])
+    }
+  }
+  return [...specifiers]
+}
+
+interface LocalImportRewriteResult {
+  code: string
+  bindings: string[]
+}
+
+/**
+ * 将源码中的相对路径导入改写为从本地模块表读取。
+ */
+function rewriteLocalImports(code: string): LocalImportRewriteResult {
+  const bindings: string[] = []
+
+  // import X from './xxx.vue'
+  let newCode = code.replace(
+    /import\s+(\w+)\s+from\s+['"](\.\/[^'"]+)['"];?/g,
+    (_match, binding: string, specifier: string) => {
+      bindings.push(binding)
+      return `const ${binding} = __local_modules__[${JSON.stringify(specifier)}]`
+    },
+  )
+
+  // import { X, Y as Z } from './xxx.vue'
+  newCode = newCode.replace(
+    /import\s+\{([^}]+)\}\s+from\s+['"](\.\/[^'"]+)['"];?/g,
+    (_match, imports: string, specifier: string) => {
+      const pairs = imports.split(',').map((s: string) => s.trim())
+      const destructuring = pairs.map((pair: string) => {
+        const parts = pair.split(/\s+as\s+/).map((s: string) => s.trim())
+        if (parts.length === 2) {
+          bindings.push(parts[1])
+          return `${parts[0]}: ${parts[1]}`
+        }
+        bindings.push(parts[0])
+        return parts[0]
+      }).join(', ')
+      return `const { ${destructuring} } = __local_modules__[${JSON.stringify(specifier)}]`
+    },
+  )
+
+  return { code: newCode, bindings }
+}
+
+/**
+ * 将本地模块编译产物封装为可在主组件代码中执行的模块表。
+ * 子模块中的 `vue` / `globals` 导入也需要重写为全局读取。
+ */
+function createLocalModulesCode(
+  localModules: Record<string, TransformResult>,
+  globals?: Record<string, string>,
+): string {
+  const entries = Object.entries(localModules).map(([specifier, result]) => {
+    let moduleCode = result.code
+      .replace(/\bexport\s+const\s+__css__\s*=\s*[\s\S]*$/m, '')
+      .replace(/\bexport\s+default\s+__sfc_main__\s*;?\s*$/, 'return __sfc_main__')
+    moduleCode = rewriteNamedImports(moduleCode, 'vue', 'Vue').code
+    if (globals) {
+      for (const [specifier, globalName] of Object.entries(globals)) {
+        moduleCode = rewriteNamedImports(moduleCode, specifier, globalName).code
+      }
+    }
+    return `${JSON.stringify(specifier)}: (function() {
+${moduleCode}
+})()`
+  })
+  return `const __local_modules__ = {\n${entries.join(',\n')}\n}`
+}
+
 import type { TransformOptions, TransformResult, RenderableComponent, MountOptions } from './types/index.js'
 
 export type { TransformOptions, TransformResult, RenderableComponent }
@@ -45,13 +131,21 @@ declare global {
   }
 }
 
-function createCacheKey(options: TransformOptions): string {
+function createCacheKey(options: TransformOptions, resolvedSources?: Record<string, string>): string {
   return generateId(
     JSON.stringify({
       filename: options.filename,
       isProduction: options.isProduction,
       styleMode: options.styleMode,
       vapor: options.vapor,
+      resolvedSources: resolvedSources
+        ? Object.entries(resolvedSources)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([k, v]) => `${k}:${createSourceHash(v)}`)
+            .join(',')
+        : undefined,
+      // 在缓存 key 中混入编译器实现指纹，避免旧版编译器缓存被新版复用。
+      compilerFingerprint: transformVueToJS.toString().length,
     }),
   )
 }
@@ -75,7 +169,21 @@ export async function transformVueToJS(
 
   const useCache = options.useCache ?? true
   const sourceHash = createSourceHash(source)
-  const cacheKey = useCache ? createCacheKey(options) : null
+
+  // 在编译前通过 resolver 异步解析本地依赖，并把依赖内容参与缓存 key，
+  // 这样依赖文件变化时缓存会自动失效。
+  const resolvedSources: Record<string, string> = {}
+  if (options.resolver) {
+    const localImports = extractLocalImports(source)
+    for (const specifier of localImports) {
+      const depSource = await options.resolver.resolve(specifier, options.filename)
+      if (depSource != null) {
+        resolvedSources[specifier] = depSource
+      }
+    }
+  }
+
+  const cacheKey = useCache ? createCacheKey(options, resolvedSources) : null
 
   if (cacheKey) {
     const cached = await getCacheEntry(cacheKey, sourceHash)
@@ -175,10 +283,48 @@ document.head.appendChild(__style__)
     code += '\nexport const __css__ = ' + JSON.stringify(css)
   }
 
+  // 递归编译本地依赖（如 `import MyButton from './button.vue'`），
+  // 并把子组件直接内联到当前产物中，避免缓存中保留无法执行的相对路径导入。
+  const localModules: Record<string, TransformResult> = {}
+  if (options.resolver) {
+    for (const [specifier, depSource] of Object.entries(resolvedSources)) {
+      if (!localModules[specifier]) {
+        const depResult = await transformVueToJS(depSource, {
+          ...options,
+          filename: specifier,
+        })
+        if (depResult.errors.length) {
+          return {
+            code: '',
+            errors: depResult.errors,
+          }
+        }
+        localModules[specifier] = depResult
+        Object.assign(localModules, depResult.localModules)
+      }
+    }
+  }
+
+  // 合并所有依赖的 CSS
+  const allCssBlocks: string[] = []
+  if (css) allCssBlocks.push(css)
+  for (const dep of Object.values(localModules)) {
+    if (dep.css) allCssBlocks.push(dep.css)
+  }
+  const allCss = allCssBlocks.join('\n')
+
+  // 把本地依赖内联为模块表并替换源码中的相对路径导入
+  if (Object.keys(localModules).length) {
+    code = createLocalModulesCode(localModules, options.globals) + '\n\n' + code
+    const localRewrite = rewriteLocalImports(code)
+    code = localRewrite.code
+  }
+
   const result: TransformResult = {
     code,
-    css: styleMode === 'inline' ? css : undefined,
+    css: styleMode === 'inline' ? allCss : undefined,
     errors: [],
+    localModules,
   }
 
   if (cacheKey) {
@@ -237,7 +383,7 @@ export async function renderVueToDOM(
   if (globalBindings.length) {
     componentCode = componentCode.replace(
       /\bexport\s+default\s+__sfc_main__\s*;?\s*$/,
-      `__sfc_main__.components = { ${globalBindings.join(', ')} }\n\nexport default __sfc_main__`,
+      `__sfc_main__.components = { ...(__sfc_main__.components || {}), ${globalBindings.join(', ')} }\n\nexport default __sfc_main__`,
     )
   }
 

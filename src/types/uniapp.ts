@@ -1,4 +1,5 @@
 import type { App, Component, Plugin } from 'vue'
+import type { ModuleResolver } from './index.js'
 
 /**
  * UniApp 目标平台。
@@ -50,6 +51,12 @@ export interface UniAppTransformOptions {
    * 改写为 `const { WdButton } = window.WotUI`。
    */
   globals?: Record<string, string>
+
+  /**
+   * 模块解析器，用于在浏览器运行时异步解析相对路径组件导入。
+   * 返回对应模块的源码字符串；若无法解析，返回 `null`。
+   */
+  resolver?: ModuleResolver
 }
 
 export interface UniAppTransformResult {
